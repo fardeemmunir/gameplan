@@ -7,4 +7,10 @@
 body {
   background-color: #0d0b0d;
   font-family: "Quicksand", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.01em;
+}
+
+.container {
+  @apply px-2 mx-auto max-w-6xl;
+  width: 100%;
 }
