@@ -1,4 +1,12 @@
 import React, { useState } from "react";
+import CreatableSelect from "react-select/creatable";
+import { colors } from "tailwindcss/defaultTheme";
+
+const selectOptions = [
+  { value: "chocolate", label: "Chocolate" },
+  { value: "strawberry", label: "Strawberry" },
+  { value: "vanilla", label: "Vanilla" }
+];
 
 const AddClassForm = () => {
   const [code, setCode] = useState("");
@@ -69,7 +77,28 @@ const AddClassForm = () => {
           <label className="form__label" htmlFor="prereq">
             Prerequisties
           </label>
-          <input className="form__input" id="prereq" type="text" />
+
+          <CreatableSelect
+            styles={{
+              control: provided => ({
+                ...provided,
+                backgroundColor: colors.gray[200],
+                border: 0
+              }),
+              multiValue: provided => ({
+                ...provided,
+                backgroundColor: "transparent"
+              })
+            }}
+            className="mb-3"
+            isMulti
+            onChange={selectedItems =>
+              setPrereq((selectedItems || []).map(({ value }) => value))
+            }
+            options={selectOptions}
+            placeholder=""
+          />
+
           <p className="text-gray-600 text-xs italic">&nbsp;</p>
         </div>
 
