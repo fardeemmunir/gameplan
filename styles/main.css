@@ -38,5 +38,5 @@ body {
 }
 
 .form__submit:focus {
-  @apply outline-none bg-white border-gray-500;
+  @apply outline-none;
 }
