@@ -11,7 +11,8 @@
     "@zeit/next-css": "^1.0.1",
     "next": "9.1.1",
     "react": "16.10.2",
-    "react-dom": "16.10.2"
+    "react-dom": "16.10.2",
+    "react-select": "^3.0.8"
   },
   "devDependencies": {
     "postcss-preset-env": "^6.7.0",
