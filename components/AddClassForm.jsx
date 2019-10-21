@@ -12,8 +12,8 @@ const AddClassForm = () => {
     console.log(code, name, prereq, difficulty);
     setCode("");
     setName("");
-    setPrereq("");
-    setDifficulty("");
+    setPrereq([]);
+    setDifficulty(1);
   }
 
   return (
@@ -37,6 +37,7 @@ const AddClassForm = () => {
               className="form__input"
               id="class-number"
               type="text"
+              required
               value={code}
               onChange={e => setCode(e.target.value)}
             />
@@ -55,6 +56,7 @@ const AddClassForm = () => {
               className="form__input"
               id="class-name"
               type="text"
+              required
               value={name}
               onChange={e => setName(e.target.value)}
             />
@@ -81,8 +83,9 @@ const AddClassForm = () => {
               type="number"
               min="1"
               max="5"
+              required
               value={difficulty}
-              onChange={e => setDifficulty(e.target.value)}
+              onChange={e => setDifficulty(Number(e.target.value))}
             />
             <input className="form__submit " type="submit" value="Add" />
           </div>
