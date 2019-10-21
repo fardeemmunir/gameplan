@@ -15,3 +15,28 @@ body {
   @apply px-2 mx-auto max-w-6xl;
   width: 100%;
 }
+
+.add-class-form__title {
+  background-image: url("/books.png");
+  background-size: 70%;
+}
+
+.form__label {
+  @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
+}
+
+.form__input {
+  @apply appearance-none block mr-4 w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 mb-3 leading-tight;
+}
+
+.form__input:focus {
+  @apply outline-none bg-white border-gray-500;
+}
+
+.form__submit {
+  @apply bg-blue-500 text-white border border-blue-500 uppercase text-xs rounded py-3 px-4 mb-3 leading-tight font-bold tracking-widest;
+}
+
+.form__submit:focus {
+  @apply outline-none bg-white border-gray-500;
+}
