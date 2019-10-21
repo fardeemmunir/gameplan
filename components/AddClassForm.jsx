@@ -10,6 +10,10 @@ const AddClassForm = () => {
     e.preventDefault();
 
     console.log(code, name, prereq, difficulty);
+    setCode("");
+    setName("");
+    setPrereq("");
+    setDifficulty("");
   }
 
   return (
