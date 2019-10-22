@@ -6,6 +6,8 @@ import Header from "../components/Header";
 import "../styles/main.css";
 import AddClassForm from "../components/AddClassForm";
 
+import "../store";
+
 const Home = () => (
   <main>
     <Head>
