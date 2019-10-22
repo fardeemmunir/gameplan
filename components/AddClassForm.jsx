@@ -8,6 +8,18 @@ const selectOptions = [
   { value: "vanilla", label: "Vanilla" }
 ];
 
+const multiSelectStyles = {
+  control: provided => ({
+    ...provided,
+    backgroundColor: colors.gray[200],
+    border: 0
+  }),
+  multiValue: provided => ({
+    ...provided,
+    backgroundColor: "transparent"
+  })
+};
+
 const AddClassForm = () => {
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
@@ -79,20 +91,11 @@ const AddClassForm = () => {
           </label>
 
           <CreatableSelect
-            styles={{
-              control: provided => ({
-                ...provided,
-                backgroundColor: colors.gray[200],
-                border: 0
-              }),
-              multiValue: provided => ({
-                ...provided,
-                backgroundColor: "transparent"
-              })
-            }}
+            styles={multiSelectStyles}
             className="mb-3"
             isMulti
             onChange={selectedItems =>
+              // @ts-ignore
               setPrereq((selectedItems || []).map(({ value }) => value))
             }
             options={selectOptions}
