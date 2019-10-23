@@ -110,7 +110,7 @@ const AddClassForm = () => {
 
           <div className="flex">
             <input
-              className="form__input"
+              className="form__input w-1/2"
               id="grid-password"
               type="number"
               min="1"
@@ -119,7 +119,7 @@ const AddClassForm = () => {
               value={difficulty}
               onChange={e => setDifficulty(Number(e.target.value))}
             />
-            <input className="form__submit " type="submit" value="Add" />
+            <input className="form__submit w-3/4" type="submit" value="Add" />
           </div>
         </div>
       </div>
