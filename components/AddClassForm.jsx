@@ -119,47 +119,23 @@ const AddClassForm = () => {
             <label className="form__label">Quarter</label>
 
             <div className="flex justify-between quarter-selector mb-2">
-              <input
-                type="checkbox"
-                className="hidden"
-                id="Q-F"
-                name="FALL"
-                onChange={e => console.log(e.target.name)}
-              />
-              <label
-                className="py-2 rounded border-2 border-gray-200 leading-tight px-2 cursor-pointer  block"
-                htmlFor="Q-F"
-              >
-                Fall
-              </label>
-
-              <input
-                type="checkbox"
-                className="hidden"
-                id="Q-W"
-                name="WINTER"
-                onChange={e => console.log(e.target.name)}
-              />
-              <label
-                className="py-2 rounded border-2 border-gray-200 leading-tight px-2 cursor-pointer  block"
-                htmlFor="Q-W"
-              >
-                Winter
-              </label>
-
-              <input
-                type="checkbox"
-                className="hidden"
-                id="Q-S"
-                name="SPRING"
-                onChange={e => console.log(e.target.name)}
-              />
-              <label
-                className="py-2 rounded border-2 border-gray-200 leading-tight px-2 cursor-pointer  block"
-                htmlFor="Q-S"
-              >
-                Spring
-              </label>
+              {["FALL", "WINTER", "SPRING"].map(quarter => (
+                <div key={quarter}>
+                  <input
+                    type="checkbox"
+                    className="hidden"
+                    id={"QUARTER-" + quarter}
+                    name={quarter}
+                    onChange={handleQuarterPrefChange}
+                  />
+                  <label
+                    className="block p-2 rounded border-2 border-gray-200 leading-tight cursor-pointer capitalize select-none"
+                    htmlFor={"QUARTER-" + quarter}
+                  >
+                    {quarter.toLowerCase()}
+                  </label>
+                </div>
+              ))}
             </div>
 
             <p className="text-gray-600 text-xs italic">
