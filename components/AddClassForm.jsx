@@ -41,15 +41,15 @@ const AddClassForm = () => {
       onSubmit={handleSubmit}
       className="flex mb-4 bg-white text-black rounded"
     >
-      <div className="w-1/3 pl-4 py-4 bg-right bg-no-repeat add-class-form__title">
+      <div className="w-1/5 pl-4 py-4 bg-right bg-no-repeat add-class-form__title">
         <h1 className="text-4xl mt-6">
           Add <br /> Classes
         </h1>
       </div>
 
-      <div className="w-1/3 pl-4 py-4">
-        <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
+      <div className="w-2/5 pl-4 py-4">
+        <div className="flex flex-wrap">
             <label className="form__label" htmlFor="class-number">
               Class Number
             </label>
@@ -108,7 +108,7 @@ const AddClassForm = () => {
         <div className="w-full">
           <label className="form__label">Difficulty (From 1 to 5)</label>
 
-          <div className="flex">
+      <div className="w-2/5 px-4 py-4">
             <input
               className="form__input w-1/2"
               id="grid-password"
