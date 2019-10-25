@@ -99,8 +99,11 @@ const AddClassForm = () => {
       </div>
 
       <div className="w-2/5 px-4 py-4">
+        <div className="flex flex-wrap">
+          <div className="w-1/2">
+            <label className="form__label">Difficulty</label>
             <input
-              className="form__input w-1/2"
+              className="form__input"
               id="grid-password"
               type="number"
               min="1"
@@ -109,7 +112,9 @@ const AddClassForm = () => {
               value={difficulty}
               onChange={e => setDifficulty(Number(e.target.value))}
             />
-            <input className="form__submit w-3/4" type="submit" value="Add" />
+            <p className="text-gray-600 text-xs italic">Between 1-5 </p>
+          </div>
+
           <div className="w-1/2 pl-3">
             <label className="form__label">Quarter</label>
 
@@ -161,6 +166,14 @@ const AddClassForm = () => {
               For teacher preference{" "}
             </p>
           </div>
+
+          <div className="w-full mt-5">
+            <label className="form__label">&nbsp;</label>
+            <input
+              className="form__submit w-full"
+              type="submit"
+              value="Add Class"
+            />
           </div>
         </div>
       </div>
