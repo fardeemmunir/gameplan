@@ -47,11 +47,11 @@ const AddClassForm = () => {
         </h1>
       </div>
 
-          <div className="w-full px-3">
       <div className="w-2/5 pl-4 py-4">
         <div className="flex flex-wrap">
+          <div className="w-1/3 pr-3">
             <label className="form__label" htmlFor="class-number">
-              Class Number
+              Class ###
             </label>
             <input
               className="form__input"
@@ -61,14 +61,10 @@ const AddClassForm = () => {
               value={code}
               onChange={e => setCode(e.target.value)}
             />
-            <p className="text-gray-600 text-xs italic">
-              Example, ELEC_ENG 395
-            </p>
+            <p className="text-gray-600 text-xs italic">Ex: ELEC_ENG 395</p>
           </div>
-        </div>
 
-        <div className="flex flex-wrap -mx-3">
-          <div className="w-full px-3">
+          <div className="w-2/3">
             <label className="form__label" htmlFor="class-name">
               Name
             </label>
@@ -81,8 +77,6 @@ const AddClassForm = () => {
               onChange={e => setName(e.target.value)}
             />
           </div>
-        </div>
-      </div>
 
       <div className="w-1/3 px-4 py-4">
         <div className="w-full mb-6">
