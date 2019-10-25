@@ -41,7 +41,7 @@ const AddClassForm = () => {
       onSubmit={handleSubmit}
       className="flex mb-4 bg-white text-black rounded"
     >
-      <div className="w-1/5 pl-4 py-4 bg-right bg-no-repeat add-class-form__title">
+      <div className="w-1/5 pl-4 py-4 bg-right-bottom bg-no-repeat add-class-form__title">
         <h1 className="text-4xl mt-6">
           Add <br /> Classes
         </h1>
