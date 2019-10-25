@@ -79,9 +79,7 @@ const AddClassForm = () => {
           </div>
 
           <div className="w-full mt-5">
-            <label className="form__label" htmlFor="prereq">
-              Prerequisties
-            </label>
+            <label className="form__label">Prerequisties</label>
 
             <CreatableSelect
               styles={multiSelectStyles}
