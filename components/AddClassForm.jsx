@@ -78,29 +78,25 @@ const AddClassForm = () => {
             />
           </div>
 
-      <div className="w-1/3 px-4 py-4">
-        <div className="w-full mb-6">
-          <label className="form__label" htmlFor="prereq">
-            Prerequisties
-          </label>
+          <div className="w-full mt-5">
+            <label className="form__label" htmlFor="prereq">
+              Prerequisties
+            </label>
 
-          <CreatableSelect
-            styles={multiSelectStyles}
-            className="mb-3"
-            isMulti
-            onChange={selectedItems =>
-              // @ts-ignore
-              setPrereq((selectedItems || []).map(({ value }) => value))
-            }
-            options={selectOptions}
-            placeholder=""
-          />
-
-          <p className="text-gray-600 text-xs italic">&nbsp;</p>
+            <CreatableSelect
+              styles={multiSelectStyles}
+              className="mb-3"
+              isMulti
+              onChange={selectedItems =>
+                // @ts-ignore
+                setPrereq((selectedItems || []).map(({ value }) => value))
+              }
+              options={selectOptions}
+              placeholder=""
+            />
+          </div>
         </div>
-
-        <div className="w-full">
-          <label className="form__label">Difficulty (From 1 to 5)</label>
+      </div>
 
       <div className="w-2/5 px-4 py-4">
             <input
