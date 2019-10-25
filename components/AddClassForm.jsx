@@ -25,15 +25,29 @@ const AddClassForm = () => {
   const [name, setName] = useState("");
   const [prereq, setPrereq] = useState([]);
   const [difficulty, setDifficulty] = useState(1);
+  const [quarterPref, setQuarterPref] = useState([]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(code, name, prereq, difficulty);
+    console.log(code, name, prereq, difficulty, quarterPref);
     setCode("");
     setName("");
     setPrereq([]);
     setDifficulty(1);
+    setQuarterPref([]);
+  }
+
+  function handleQuarterPrefChange(e) {
+    const selection = e.target.name;
+
+    if (quarterPref.includes(selection)) {
+      return setQuarterPref(
+        quarterPref.filter(quarters => quarters !== selection)
+      );
+    } else {
+      return setQuarterPref(quarterPref.concat(selection));
+    }
   }
 
   return (
@@ -125,6 +139,7 @@ const AddClassForm = () => {
                     id={"QUARTER-" + quarter}
                     name={quarter}
                     onChange={handleQuarterPrefChange}
+                    checked={quarterPref.includes(quarter)}
                   />
                   <label
                     className="block p-2 rounded border-2 border-gray-200 leading-tight cursor-pointer capitalize select-none"
