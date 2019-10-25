@@ -110,6 +110,57 @@ const AddClassForm = () => {
               onChange={e => setDifficulty(Number(e.target.value))}
             />
             <input className="form__submit w-3/4" type="submit" value="Add" />
+          <div className="w-1/2 pl-3">
+            <label className="form__label">Quarter</label>
+
+            <div className="flex justify-between quarter-selector mb-2">
+              <input
+                type="checkbox"
+                className="hidden"
+                id="Q-F"
+                name="FALL"
+                onChange={e => console.log(e.target.name)}
+              />
+              <label
+                className="py-2 rounded border-2 border-gray-200 leading-tight px-2 cursor-pointer  block"
+                htmlFor="Q-F"
+              >
+                Fall
+              </label>
+
+              <input
+                type="checkbox"
+                className="hidden"
+                id="Q-W"
+                name="WINTER"
+                onChange={e => console.log(e.target.name)}
+              />
+              <label
+                className="py-2 rounded border-2 border-gray-200 leading-tight px-2 cursor-pointer  block"
+                htmlFor="Q-W"
+              >
+                Winter
+              </label>
+
+              <input
+                type="checkbox"
+                className="hidden"
+                id="Q-S"
+                name="SPRING"
+                onChange={e => console.log(e.target.name)}
+              />
+              <label
+                className="py-2 rounded border-2 border-gray-200 leading-tight px-2 cursor-pointer  block"
+                htmlFor="Q-S"
+              >
+                Spring
+              </label>
+            </div>
+
+            <p className="text-gray-600 text-xs italic">
+              For teacher preference{" "}
+            </p>
+          </div>
           </div>
         </div>
       </div>
