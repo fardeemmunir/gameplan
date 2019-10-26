@@ -48,3 +48,17 @@ body {
 .quarter-selector label {
   transition: all 0.2s;
 }
+
+.meta:hover .meta__tooltip,
+.meta__tooltip:hover {
+  z-index: 1;
+  opacity: 1;
+}
+
+.meta__tooltip {
+  top: 0rem;
+  left: 3rem;
+  opacity: 0;
+  z-index: -2;
+  transition: all 0.4s;
+}
