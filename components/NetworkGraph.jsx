@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import * as d3 from "d3";
 
+import color from "../lib/difficultyToColor";
 const NetworkGraph = ({ nodes, links }) => {
   const svgContainer = useRef(null);
 
@@ -74,23 +75,6 @@ const NetworkGraph = ({ nodes, links }) => {
 
   return <div className="w-full" ref={svgContainer}></div>;
 };
-
-function color(classInfo) {
-  switch (classInfo.difficulty) {
-    case 1:
-      return "#C45AB3";
-    case 2:
-      return "#D0FCB3";
-    case 3:
-      return "#7D7ABC";
-    case 4:
-      return "#EF767A";
-    case 5:
-      return "#CC5A71";
-    default:
-      return "#eee";
-  }
-}
 
 function drag(simulation) {
   function dragstarted(d) {
