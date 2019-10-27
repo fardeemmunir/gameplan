@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import CreatableSelect from "react-select/creatable";
 import { colors } from "tailwindcss/defaultTheme";
+import Store from "../lib/store";
 
 const selectOptions = [
   { value: "chocolate", label: "Chocolate" },
@@ -23,17 +24,22 @@ const multiSelectStyles = {
 const AddClassForm = () => {
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
-  const [prereq, setPrereq] = useState([]);
+  const [prereqs, setPrereqs] = useState([]);
   const [difficulty, setDifficulty] = useState(1);
   const [quarterPref, setQuarterPref] = useState([]);
+
+  const { dispatch } = useContext(Store);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(code, name, prereq, difficulty, quarterPref);
+    dispatch({
+      type: "ADD_CLASS",
+      payload: { code, name, prereqs, difficulty, quarterPref }
+    });
     setCode("");
     setName("");
-    setPrereq([]);
+    setPrereqs([]);
     setDifficulty(1);
     setQuarterPref([]);
   }
@@ -101,7 +107,7 @@ const AddClassForm = () => {
               isMulti
               onChange={selectedItems =>
                 // @ts-ignore
-                setPrereq((selectedItems || []).map(({ value }) => value))
+                setPrereqs((selectedItems || []).map(({ value }) => value))
               }
               options={selectOptions}
               placeholder=""
