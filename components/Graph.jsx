@@ -1,19 +1,16 @@
 import React, { useContext } from "react";
 
 import Store from "../lib/store";
+import makeLinks from "../lib/makeLinks";
 import NetworkGraph from "./NetworkGraph";
 
 const Graph = () => {
-  const { classList } = useContext(Store);
-
-  return (
-    <div>
-      <NetworkGraph
-        nodes={classList}
-        links={[{ source: "ES_APPM 252-1", target: "ES_APPM 252-2" }]}
-      />
-    </div>
+  const { classList: nodes } = useContext(Store);
+  const links = makeLinks(
+    nodes.map(({ code, prereqs }) => ({ node: code, pointsTo: prereqs }))
   );
+
+  return <NetworkGraph nodes={nodes} links={links} />;
 };
 
 export default Graph;
