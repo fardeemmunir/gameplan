@@ -1,9 +1,19 @@
-import React, { useEffect } from "react";
-import * as d3 from "d3";
+import React, { useContext } from "react";
 
-import data from "./data";
+import Store from "../lib/store";
+import NetworkGraph from "./NetworkGraph";
 
 const Graph = () => {
+  const { classList } = useContext(Store);
+
+  return (
+    <div>
+      <NetworkGraph
+        nodes={classList}
+        links={[{ source: "ES_APPM 252-1", target: "ES_APPM 252-2" }]}
+      />
+    </div>
+  );
 };
 
 export default Graph;
