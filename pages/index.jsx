@@ -44,6 +44,7 @@ const Home = () => (
             Edit
           </button>
         </footer>
+        <Graph></Graph>
       </div>
     </div>
   </main>

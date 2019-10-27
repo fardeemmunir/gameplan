@@ -62,3 +62,7 @@ body {
   z-index: -2;
   transition: all 0.4s;
 }
+
+text {
+  fill: white;
+}
