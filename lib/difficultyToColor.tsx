@@ -1,4 +1,4 @@
-const colors = ["#25a18e", "#00a5b2", "#00a5cf", "#8b7bc5", "#bd4f6c"];
+const colors = ["#25a18e", "#0047b2", "#00a5cf", "#8b7bc5", "#bd4f6c"];
 
 function difficultyToColor(difficulty: number) {
   switch (difficulty) {
