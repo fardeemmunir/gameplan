@@ -7,7 +7,6 @@ import "../styles/main.css";
 import AddClassForm from "../components/AddClassForm";
 
 import Store, { StoreProvider } from "../lib/store";
-import ClassList from "../components/ClassList";
 import Graph from "../components/graph";
 
 const Home = () => {
