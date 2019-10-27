@@ -81,3 +81,11 @@ text {
 .leading-zero {
   line-height: 0;
 }
+
+.network__node {
+  transition: transform 0.1s;
+}
+
+.network__node:hover {
+  transform: scale(1.3);
+}

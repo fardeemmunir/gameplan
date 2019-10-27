@@ -56,7 +56,7 @@ const NetworkGraph = ({ nodes, links }) => {
 
     node
       .append("circle")
-      .attr("class", "cursor-pointer")
+      .attr("class", "cursor-pointer network__node")
       .attr("r", 10)
       .attr("fill", d => color(d.difficulty))
       .attr("x", -8)
