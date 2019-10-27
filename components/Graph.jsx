@@ -71,7 +71,7 @@ const Graph = () => {
     });
 
     function color(group) {
-      console.log(group);
+      // console.log(group);
       return Math.random() > 0.2 ? "#957AE6" : "#CB4C49";
     }
 
