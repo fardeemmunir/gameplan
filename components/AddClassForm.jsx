@@ -104,12 +104,12 @@ const AddClassForm = () => {
               styles={multiSelectStyles}
               className="mb-3"
               isMulti
+              options={prereqOptions}
+              placeholder=""
               onChange={selectedItems =>
                 // @ts-ignore
                 setPrereqs((selectedItems || []).map(({ value }) => value))
               }
-              options={prereqOptions}
-              placeholder=""
             />
           </div>
         </div>
