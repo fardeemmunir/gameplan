@@ -38,13 +38,32 @@ const NetworkGraph = ({ nodes, links }) => {
       // @ts-ignore
       .attr("viewBox", [-width / 2, -height / 4, width, height]);
 
+    d3.select(svgContainer.current)
+      .select("svg")
+      .append("defs")
+      .append("marker")
+      .attr("id", "arrowhead")
+      .attr("id", "arrowhead")
+      .attr("viewBox", "-0 -5 10 10")
+      .attr("refX", 13)
+      .attr("refY", 0)
+      .attr("orient", "auto")
+      .attr("markerWidth", 13)
+      .attr("markerHeight", 13)
+      .attr("xoverflow", "visible")
+      .append("svg:path")
+      .attr("d", "M 0,-3 L 5 ,0 L 0,3")
+      .attr("fill", "#999")
+      .style("stroke", "none");
+
     const link = svg
       .append("g")
       .attr("stroke", "#999")
       .attr("stroke-opacity", 0.6)
       .selectAll("line")
       .data(links)
-      .join("line");
+      .join("line")
+      .attr("marker-end", "url(#arrowhead)");
 
     const node = svg
       .append("g")
@@ -76,10 +95,10 @@ const NetworkGraph = ({ nodes, links }) => {
 
     simulation.on("tick", () => {
       link
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y);
+        .attr("x2", d => d.source.x)
+        .attr("y2", d => d.source.y)
+        .attr("x1", d => d.target.x)
+        .attr("y1", d => d.target.y);
 
       node.attr("transform", d => `translate(${d.x},${d.y})`);
     });
