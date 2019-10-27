@@ -27,6 +27,13 @@ export const initialState = {
       quarterPref: ["FALL"],
       difficulty: 3,
       prereqs: []
+    },
+    {
+      code: "ES_APPM 252-2",
+      name: "Multivariable Integral Calculus",
+      quarterPref: ["WINTER"],
+      difficulty: 1,
+      prereqs: ["ES_APPM 252-1"]
     }
   ]
 };
