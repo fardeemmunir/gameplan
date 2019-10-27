@@ -3,12 +3,6 @@ import CreatableSelect from "react-select/creatable";
 import { colors } from "tailwindcss/defaultTheme";
 import Store from "../lib/store";
 
-const selectOptions = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" }
-];
-
 const multiSelectStyles = {
   control: provided => ({
     ...provided,
@@ -28,7 +22,7 @@ const AddClassForm = () => {
   const [difficulty, setDifficulty] = useState(1);
   const [quarterPref, setQuarterPref] = useState([]);
 
-  const { dispatch } = useContext(Store);
+  const { classList, dispatch } = useContext(Store);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -55,6 +49,11 @@ const AddClassForm = () => {
       return setQuarterPref(quarterPref.concat(selection));
     }
   }
+
+  const prereqOptions = classList.map(({ code }) => ({
+    label: code,
+    value: code
+  }));
 
   return (
     <form
@@ -109,7 +108,7 @@ const AddClassForm = () => {
                 // @ts-ignore
                 setPrereqs((selectedItems || []).map(({ value }) => value))
               }
-              options={selectOptions}
+              options={prereqOptions}
               placeholder=""
             />
           </div>
