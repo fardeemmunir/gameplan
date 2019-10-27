@@ -66,3 +66,18 @@ body {
 text {
   fill: white;
 }
+
+.class-more-details {
+  position: absolute;
+  top: 4rem;
+  height: 800px;
+}
+
+.class-more-details > div {
+  position: sticky;
+  top: 2rem;
+}
+
+.leading-zero {
+  line-height: 0;
+}

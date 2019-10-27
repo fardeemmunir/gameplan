@@ -1,9 +1,18 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 
 import color from "../lib/difficultyToColor";
+import ClassCard from "./ClassCard";
+
 const NetworkGraph = ({ nodes, links }) => {
   const svgContainer = useRef(null);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [selectedClass, setSelectedClass] = useState({
+    code: "",
+    name: "",
+    quarterPref: [],
+    difficulty: 0
+  });
 
   useEffect(() => {
     const width = 1000;
@@ -26,7 +35,8 @@ const NetworkGraph = ({ nodes, links }) => {
     const svg = d3
       .select(svgContainer.current)
       .append("svg")
-      .attr("viewBox", [-width / 2, -height / 2.5, width, height]);
+      // @ts-ignore
+      .attr("viewBox", [-width / 2, -height / 4, width, height]);
 
     const link = svg
       .append("g")
@@ -46,10 +56,16 @@ const NetworkGraph = ({ nodes, links }) => {
 
     node
       .append("circle")
+      .attr("class", "cursor-pointer")
       .attr("r", 10)
-      .attr("fill", color)
+      .attr("fill", d => color(d.difficulty))
       .attr("x", -8)
-      .attr("y", -8);
+      .attr("y", -8)
+      .on("click", d => {
+        console.log(d);
+        setShowTooltip(true);
+        setSelectedClass(d);
+      });
 
     node
       .append("text")
@@ -71,9 +87,29 @@ const NetworkGraph = ({ nodes, links }) => {
     return () => {
       svgContainer.current.innerHTML = "";
     };
-  });
+  }, [nodes, links]);
 
-  return <div className="w-full" ref={svgContainer}></div>;
+  return (
+    <section className="relative">
+      <div
+        className={
+          "class-more-details inline-block " + (!showTooltip && "hidden")
+        }
+      >
+        <div>
+          <p
+            className="absolute top-0 right-0 px-2 -my-1 text-2xl cursor-pointer"
+            onClick={() => setShowTooltip(false)}
+          >
+            &times;
+          </p>
+          <ClassCard {...selectedClass} />
+        </div>
+      </div>
+
+      <div className="w-full" ref={svgContainer}></div>
+    </section>
+  );
 };
 
 function drag(simulation) {
