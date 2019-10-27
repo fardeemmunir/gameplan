@@ -23,7 +23,7 @@ const ClassList = () => {
             <div className="text-sm meta relative">
               <span className="cursor-pointer">
                 {classInfo.difficulty} – 
-                {classInfo.quarterPref.map(name => name[0]).join()}
+                {classInfo.quarterPref.map(name => name[0]).join("")}
               </span>
 
               <div className="bg-black  absolute meta__tooltip text-white border border-gray-800 border-l-4 w-32 p-1 text-xs">
