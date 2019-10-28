@@ -6,7 +6,7 @@ import ClassCard from "./ClassCard";
 import Store from "../lib/store";
 
 const NetworkGraph = ({ nodes, links }) => {
-  const { dispatch } = useContext(Store);
+  const { classList, editClass, dispatch } = useContext(Store);
   const svgContainer = useRef(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [selectedClass, setSelectedClass] = useState({
@@ -15,6 +15,13 @@ const NetworkGraph = ({ nodes, links }) => {
     quarterPref: [],
     difficulty: 0
   });
+
+  useEffect(() => {
+    if (selectedClass.code)
+      setSelectedClass(
+        classList.find(({ code }) => code === selectedClass.code)
+      );
+  }, [editClass]);
 
   useEffect(() => {
     const width = 1000;
@@ -83,9 +90,14 @@ const NetworkGraph = ({ nodes, links }) => {
       .attr("x", -8)
       .attr("y", -8)
       .on("click", d => {
-        console.log(d);
         setShowTooltip(true);
         setSelectedClass(d);
+        dispatch({
+          type: "EDIT_CLASS",
+          payload: {
+            classCode: d.code
+          }
+        });
       });
 
     node
