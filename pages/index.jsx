@@ -7,24 +7,22 @@ import "../styles/main.css";
 import AddClassForm from "../components/AddClassForm";
 
 import Store, { StoreProvider } from "../lib/store";
+import Meta from "../components/Meta";
 import Graph from "../components/graph";
 
 const Home = () => {
   return (
     <StoreProvider>
-      <main>
+      <main className="container">
         <Head>
           <title>Gameplan – Design Wonderful Semesters</title>
           <link rel="shortcut icon" href="/favicon.png" />
         </Head>
 
         <Header />
-
-        <div className="container">
-          <AddClassForm />
-          <div className="flex justify-center">{/* <ClassList /> */}</div>
-          <Graph />
-        </div>
+        <AddClassForm />
+        <Meta />
+        <Graph />
       </main>
     </StoreProvider>
   );
