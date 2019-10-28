@@ -45,7 +45,7 @@ const NetworkGraph = ({ nodes, links }) => {
       .select(svgContainer.current)
       .append("svg")
       // @ts-ignore
-      .attr("viewBox", [-width / 2, -height / 4, width, height]);
+      .attr("viewBox", [-width / 2, -height / 3, width, height]);
 
     d3.select(svgContainer.current)
       .select("svg")

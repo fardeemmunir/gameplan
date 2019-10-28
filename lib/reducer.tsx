@@ -10,8 +10,6 @@ interface EditClassPayload {
 }
 
 function reducer(state = initialState, action: ActionInterface) {
-  console.log(action);
-
   switch (action.type) {
     case "ADD_CLASS":
       const classList = Array.from(state.classList);
