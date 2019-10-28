@@ -1,10 +1,12 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import * as d3 from "d3";
 
 import color from "../lib/difficultyToColor";
 import ClassCard from "./ClassCard";
+import Store from "../lib/store";
 
 const NetworkGraph = ({ nodes, links }) => {
+  const { dispatch } = useContext(Store);
   const svgContainer = useRef(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [selectedClass, setSelectedClass] = useState({
@@ -118,7 +120,12 @@ const NetworkGraph = ({ nodes, links }) => {
         <div>
           <p
             className="absolute top-0 right-0 px-2 -my-1 text-2xl cursor-pointer"
-            onClick={() => setShowTooltip(false)}
+            onClick={() => {
+              dispatch({
+                type: "FINISH_EDITING_CLASS"
+              });
+              setShowTooltip(false);
+            }}
           >
             &times;
           </p>

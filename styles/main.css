@@ -37,6 +37,12 @@ body {
   @apply cursor-pointer bg-blue-500 text-white border border-blue-500 uppercase text-xs rounded py-3 px-4 mb-3 leading-none font-bold tracking-widest;
 }
 
+.form__submit--danger {
+  @apply form__submit;
+  @apply bg-red-600;
+  @apply border-red-600;
+}
+
 .form__submit:focus {
   @apply outline-none;
 }

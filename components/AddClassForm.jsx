@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import CreatableSelect from "react-select/creatable";
 import { colors } from "tailwindcss/defaultTheme";
 import Store from "../lib/store";
@@ -21,8 +21,32 @@ const AddClassForm = () => {
   const [prereqs, setPrereqs] = useState([]);
   const [difficulty, setDifficulty] = useState(1);
   const [quarterPref, setQuarterPref] = useState([]);
+  const [isEditingClass, setIsEditingClass] = useState(false);
 
-  const { classList, dispatch } = useContext(Store);
+  const { classList, editClass, dispatch } = useContext(Store);
+
+  useEffect(() => {
+    if (editClass.trim() === "") {
+      setIsEditingClass(false);
+      return clearForm();
+    }
+
+    const selectedClass = classList.find(({ code }) => code === editClass);
+    setCode(selectedClass.code);
+    setName(selectedClass.name);
+    setPrereqs(selectedClass.prereqs);
+    setDifficulty(selectedClass.difficulty);
+    setQuarterPref(selectedClass.quarterPref);
+    setIsEditingClass(true);
+  }, [editClass]);
+
+  function clearForm() {
+    setCode("");
+    setName("");
+    setPrereqs([]);
+    setDifficulty(1);
+    setQuarterPref([]);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -31,11 +55,7 @@ const AddClassForm = () => {
       type: "ADD_CLASS",
       payload: { code, name, prereqs, difficulty, quarterPref }
     });
-    setCode("");
-    setName("");
-    setPrereqs([]);
-    setDifficulty(1);
-    setQuarterPref([]);
+    clearForm();
   }
 
   function handleQuarterPrefChange(e) {
@@ -106,6 +126,10 @@ const AddClassForm = () => {
               isMulti
               options={prereqOptions}
               placeholder=""
+              value={prereqs.map(code => ({
+                value: code,
+                label: code
+              }))}
               onChange={selectedItems =>
                 // @ts-ignore
                 setPrereqs((selectedItems || []).map(({ value }) => value))
@@ -161,14 +185,24 @@ const AddClassForm = () => {
             </p>
           </div>
 
-          <div className="w-full mt-5">
+          <div className={"mt-5 " + (isEditingClass ? "w-1/2" : "w-full")}>
             <label className="form__label">&nbsp;</label>
             <input
               className="form__submit w-full"
               type="submit"
-              value="Add Class"
+              value={isEditingClass ? "Update Class" : "Add Class"}
             />
           </div>
+          {isEditingClass && (
+            <div className="w-1/2 pl-3 mt-5">
+              <label className="form__label">&nbsp;</label>
+              <input
+                className="w-full form__submit--danger"
+                type="submit"
+                value="Remove Class"
+              />
+            </div>
+          )}
         </div>
       </div>
     </form>
