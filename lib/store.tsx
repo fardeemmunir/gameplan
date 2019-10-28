@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 
 import reducer from "./reducer";
 
@@ -38,7 +38,7 @@ export const initialState = {
       prereqs: ["ES_APPM 252-1"]
     },
     {
-      code: "COMP_SCI 101",
+      code: "COMP_SCI 111",
       name: "Intro to Programming",
       quarterPref: ["FALL"],
       difficulty: 1,
@@ -47,8 +47,27 @@ export const initialState = {
   ]
 };
 
+const localStorageKey = "GAMEPLAN.NU_CLASSLIST";
+
 export const StoreProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState, () => {
+    if (typeof localStorage !== "undefined") {
+      const classList =
+        JSON.parse(localStorage.getItem(localStorageKey)) ||
+        initialState.classList;
+
+      return {
+        ...initialState,
+        classList
+      };
+    } else {
+      return initialState;
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(localStorageKey, JSON.stringify(state.classList));
+  }, [state]);
 
   return (
     <Store.Provider value={{ ...state, dispatch }}>{children}</Store.Provider>
