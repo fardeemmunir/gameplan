@@ -46,6 +46,7 @@ const AddClassForm = () => {
     setPrereqs([]);
     setDifficulty(1);
     setQuarterPref([]);
+    setIsEditingClass(false);
   }
 
   function handleSubmit(e) {
@@ -54,6 +55,9 @@ const AddClassForm = () => {
     dispatch({
       type: "ADD_CLASS",
       payload: { code, name, prereqs, difficulty, quarterPref }
+    });
+    dispatch({
+      type: "FINISH_EDITING_CLASS"
     });
     clearForm();
   }
@@ -82,7 +86,7 @@ const AddClassForm = () => {
     >
       <div className="w-1/5 pl-4 py-4 bg-right-bottom bg-no-repeat add-class-form__title">
         <h1 className="text-4xl mt-6">
-          Add <br /> Classes
+          {isEditingClass ? "Edit" : "Add"} <br /> Class
         </h1>
       </div>
 
