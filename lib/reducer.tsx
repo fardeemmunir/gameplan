@@ -1,7 +1,7 @@
 import { initialState, ClassInfoInterface } from "./store";
 
 interface ActionInterface {
-  type: "ADD_CLASS" | "EDIT_CLASS" | "FINISH_EDITING_CLASS";
+  type: "ADD_CLASS" | "EDIT_CLASS" | "FINISH_EDITING_CLASS" | "REMOVE_CLASS";
   payload: ClassInfoInterface & EditClassPayload;
 }
 
@@ -38,6 +38,20 @@ function reducer(state = initialState, action: ActionInterface) {
         ...state,
         editClass: ""
       };
+    case "REMOVE_CLASS": {
+      const classList = Array.from(state.classList);
+      const index = classList.findIndex(
+        ({ code }) => code === action.payload.classCode
+      );
+
+      classList.splice(index, 1);
+      console.log(classList);
+      return {
+        ...state,
+        classList,
+        editClass: ""
+      };
+    }
     default:
       return state;
   }

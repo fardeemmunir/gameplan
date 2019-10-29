@@ -17,10 +17,13 @@ const NetworkGraph = ({ nodes, links }) => {
   });
 
   useEffect(() => {
-    if (selectedClass.code)
+    if (selectedClass.code && editClass !== "")
       setSelectedClass(
         classList.find(({ code }) => code === selectedClass.code)
       );
+    if (editClass === "") {
+      setShowTooltip(false);
+    }
   }, [editClass]);
 
   useEffect(() => {

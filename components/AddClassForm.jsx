@@ -202,8 +202,16 @@ const AddClassForm = () => {
               <label className="form__label">&nbsp;</label>
               <input
                 className="w-full form__submit--danger"
-                type="submit"
+                type="button"
                 value="Remove Class"
+                onClick={() => {
+                  dispatch({
+                    type: "REMOVE_CLASS",
+                    payload: {
+                      classCode: code
+                    }
+                  });
+                }}
               />
             </div>
           )}
