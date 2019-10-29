@@ -2,8 +2,10 @@ import React from "react";
 
 const years = ["Freshman", "Sophmore", "Junior", "Senior"];
 const quarters = ["Fall", "Winter", "Spring"];
-const yearsAndQuarters = years.map(year => {
-  return quarters.map(quarter => ({ year, quarter }));
+const yearsAndQuarters = [];
+
+years.forEach(year => {
+  return quarters.forEach(quarter => yearsAndQuarters.push({ year, quarter }));
 });
 
 const Schedule = () => {
@@ -13,7 +15,7 @@ const Schedule = () => {
 
       <div className="p-4 w-full rounded bg-white text-black">
         <div className="flex flex-wrap -mx-2">
-          {yearsAndQuarters.flat().map(({ year, quarter }) => (
+          {yearsAndQuarters.map(({ year, quarter }) => (
             <div className="w-1/3 px-2 mb-2">
               <div className="border border-gray-200 rounded h-64 p-2">
                 <h1 className="text-sm uppercase font-bold tracking-widest">
