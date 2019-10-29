@@ -97,12 +97,13 @@ const AddClassForm = () => {
               Class ###
             </label>
             <input
-              className="form__input"
+              className={"form__input " + (isEditingClass && "opacity-75")}
               id="class-number"
               type="text"
               required
               value={code}
               onChange={e => setCode(e.target.value)}
+              disabled={isEditingClass}
             />
             <p className="text-gray-600 text-xs italic">Ex: ELEC_ENG 395</p>
           </div>
