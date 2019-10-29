@@ -9,6 +9,7 @@ import AddClassForm from "../components/AddClassForm";
 import Store, { StoreProvider } from "../lib/store";
 import Meta from "../components/Meta";
 import Graph from "../components/graph";
+import Schedule from "../components/Schedule";
 
 const Home = () => {
   return (
@@ -23,6 +24,7 @@ const Home = () => {
         <AddClassForm />
         <Meta />
         <Graph />
+        <Schedule />
       </main>
     </StoreProvider>
   );
