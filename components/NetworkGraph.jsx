@@ -28,7 +28,7 @@ const NetworkGraph = ({ nodes, links }) => {
 
   useEffect(() => {
     const width = 1000;
-    const height = 700;
+    const height = 900;
 
     const simulation = d3
       .forceSimulation(nodes)
@@ -48,7 +48,7 @@ const NetworkGraph = ({ nodes, links }) => {
       .select(svgContainer.current)
       .append("svg")
       // @ts-ignore
-      .attr("viewBox", [-width / 2, -height / 3, width, height]);
+      .attr("viewBox", [-width / 2, -height / 2, width, height]);
 
     d3.select(svgContainer.current)
       .select("svg")
