@@ -17,11 +17,24 @@ function reducer(state = initialState, action: ActionInterface) {
         ({ code }) => code === action.payload.code
       );
 
+      action.payload.prereqs
+        .filter(code => {
+          return !classList.map(({ code }) => code).includes(code);
+        })
+        .forEach(code => {
+          classList.push({
+            code,
+            name: "",
+            quarterPref: [],
+            difficulty: 0,
+            prereqs: []
+          });
+        });
+
       if (docIndex !== -1)
         // This class exists so remove the current defintiion
         // and update it with the new payload
         classList[docIndex] = action.payload;
-      // classList.splice(docIndex, 1, action.payload);
       else classList.push(action.payload);
 
       return {
