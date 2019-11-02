@@ -11,7 +11,7 @@ interface EditClassPayload {
 
 function reducer(state = initialState, action: ActionInterface) {
   switch (action.type) {
-    case "ADD_CLASS":
+    case "ADD_CLASS": {
       const classList = Array.from(state.classList);
       const docIndex = classList.findIndex(
         ({ code }) => code === action.payload.code
@@ -28,6 +28,7 @@ function reducer(state = initialState, action: ActionInterface) {
         ...state,
         classList
       };
+    }
     case "EDIT_CLASS":
       return {
         ...state,
