@@ -24,7 +24,6 @@ const Home = () => {
         <AddClassForm />
         <Meta />
         <Graph />
-        <Schedule />
       </main>
     </StoreProvider>
   );
