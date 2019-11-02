@@ -13,7 +13,7 @@ function difficultyToColor(difficulty: number) {
     case 5:
       return colors[4];
     default:
-      return "#eee";
+      return "#636363";
   }
 }
 
