@@ -14,15 +14,17 @@ import Schedule from "../components/Schedule";
 const Home = () => {
   return (
     <StoreProvider>
-      <main className="container">
+      <main>
         <Head>
           <title>Gameplan – Design Wonderful Semesters</title>
           <link rel="shortcut icon" href="/favicon.png" />
         </Head>
 
-        <Header />
-        <AddClassForm />
-        <Meta />
+        <div className="container">
+          <Header />
+          <AddClassForm />
+          <Meta />
+        </div>
         <Graph />
       </main>
     </StoreProvider>
