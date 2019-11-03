@@ -17,6 +17,8 @@ function reducer(state = initialState, action: ActionInterface) {
         ({ code }) => code === action.payload.code
       );
 
+      // Find all the classes that don't exist in our list
+      // Add them to the list
       action.payload.prereqs
         .filter(code => {
           return !classList.map(({ code }) => code).includes(code);
