@@ -25,7 +25,10 @@ const Home = () => {
           <AddClassForm />
           <Meta />
         </div>
-        <Graph />
+
+        <div className="w-full px-8">
+          <Graph />
+        </div>
       </main>
     </StoreProvider>
   );
