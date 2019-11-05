@@ -27,8 +27,8 @@ const NetworkGraph = ({ nodes, links }) => {
   }, [editClass]);
 
   useEffect(() => {
-    const width = 1000;
-    const height = 900;
+    const width = window.innerWidth - 100;
+    const height = nodes.length > 15 ? 1100 : 900;
 
     const simulation = d3
       .forceSimulation(nodes)

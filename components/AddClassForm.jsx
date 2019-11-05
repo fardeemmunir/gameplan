@@ -190,7 +190,7 @@ const AddClassForm = () => {
             </p>
           </div>
 
-          <div className={"mt-5 " + (isEditingClass ? "w-1/2" : "w-full")}>
+          <div className="mt-5 flex-1">
             <label className="form__label">&nbsp;</label>
             <input
               className="form__submit w-full"
@@ -198,24 +198,26 @@ const AddClassForm = () => {
               value={isEditingClass ? "Update Class" : "Add Class"}
             />
           </div>
-          {isEditingClass && (
-            <div className="w-1/2 pl-3 mt-5">
-              <label className="form__label">&nbsp;</label>
-              <input
-                className="w-full form__submit--danger"
-                type="button"
-                value="Remove Class"
-                onClick={() => {
-                  dispatch({
-                    type: "REMOVE_CLASS",
-                    payload: {
-                      classCode: code
-                    }
-                  });
-                }}
-              />
-            </div>
-          )}
+          {isEditingClass &&
+            classList.filter(({ prereqs }) => prereqs.includes(code)).length ===
+              0 && (
+              <div className="w-1/2 pl-3 mt-5">
+                <label className="form__label">&nbsp;</label>
+                <input
+                  className="w-full form__submit--danger"
+                  type="button"
+                  value="Remove Class"
+                  onClick={() => {
+                    dispatch({
+                      type: "REMOVE_CLASS",
+                      payload: {
+                        classCode: code
+                      }
+                    });
+                  }}
+                />
+              </div>
+            )}
         </div>
       </div>
     </form>
