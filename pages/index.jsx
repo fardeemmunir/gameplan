@@ -26,9 +26,7 @@ const Home = () => {
           <Meta />
         </div>
 
-        <div className="w-full px-8">
-          <Graph />
-        </div>
+        <Graph />
       </main>
     </StoreProvider>
   );

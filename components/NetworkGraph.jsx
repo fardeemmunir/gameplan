@@ -127,7 +127,7 @@ const NetworkGraph = ({ nodes, links }) => {
   }, [nodes, links]);
 
   return (
-    <section className="relative">
+    <section className="relative w-full px-8">
       <div
         className={
           "class-more-details inline-block " + (!showTooltip && "hidden")
