@@ -107,7 +107,7 @@ const AddClassForm = () => {
               onChange={e => setCode(e.target.value)}
               disabled={isEditingClass}
             />
-            <p className="text-gray-600 text-xs italic">Ex: ELEC_ENG 395</p>
+            <p className="text-gray-600 text-xs italic">Ex: ELEC_ENG 302</p>
           </div>
 
           <div className="w-2/3">
@@ -122,6 +122,9 @@ const AddClassForm = () => {
               value={name}
               onChange={e => setName(e.target.value)}
             />
+            <p className="text-gray-600 text-xs italic">
+              Ex: Probabilistic Systems
+            </p>
           </div>
 
           <div className="w-full mt-5">
