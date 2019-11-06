@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import Store from "../lib/store";
 import difficultyToColor from "../lib/difficultyToColor";
 
-const ClassCard = ({ code, name, difficulty, quarterPref }) => {
+const ClassCard = ({ code, name, difficulty, quarterPref, interest }) => {
   const { dispatch } = useContext(Store);
 
   return (
@@ -19,6 +19,10 @@ const ClassCard = ({ code, name, difficulty, quarterPref }) => {
       </header>
 
       <footer className="text-sm meta relative">
+        <p>
+          <span className="opacity-75">Interest: </span>
+          {interest} / 5
+        </p>
         <p>
           <span className="opacity-75">Difficulty: </span>
           {difficulty} / 5
