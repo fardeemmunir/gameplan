@@ -20,6 +20,7 @@ const AddClassForm = () => {
   const [name, setName] = useState("");
   const [prereqs, setPrereqs] = useState([]);
   const [difficulty, setDifficulty] = useState(1);
+  const [interest, setInterest] = useState(1);
   const [quarterPref, setQuarterPref] = useState([]);
   const [isEditingClass, setIsEditingClass] = useState(false);
 
@@ -146,17 +147,30 @@ const AddClassForm = () => {
 
       <div className="w-2/5 px-4 py-4">
         <div className="flex flex-wrap">
-          <div className="w-1/2">
+          <div className="w-1/4">
             <label className="form__label">Difficulty</label>
             <input
               className="form__input"
-              id="grid-password"
               type="number"
               min="1"
               max="5"
               required
               value={difficulty}
               onChange={e => setDifficulty(Number(e.target.value))}
+            />
+            <p className="text-gray-600 text-xs italic">Between 1-5 </p>
+          </div>
+
+          <div className="w-1/4 pl-3">
+            <label className="form__label">Interest</label>
+            <input
+              className="form__input"
+              type="number"
+              min="1"
+              max="5"
+              required
+              value={interest}
+              onChange={e => setInterest(Number(e.target.value))}
             />
             <p className="text-gray-600 text-xs italic">Between 1-5 </p>
           </div>
