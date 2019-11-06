@@ -13,6 +13,7 @@ const NetworkGraph = ({ nodes, links }) => {
     code: "",
     name: "",
     quarterPref: [],
+    interest: 1,
     difficulty: 0
   });
 

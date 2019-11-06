@@ -13,6 +13,7 @@ export interface ClassInfoInterface {
   name: string;
   prereqs: string[];
   difficulty: number;
+  interest: number;
   quarterPref: string[];
 }
 
@@ -27,6 +28,7 @@ export const initialState = {
       code: "ES_APPM 252-1",
       name: "Multivariable Differential Calculus",
       quarterPref: ["FALL"],
+      interest: 1,
       difficulty: 3,
       prereqs: []
     },
@@ -35,6 +37,7 @@ export const initialState = {
       name: "Multivariable Integral Calculus",
       quarterPref: ["WINTER"],
       difficulty: 4,
+      interest: 1,
       prereqs: ["ES_APPM 252-1"]
     },
     {
@@ -42,6 +45,7 @@ export const initialState = {
       name: "Intro to Programming",
       quarterPref: ["FALL"],
       difficulty: 1,
+      interest: 1,
       prereqs: ["ES_APPM 252-1"]
     }
   ]
