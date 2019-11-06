@@ -17,6 +17,8 @@ const NetworkGraph = ({ nodes, links }) => {
     difficulty: 0
   });
 
+  const height = nodes.length > 15 ? 1100 : 900;
+
   useEffect(() => {
     if (selectedClass.code && editClass !== "")
       setSelectedClass(
@@ -29,7 +31,6 @@ const NetworkGraph = ({ nodes, links }) => {
 
   useEffect(() => {
     const width = window.innerWidth - 100;
-    const height = nodes.length > 15 ? 1100 : 900;
 
     const simulation = d3
       .forceSimulation(nodes)
@@ -127,26 +128,17 @@ const NetworkGraph = ({ nodes, links }) => {
   }, [nodes, links]);
 
   return (
-    <section className="relative w-full px-8">
-      <div
-        className={
-          "class-more-details inline-block " + (!showTooltip && "hidden")
-        }
-      >
-        <div>
-          <p
-            className="absolute top-0 right-0 px-2 -my-1 text-2xl cursor-pointer"
-            onClick={() => {
-              dispatch({
-                type: "FINISH_EDITING_CLASS"
-              });
-              setShowTooltip(false);
-            }}
-          >
-            &times;
-          </p>
-          <ClassCard {...selectedClass} />
-        </div>
+    <section className="relative w-full px-8" style={{ height }}>
+      <div className={"class-more-details " + (!showTooltip && "hidden")}>
+        <ClassCard
+          {...selectedClass}
+          closeCard={() => {
+            dispatch({
+              type: "FINISH_EDITING_CLASS"
+            });
+            setShowTooltip(false);
+          }}
+        />
       </div>
 
       <div className="w-full" ref={svgContainer}></div>

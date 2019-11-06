@@ -74,14 +74,8 @@ text {
 }
 
 .class-more-details {
-  position: absolute;
-  top: 4rem;
-  height: 430px;
-}
-
-.class-more-details > div {
-  position: sticky;
-  top: 2rem;
+  position: fixed;
+  bottom: 2rem;
 }
 
 .leading-zero {

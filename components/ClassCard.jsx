@@ -3,7 +3,14 @@ import React, { useContext } from "react";
 import Store from "../lib/store";
 import difficultyToColor from "../lib/difficultyToColor";
 
-const ClassCard = ({ code, name, difficulty, quarterPref, interest }) => {
+const ClassCard = ({
+  code,
+  name,
+  difficulty,
+  quarterPref,
+  interest,
+  closeCard
+}) => {
   const { dispatch } = useContext(Store);
 
   return (
@@ -13,6 +20,12 @@ const ClassCard = ({ code, name, difficulty, quarterPref, interest }) => {
         backgroundColor: difficultyToColor(difficulty)
       }}
     >
+      <p
+        className="absolute top-0 right-0 px-2 -my-1 text-2xl cursor-pointer"
+        onClick={closeCard}
+      >
+        &times;
+      </p>
       <header className="mb-3">
         <h2 className="font-bold text-xs tracking-widest font-mono">{code}</h2>
         <h1>{name}</h1>
