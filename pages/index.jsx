@@ -6,8 +6,7 @@ import Header from "../components/Header";
 import "../styles/main.css";
 import AddClassForm from "../components/AddClassForm";
 
-import Store, { StoreProvider } from "../lib/store";
-import Meta from "../components/Meta";
+import { StoreProvider } from "../lib/store";
 import Graph from "../components/graph";
 import Schedule from "../components/Schedule";
 
@@ -23,7 +22,6 @@ const Home = () => {
         <div className="container">
           <Header />
           <AddClassForm />
-          <Meta />
         </div>
 
         <Graph />
