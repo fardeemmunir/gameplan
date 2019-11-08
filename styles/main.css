@@ -71,6 +71,15 @@ body {
 
 text {
   fill: white;
+  transition: opacity 0.1s;
+}
+
+.network--is-searched text {
+  opacity: 0.5;
+}
+
+.network--is-searched .searched-item {
+  opacity: 1;
 }
 
 .class-more-details {

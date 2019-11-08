@@ -5,7 +5,7 @@ import color from "../lib/difficultyToColor";
 import ClassCard from "./ClassCard";
 import Store from "../lib/store";
 
-const NetworkGraph = ({ nodes, links }) => {
+const NetworkGraph = ({ nodes, links, isSearching }) => {
   const { classList, editClass, dispatch } = useContext(Store);
   const svgContainer = useRef(null);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -107,7 +107,12 @@ const NetworkGraph = ({ nodes, links }) => {
 
     node
       .append("text")
-      .attr("class", "text-xs text-white")
+      .attr("class", d => {
+        return (
+          "text-green text-xs " +
+          (d.isSearched ? "font-bold searched-item" : "")
+        );
+      })
       .attr("dx", 20)
       .attr("dy", ".45em")
       .text(d => d.code);
@@ -128,7 +133,7 @@ const NetworkGraph = ({ nodes, links }) => {
   }, [nodes, links]);
 
   return (
-    <section className="relative w-full px-8" style={{ height }}>
+    <section className="relative w-full px-8">
       <div className={"class-more-details " + (!showTooltip && "hidden")}>
         <ClassCard
           {...selectedClass}
@@ -141,7 +146,10 @@ const NetworkGraph = ({ nodes, links }) => {
         />
       </div>
 
-      <div className="w-full" ref={svgContainer}></div>
+      <div
+        className={"w-full " + (isSearching && "network--is-searched")}
+        ref={svgContainer}
+      ></div>
     </section>
   );
 };
