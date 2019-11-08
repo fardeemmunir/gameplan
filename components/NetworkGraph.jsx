@@ -134,18 +134,6 @@ const NetworkGraph = ({ nodes, links, isSearching }) => {
 
   return (
     <section className="relative w-full px-8">
-      <div className={"class-more-details " + (!showTooltip && "hidden")}>
-        <ClassCard
-          {...selectedClass}
-          closeCard={() => {
-            dispatch({
-              type: "FINISH_EDITING_CLASS"
-            });
-            setShowTooltip(false);
-          }}
-        />
-      </div>
-
       <div
         className={"w-full " + (isSearching && "network--is-searched")}
         ref={svgContainer}
