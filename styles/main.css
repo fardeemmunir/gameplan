@@ -85,6 +85,7 @@ text {
 .class-more-details {
   position: fixed;
   bottom: 2rem;
+  z-index: 2;
 }
 
 .leading-zero {
