@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+
+import Store from "../lib/store";
 import difficultyToColor from "../lib/difficultyToColor";
 
 const QuarterOverview = ({ difficulty, interest }) => (
@@ -20,6 +22,8 @@ const QuarterOverview = ({ difficulty, interest }) => (
 );
 
 const QuarterCard = ({ classes, year, quarter }) => {
+  const { dispatch } = useContext(Store);
+
   return (
     <div className="w-1/3 px-2 mb-4">
       <div className="border border-gray-200 rounded p-2 bg-white">
@@ -49,11 +53,18 @@ const QuarterCard = ({ classes, year, quarter }) => {
               style={{
                 backgroundColor: difficultyToColor(classInfo.difficulty)
               }}
+              onClick={() => {
+                dispatch({
+                  type: "EDIT_CLASS",
+                  payload: {
+                    classCode: classInfo.code
+                  }
+                });
+              }}
             >
-              <h2 className="font-bold text-xs tracking-widest font-mono">
+              <h2 className="text-xs tracking-widest font-mono">
                 {classInfo.code}
               </h2>
-              <h1 className="text-sm">{classInfo.name}</h1>
             </li>
           ))}
         </ul>
