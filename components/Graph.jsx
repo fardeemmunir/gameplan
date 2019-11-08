@@ -42,7 +42,7 @@ const Graph = () => {
           />
         </div>
 
-        <div>
+        <div className="opacity-75">
           <p>Total Classes: {nodes.length}</p>
         </div>
       </div>
