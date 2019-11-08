@@ -9,6 +9,7 @@ import AddClassForm from "../components/AddClassForm";
 import { StoreProvider } from "../lib/store";
 import Graph from "../components/graph";
 import Schedule from "../components/Schedule";
+import ClassDetails from "../components/ClassDetails";
 
 const Home = () => {
   return (
@@ -24,6 +25,7 @@ const Home = () => {
           <AddClassForm />
         </div>
 
+        <ClassDetails />
         <Graph />
         <Schedule />
       </main>
