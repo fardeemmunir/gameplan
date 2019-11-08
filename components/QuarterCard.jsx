@@ -25,8 +25,8 @@ const QuarterCard = ({ classes, year, quarter }) => {
   const { dispatch } = useContext(Store);
 
   return (
-    <div className="w-1/3 px-2 mb-4">
-      <div className="border border-gray-200 rounded p-2 bg-white">
+    <div className="w-1/3 px-2 mb-4 flex">
+      <div className="w-full rounded p-2 bg-white">
         <div className="flex justify-between">
           <div>
             <h1 className="text-sm uppercase font-bold tracking-widest">
