@@ -102,6 +102,7 @@ const Schedule = () => {
         <div className="flex flex-wrap -mx-2">
           {yearsAndQuarters.map(({ year, quarter }, i) => (
             <QuarterCard
+              key={i}
               year={year}
               quarter={quarter}
               classes={classes.filter(
