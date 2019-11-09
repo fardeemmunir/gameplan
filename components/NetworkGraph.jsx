@@ -42,7 +42,7 @@ const NetworkGraph = ({ nodes, links, isSearching }) => {
           .id(d => d.code)
           .distance(200)
       )
-      .force("charge", d3.forceManyBody().strength(-800))
+      .force("charge", d3.forceManyBody().strength(-1000))
       .force("x", d3.forceX())
       .force("y", d3.forceY());
 
