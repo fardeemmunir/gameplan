@@ -56,7 +56,7 @@ const AddClassForm = () => {
 
     dispatch({
       type: "ADD_CLASS",
-      payload: { code, name, prereqs, difficulty, quarterPref }
+      payload: { code, name, prereqs, difficulty, interest, quarterPref }
     });
     dispatch({
       type: "FINISH_EDITING_CLASS"
