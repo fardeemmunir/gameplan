@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState, useContext } from "react";
 import * as d3 from "d3";
 
 import color from "../lib/difficultyToColor";
-import ClassCard from "./ClassCard";
 import Store from "../lib/store";
 
 const NetworkGraph = ({
