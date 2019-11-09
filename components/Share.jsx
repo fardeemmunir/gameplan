@@ -23,7 +23,7 @@ const Share = () => {
             type="text"
             value="localhost:3000/sHjwKlQ"
             disabled
-            className="w-full bg-gray-300 px-2 py-1 rounded-tl rounded-bl mb-2"
+            className="w-full bg-gray-200 px-2 py-1 rounded-tl rounded-bl mb-2"
           />
 
           <svg
@@ -32,7 +32,7 @@ const Share = () => {
             y="0px"
             viewBox="0 0 100 100"
             fill="#eee"
-            className="bg-gray-300 rounded-tr rounded-br cursor-pointer share-modal--icon"
+            className="bg-gray-200 rounded-tr rounded-br cursor-pointer share-modal--icon"
             style={{
               width: "30px",
               height: "32px"
