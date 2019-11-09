@@ -110,12 +110,3 @@ text {
   z-index: 2;
   transition: opacity 0.2s;
 }
-
-.share-modal--icon {
-  fill: rgba(0, 0, 0, 0.3);
-  transition: fill 0.3s;
-}
-
-.share-modal--icon:hover {
-  fill: rgba(0, 0, 0, 0.5);
-}
