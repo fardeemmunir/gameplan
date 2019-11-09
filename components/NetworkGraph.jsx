@@ -6,28 +6,9 @@ import ClassCard from "./ClassCard";
 import Store from "../lib/store";
 
 const NetworkGraph = ({ nodes, links, isSearching }) => {
-  const { classList, editClass, dispatch } = useContext(Store);
+  const { dispatch } = useContext(Store);
   const svgContainer = useRef(null);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [selectedClass, setSelectedClass] = useState({
-    code: "",
-    name: "",
-    quarterPref: [],
-    interest: 1,
-    difficulty: 0
-  });
-
   const height = nodes.length > 15 ? 1100 : 900;
-
-  useEffect(() => {
-    if (selectedClass.code && editClass !== "")
-      setSelectedClass(
-        classList.find(({ code }) => code === selectedClass.code)
-      );
-    if (editClass === "") {
-      setShowTooltip(false);
-    }
-  }, [editClass]);
 
   useEffect(() => {
     const width = window.innerWidth - 100;
@@ -95,8 +76,6 @@ const NetworkGraph = ({ nodes, links, isSearching }) => {
       .attr("x", -8)
       .attr("y", -8)
       .on("click", d => {
-        setShowTooltip(true);
-        setSelectedClass(d);
         dispatch({
           type: "EDIT_CLASS",
           payload: {
