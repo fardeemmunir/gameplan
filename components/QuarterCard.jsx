@@ -36,12 +36,12 @@ const QuarterCard = ({ classes, year, quarter }) => {
           </div>
 
           <QuarterOverview
-            difficulty={Math.floor(
+            difficulty={(
               classes.reduce((a, b) => a + b.difficulty, 0) / classes.length
-            )}
-            interest={Math.floor(
+            ).toFixed(1)}
+            interest={(
               classes.reduce((a, b) => a + b.interest, 0) / classes.length
-            )}
+            ).toFixed(1)}
           />
         </div>
 
