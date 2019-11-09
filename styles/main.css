@@ -127,10 +127,10 @@ text {
 .range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 1.5em;
-  height: 1.5em;
+  width: 1em;
+  height: 1em;
   background: #2c3e50;
-  border: 0.2em solid #ffffff;
+  border: 0.1em solid #ffffff;
   border-radius: 1.2em;
   cursor: pointer;
 }
@@ -138,20 +138,20 @@ text {
 .range::-moz-range-thumb {
   -moz-appearance: none;
   appearance: none;
-  width: 1.5em;
-  height: 1.5em;
+  width: 1em;
+  height: 1em;
   background: #2c3e50;
-  border: 0.2em solid #ffffff;
+  border: 0.1em solid #ffffff;
   border-radius: 1.2em;
   cursor: pointer;
 }
 
 .range::-ms-thumb {
   appearance: none;
-  width: 1.5em;
-  height: 1.5em;
+  width: 1em;
+  height: 1em;
   background: #2c3e50;
-  border: 0.2em solid #ffffff;
+  border: 0.1em solid #ffffff;
   border-radius: 1.2em;
   cursor: pointer;
 }
