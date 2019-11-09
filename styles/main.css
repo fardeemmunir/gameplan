@@ -34,7 +34,7 @@ body {
 }
 
 .form__submit {
-  @apply cursor-pointer bg-blue-500 text-white border border-blue-500 uppercase text-xs rounded py-3 px-4 mb-3 leading-none font-bold tracking-widest;
+  @apply cursor-pointer bg-blue-500 text-white border border-blue-500 uppercase text-xs rounded py-3 px-4 leading-none font-bold tracking-widest;
 }
 
 .form__submit--danger {
@@ -102,4 +102,20 @@ text {
 
 .text-gigantic {
   font-size: 7rem;
+}
+
+.share-modal {
+  top: 150%;
+  right: 0;
+  z-index: 2;
+  transition: opacity 0.2s;
+}
+
+.share-modal--icon {
+  fill: rgba(0, 0, 0, 0.3);
+  transition: fill 0.3s;
+}
+
+.share-modal--icon:hover {
+  fill: rgba(0, 0, 0, 0.5);
 }

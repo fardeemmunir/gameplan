@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import Store, { ClassInfoInterface } from "../lib/store";
 import makeLinks from "../lib/makeLinks";
 import NetworkGraph from "./NetworkGraph";
+import Share from "./Share";
 
 const Graph = () => {
   const { classList: nodes } = useContext(Store);
@@ -42,8 +43,9 @@ const Graph = () => {
           />
         </div>
 
-        <div className="opacity-75">
-          <p>Total Classes: {nodes.length}</p>
+        <div className="flex items-center">
+          <p className="opacity-75 mr-4">Total Classes: {nodes.length}</p>
+          <Share />
         </div>
       </div>
       <NetworkGraph
