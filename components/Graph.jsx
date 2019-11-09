@@ -12,6 +12,8 @@ const Graph = () => {
   );
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [linkDistance, setLinkDistance] = useState(200);
+  const [nodeDistance, setNodeDistance] = useState(1000);
 
   /**
    * @param {ClassInfoInterface[]} nodes
@@ -33,14 +35,36 @@ const Graph = () => {
   return (
     <>
       <div className="w-full text-center mt-8 flex justify-between items-center container">
-        <div>
+        <div className="flex items-center">
           <input
-            className="bg-transparent focus:outline-none border border-gray-300 rounded py-2 px-4 block w-full appearance-none leading-normal"
+            className="bg-transparent focus:outline-none border border-gray-300 rounded py-2 px-4 mr-4 block w-full appearance-none leading-normal"
             type="search"
             placeholder="Search Classes"
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value.trim())}
           />
+          <div className="text-left mr-4">
+            <h1 className="text-sm">Link Distance</h1>
+            <input
+              type="range"
+              className="range"
+              min="100"
+              max="500"
+              value={linkDistance}
+              onChange={e => setLinkDistance(Number(e.target.value))}
+            />
+          </div>
+          <div className="text-left">
+            <h1 className="text-sm">Node Distance</h1>
+            <input
+              type="range"
+              className="range"
+              min="500"
+              max="1500"
+              value={nodeDistance}
+              onChange={e => setNodeDistance(Number(e.target.value))}
+            />
+          </div>
         </div>
 
         <div className="flex items-center">
@@ -51,6 +75,8 @@ const Graph = () => {
       <NetworkGraph
         nodes={mapNodesToSearchTerm(nodes)}
         links={links}
+        linkDistance={linkDistance}
+        nodeDistance={nodeDistance}
         isSearching={!!searchTerm}
       />
     </>

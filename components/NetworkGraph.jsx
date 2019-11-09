@@ -5,7 +5,13 @@ import color from "../lib/difficultyToColor";
 import ClassCard from "./ClassCard";
 import Store from "../lib/store";
 
-const NetworkGraph = ({ nodes, links, isSearching }) => {
+const NetworkGraph = ({
+  nodes,
+  links,
+  isSearching,
+  linkDistance,
+  nodeDistance
+}) => {
   const { dispatch } = useContext(Store);
   const svgContainer = useRef(null);
   const height = nodes.length > 15 ? 1100 : 900;
@@ -21,9 +27,9 @@ const NetworkGraph = ({ nodes, links, isSearching }) => {
           .forceLink(links)
           // @ts-ignore
           .id(d => d.code)
-          .distance(200)
+          .distance(linkDistance)
       )
-      .force("charge", d3.forceManyBody().strength(-1000))
+      .force("charge", d3.forceManyBody().strength(nodeDistance * -1))
       .force("x", d3.forceX())
       .force("y", d3.forceY());
 
@@ -109,7 +115,7 @@ const NetworkGraph = ({ nodes, links, isSearching }) => {
     return () => {
       svgContainer.current.innerHTML = "";
     };
-  }, [nodes, links]);
+  }, [nodes, links, linkDistance, nodeDistance]);
 
   return (
     <section className="relative w-full px-8">
