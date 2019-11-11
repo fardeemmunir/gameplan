@@ -32,7 +32,9 @@ const QuarterCard = ({ classes, year, quarter }) => {
             <h1 className="text-sm uppercase font-bold tracking-widest">
               {year}
             </h1>
-            <h1 className="text-3xl leading-none mb-4">{quarter}</h1>
+            <h1 className="text-3xl leading-none mb-4 capitalize">
+              {quarter.toLowerCase()}
+            </h1>
           </div>
 
           <QuarterOverview
