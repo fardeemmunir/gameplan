@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import difficultyToColor from "../lib/difficultyToColor";
 import QuarterCard from "./QuarterCard";
 import Store from "../lib/store";
 
