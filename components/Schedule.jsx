@@ -1,4 +1,4 @@
-import React, { useContext, useState, useLayoutEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import QuarterCard from "./QuarterCard";
 import Store from "../lib/store";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -19,7 +19,7 @@ const Schedule = () => {
   });
   const { classList } = useContext(Store);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setSchedule({
       FRESHMAN_FALL: ["ES_APPM 252-1"],
       FRESHMAN_WINTER: ["ES_APPM 252-2"],
