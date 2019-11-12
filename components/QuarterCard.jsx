@@ -22,14 +22,11 @@ const QuarterCard = ({ classes, year, quarter }) => (
               </h1>
             </div>
 
-            <QuarterOverview
-              difficulty={(
-                classes.reduce((a, b) => a + b.difficulty, 0) / classes.length
-              ).toFixed(1)}
-              interest={(
-                classes.reduce((a, b) => a + b.interest, 0) / classes.length
-              ).toFixed(1)}
-            />
+        <QuarterOverview
+          difficulty={classes.reduce((a, b) => a + b.difficulty, 0)}
+          interest={classes.reduce((a, b) => a + b.interest, 0)}
+        />
+      </div>
           </div>
 
           <ScheduleList classes={classes} />
@@ -46,14 +43,14 @@ const QuarterOverview = ({ difficulty, interest }) => (
       <div className="p-2 font-mono text-sm font-bold text-white rounded bg-indigo-700 inline-block leading-none">
         {interest}
       </div>
-      <p className="text-xs">Avg. Interest</p>
+      <p className="text-xs">Total Interest</p>
     </div>
 
     <div className="text-right mb-4">
       <div className="p-2 font-mono text-sm font-bold text-white rounded bg-red-700 inline-block leading-none">
         {difficulty}
       </div>
-      <p className="text-xs">Avg. Difficulty</p>
+      <p className="text-xs">Total Difficulty</p>
     </div>
   </div>
 );
