@@ -10,11 +10,7 @@ const ScheduleList = ({ classes }) => {
   return (
     <ul>
       {classes.map((classInfo, i) => (
-        <Draggable
-          key={classInfo.name}
-          draggableId={classInfo.code.replace(" ", "-")}
-          index={i}
-        >
+        <Draggable key={classInfo.name} draggableId={classInfo.code} index={i}>
           {provided => (
             <div
               {...provided.draggableProps}
