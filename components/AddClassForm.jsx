@@ -152,10 +152,13 @@ const AddClassForm = () => {
       <div className="w-2/5 px-4 py-4">
         <div className="flex flex-wrap">
           <div className="w-1/4">
-            <label className="form__label">Difficulty</label>
+            <label className="form__label" htmlFor="difficulty">
+              Difficulty
+            </label>
             <input
               className="form__input"
               type="number"
+              id="difficulty"
               min="1"
               max="5"
               required
@@ -166,10 +169,13 @@ const AddClassForm = () => {
           </div>
 
           <div className="w-1/4 pl-3">
-            <label className="form__label">Interest</label>
+            <label className="form__label" htmlFor="interest">
+              Interest
+            </label>
             <input
               className="form__input"
               type="number"
+              id="interest"
               min="1"
               max="5"
               required
