@@ -121,6 +121,7 @@ const NetworkGraph = ({
       <div
         className={"w-full " + (isSearching && "network--is-searched")}
         ref={svgContainer}
+        style={{ minHeight: height }}
       ></div>
     </section>
   );
