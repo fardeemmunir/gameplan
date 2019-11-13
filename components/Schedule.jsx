@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
-import difficultyToColor from "../lib/difficultyToColor";
+import React, { useContext, useState, useEffect } from "react";
 import QuarterCard from "./QuarterCard";
 import Store from "../lib/store";
+import { DragDropContext } from "react-beautiful-dnd";
 
 const years = ["FRESHMAN" /* , "Sophmore", "Junior", "Senior" */];
 const quarters = ["FALL", "WINTER", "SPRING"];
@@ -11,37 +11,63 @@ years.forEach(year => {
   return quarters.forEach(quarter => yearsAndQuarters.push({ year, quarter }));
 });
 
-const schedule = {
-  FRESHMAN_FALL: [
-    "ES_APPM 252-1",
-    "COMP_SCI 111",
-    "GEN_ENG 205-1",
-    "DSGN 106-1"
-  ],
-  FRESHMAN_WINTER: ["GEN_ENG 205-2", "COMP_SCI 212"],
-  FRESHMAN_SPRING: ["GEN_ENG 205-3", "DSGN 106-2"]
-};
-
 const Schedule = () => {
+  const [schedule, setSchedule] = useState({
+    FRESHMAN_FALL: [],
+    FRESHMAN_WINTER: [],
+    FRESHMAN_SPRING: []
+  });
   const { classList } = useContext(Store);
+
+  useEffect(() => {
+    setSchedule({
+      FRESHMAN_FALL: ["ES_APPM 252-1"],
+      FRESHMAN_WINTER: ["ES_APPM 252-2"],
+      FRESHMAN_SPRING: ["COMP_SCI 111"]
+    });
+  }, []);
+
+  function updateSchedule(result) {
+    console.log(result);
+    // Remove item from source
+    const newSource = Array.from(schedule[result.source.droppableId]);
+    newSource.splice(result.source.index, 1);
+
+    const newDest = Array.from(schedule[result.destination.droppableId]);
+    if (result.destination.droppableId === result.source.droppableId) {
+      newDest.splice(result.source.index, 1);
+    }
+    newDest.splice(result.destination.index, 0, result.draggableId);
+
+    setSchedule(
+      Object.assign({}, schedule, {
+        [result.source.droppableId]: newSource,
+        [result.destination.droppableId]: newDest
+      })
+    );
+
+    // Add item to destination
+  }
 
   return (
     <div className="w-full mb-10">
       <p className="text-center text-gigantic opacity-25 font-bold">Schedule</p>
 
       <div className="p-4 w-full max-w-3xl mx-auto -mt-16 rounded text-black">
-        <div className="flex flex-wrap -mx-2">
-          {yearsAndQuarters.map(({ year, quarter }, i) => (
-            <QuarterCard
-              key={i}
-              year={year}
-              quarter={quarter}
-              classes={classList.filter(({ code }) =>
-                schedule[year + "_" + quarter].includes(code)
-              )}
-            />
-          ))}
-        </div>
+        <DragDropContext onDragEnd={updateSchedule}>
+          <div className="flex flex-wrap -mx-2">
+            {yearsAndQuarters.map(({ year, quarter }, i) => (
+              <QuarterCard
+                key={i}
+                year={year}
+                quarter={quarter}
+                classes={schedule[year + "_" + quarter].map(code =>
+                  classList.find(info => info.code === code)
+                )}
+              />
+            ))}
+          </div>
+        </DragDropContext>
       </div>
     </div>
   );

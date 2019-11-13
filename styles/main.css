@@ -155,3 +155,7 @@ text {
   border-radius: 1.2em;
   cursor: pointer;
 }
+
+.min-h-24 {
+  min-height: 6rem;
+}
