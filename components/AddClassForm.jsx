@@ -11,7 +11,7 @@ const multiSelectStyles = {
   }),
   multiValue: provided => ({
     ...provided,
-    backgroundColor: "transparent"
+    backgroundColor: colors.gray[300]
   })
 };
 
