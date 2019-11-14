@@ -12,25 +12,30 @@ years.forEach(year => {
 });
 
 const Schedule = () => {
+  const { classList, schedule, dispatch } = useContext(Store);
 
   function updateSchedule(result) {
-    console.log(result);
     // Remove item from source
     const newSource = Array.from(schedule[result.source.droppableId]);
     newSource.splice(result.source.index, 1);
 
+    // Add item to destination
     const newDest = Array.from(schedule[result.destination.droppableId]);
     if (result.destination.droppableId === result.source.droppableId) {
       newDest.splice(result.source.index, 1);
     }
     newDest.splice(result.destination.index, 0, result.draggableId);
 
-    setSchedule(
-      Object.assign({}, schedule, {
-        [result.source.droppableId]: newSource,
-        [result.destination.droppableId]: newDest
-      })
-    );
+    dispatch({
+      type: "UPDATE_SCHEDULE",
+      payload: {
+        updatedSchedule: Object.assign({}, schedule, {
+          [result.source.droppableId]: newSource,
+          [result.destination.droppableId]: newDest
+        })
+      }
+    });
+  }
 
     // Add item to destination
   }
