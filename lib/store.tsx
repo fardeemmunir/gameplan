@@ -57,7 +57,7 @@ export const initialState = {
   schedule: {}
 };
 
-const localStorageKey = "GAMEPLAN.NU_CLASSLIST";
+const localStorageKey = "GAMEPLAN.NU";
 
 export const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState, () => {
