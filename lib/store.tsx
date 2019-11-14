@@ -18,9 +18,23 @@ export interface ClassInfoInterface {
   quarterPref: string[];
 }
 
-export interface ScheduleInterface {
-  [key: string]: string[];
-}
+type AllowedScheduleKeys =
+  | "FRESHMAN_FALL"
+  | "FRESHMAN_WINTER"
+  | "FRESHMAN_SPRING"
+  | "SOPHMORE_FALL"
+  | "SOPHMORE_WINTER"
+  | "SOPHMORE_SPRING"
+  | "JUNIOR_FALL"
+  | "JUNIOR_WINTER"
+  | "JUNIOR_SPRING"
+  | "SENIOR_FALL"
+  | "SENIOR_WINTER"
+  | "SENIOR_SPRING";
+
+export type ScheduleInterface = {
+  [key in AllowedScheduleKeys]?: string[];
+};
 
 const Store = createContext<Partial<StoreInterface>>({
   classList: []
