@@ -5,6 +5,7 @@ import reducer from "./reducer";
 export interface StoreInterface {
   classList: ClassInfoInterface[];
   editClass: string;
+  schedule: ScheduleInterface;
   dispatch: Function;
 }
 
@@ -15,6 +16,10 @@ export interface ClassInfoInterface {
   difficulty: number;
   interest: number;
   quarterPref: string[];
+}
+
+export interface ScheduleInterface {
+  [key: string]: string[];
 }
 
 const Store = createContext<Partial<StoreInterface>>({
@@ -48,7 +53,8 @@ export const initialState = {
       interest: 1,
       prereqs: ["ES_APPM 252-1"]
     }
-  ]
+  ],
+  schedule: {}
 };
 
 const localStorageKey = "GAMEPLAN.NU_CLASSLIST";

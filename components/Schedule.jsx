@@ -12,20 +12,6 @@ years.forEach(year => {
 });
 
 const Schedule = () => {
-  const [schedule, setSchedule] = useState({
-    FRESHMAN_FALL: [],
-    FRESHMAN_WINTER: [],
-    FRESHMAN_SPRING: []
-  });
-  const { classList } = useContext(Store);
-
-  useEffect(() => {
-    setSchedule({
-      FRESHMAN_FALL: ["ES_APPM 252-1"],
-      FRESHMAN_WINTER: ["ES_APPM 252-2"],
-      FRESHMAN_SPRING: ["COMP_SCI 111"]
-    });
-  }, []);
 
   function updateSchedule(result) {
     console.log(result);
