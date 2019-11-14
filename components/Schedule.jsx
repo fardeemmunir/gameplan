@@ -50,6 +50,15 @@ const Schedule = () => {
     });
   }
 
+  function clearSchedule() {
+    dispatch({
+      type: "UPDATE_SCHEDULE",
+      payload: {
+        updatedSchedule: {}
+      }
+    });
+  }
+
   return (
     <div className="w-full mb-10">
       <p className="text-center text-gigantic opacity-25 font-bold">Schedule</p>
@@ -62,20 +71,27 @@ const Schedule = () => {
             </button>
           </div>
         ) : (
-          <DragDropContext onDragEnd={updateSchedule}>
-            <div className="flex flex-wrap -mx-2">
-              {yearsAndQuarters.map(({ year, quarter }, i) => (
-                <QuarterCard
-                  key={i}
-                  year={year}
-                  quarter={quarter}
-                  classes={schedule[year + "_" + quarter].map(code =>
-                    classList.find(info => info.code === code)
-                  )}
-                />
-              ))}
+          <>
+            <DragDropContext onDragEnd={updateSchedule}>
+              <div className="flex flex-wrap -mx-2">
+                {yearsAndQuarters.map(({ year, quarter }, i) => (
+                  <QuarterCard
+                    key={i}
+                    year={year}
+                    quarter={quarter}
+                    classes={schedule[year + "_" + quarter].map(code =>
+                      classList.find(info => info.code === code)
+                    )}
+                  />
+                ))}
+              </div>
+            </DragDropContext>
+            <div className="w-full flex justify-center">
+              <button className="form__submit" onClick={clearSchedule}>
+                Clear Schedule
+              </button>
             </div>
-          </DragDropContext>
+          </>
         )}
       </div>
     </div>
