@@ -1,12 +1,21 @@
-import { initialState, ClassInfoInterface } from "./store";
+import { initialState, ClassInfoInterface, ScheduleInterface } from "./store";
 
 interface ActionInterface {
-  type: "ADD_CLASS" | "EDIT_CLASS" | "FINISH_EDITING_CLASS" | "REMOVE_CLASS";
-  payload: ClassInfoInterface & EditClassPayload;
+  type:
+    | "ADD_CLASS"
+    | "EDIT_CLASS"
+    | "FINISH_EDITING_CLASS"
+    | "REMOVE_CLASS"
+    | "UPDATE_SCHEDULE";
+  payload: ClassInfoInterface & EditClassPayload & UpdatedSchedulePayload;
 }
 
 interface EditClassPayload {
   classCode: string;
+}
+
+interface UpdatedSchedulePayload {
+  updatedSchedule: ScheduleInterface;
 }
 
 function reducer(state = initialState, action: ActionInterface) {
@@ -62,11 +71,16 @@ function reducer(state = initialState, action: ActionInterface) {
       );
 
       classList.splice(index, 1);
-      console.log(classList);
       return {
         ...state,
         classList,
         editClass: ""
+      };
+    }
+    case "UPDATE_SCHEDULE": {
+      return {
+        ...state,
+        schedule: action.payload.updatedSchedule
       };
     }
     default:
