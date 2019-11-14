@@ -63,12 +63,16 @@ export const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState, () => {
     if (typeof localStorage !== "undefined") {
       const classList =
-        JSON.parse(localStorage.getItem(localStorageKey)) ||
+        JSON.parse(localStorage.getItem(`${localStorageKey}_CLASSLIST`)) ||
         initialState.classList;
+      const schedule =
+        JSON.parse(localStorage.getItem(`${localStorageKey}_SCHEDULE`)) ||
+        initialState.schedule;
 
       return {
         ...initialState,
-        classList
+        classList,
+        schedule
       };
     } else {
       return initialState;
@@ -76,7 +80,14 @@ export const StoreProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    localStorage.setItem(localStorageKey, JSON.stringify(state.classList));
+    localStorage.setItem(
+      `${localStorageKey}_CLASSLIST`,
+      JSON.stringify(state.classList)
+    );
+    localStorage.setItem(
+      `${localStorageKey}_SCHEDULE`,
+      JSON.stringify(state.schedule)
+    );
   }, [state]);
 
   return (
