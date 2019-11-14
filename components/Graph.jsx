@@ -12,8 +12,8 @@ const Graph = () => {
   );
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [linkDistance, setLinkDistance] = useState(200);
-  const [nodeDistance, setNodeDistance] = useState(1000);
+  const [linkDistance, setLinkDistance] = useState(150);
+  const [nodeDistance, setNodeDistance] = useState(900);
 
   /**
    * @param {ClassInfoInterface[]} nodes
@@ -49,7 +49,7 @@ const Graph = () => {
               type="range"
               className="range"
               min="100"
-              max="500"
+              max="300"
               value={linkDistance}
               onChange={e => setLinkDistance(Number(e.target.value))}
             />
