@@ -37,28 +37,46 @@ const Schedule = () => {
     });
   }
 
-    // Add item to destination
+  function generateSchedule() {
+    dispatch({
+      type: "UPDATE_SCHEDULE",
+      payload: {
+        updatedSchedule: {
+          FRESHMAN_FALL: ["ES_APPM 252-1"],
+          FRESHMAN_WINTER: ["ES_APPM 252-2"],
+          FRESHMAN_SPRING: ["COMP_SCI 111"]
+        }
+      }
+    });
   }
 
   return (
     <div className="w-full mb-10">
       <p className="text-center text-gigantic opacity-25 font-bold">Schedule</p>
 
-      <div className="p-4 w-full max-w-3xl mx-auto -mt-16 rounded text-black">
-        <DragDropContext onDragEnd={updateSchedule}>
-          <div className="flex flex-wrap -mx-2">
-            {yearsAndQuarters.map(({ year, quarter }, i) => (
-              <QuarterCard
-                key={i}
-                year={year}
-                quarter={quarter}
-                classes={schedule[year + "_" + quarter].map(code =>
-                  classList.find(info => info.code === code)
-                )}
-              />
-            ))}
+      <div className="p-4 w-full max-w-3xl mx-auto -mt-16 rounded text-black relative z-10 schedule-chart mb-12">
+        {Object.keys(schedule).length === 0 ? (
+          <div className="w-full flex justify-center">
+            <button className="form__submit" onClick={generateSchedule}>
+              Generate
+            </button>
           </div>
-        </DragDropContext>
+        ) : (
+          <DragDropContext onDragEnd={updateSchedule}>
+            <div className="flex flex-wrap -mx-2">
+              {yearsAndQuarters.map(({ year, quarter }, i) => (
+                <QuarterCard
+                  key={i}
+                  year={year}
+                  quarter={quarter}
+                  classes={schedule[year + "_" + quarter].map(code =>
+                    classList.find(info => info.code === code)
+                  )}
+                />
+              ))}
+            </div>
+          </DragDropContext>
+        )}
       </div>
     </div>
   );
