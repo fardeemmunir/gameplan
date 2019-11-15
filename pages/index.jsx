@@ -29,13 +29,11 @@ const Home = () => {
         <Graph />
         <Schedule />
 
-        <footer className="pb-8 pt-4 text-sm container flex justify-between">
-          <p className="text-right tracking-tight text-gray-600">
+        <footer className="text-white opacity-50 pb-8 pt-4 text-sm container flex justify-between">
+          <p className="text-right tracking-tight">
             Build using D3, Tailwind.css and React and Friends
           </p>
-          <p className="text-right tracking-tight text-gray-600">
-            Made by Fardeem Munir
-          </p>
+          <p className="text-right tracking-tight">Made by Fardeem Munir</p>
         </footer>
       </main>
     </StoreProvider>
