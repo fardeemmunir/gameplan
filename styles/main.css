@@ -163,3 +163,11 @@ text {
 .schedule-chart {
   min-height: 18rem;
 }
+
+a {
+  @apply text-blue-500;
+}
+
+a:hover {
+  /* @apply text-purple-700; */
+}
