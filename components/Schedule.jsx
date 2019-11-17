@@ -31,9 +31,6 @@ const Schedule = () => {
 
     // Add item to destination
     const newDest = Array.from(schedule[destination.droppableId]);
-    if (destination.droppableId === source.droppableId) {
-      newDest.splice(source.index, 1);
-    }
     newDest.splice(destination.index, 0, draggableId);
 
     dispatch({
