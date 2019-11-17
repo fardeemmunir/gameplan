@@ -15,23 +15,33 @@ const Schedule = () => {
   const { classList, schedule, dispatch } = useContext(Store);
 
   function updateSchedule(result) {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) return;
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    )
+      return;
+
     // Remove item from source
-    const newSource = Array.from(schedule[result.source.droppableId]);
-    newSource.splice(result.source.index, 1);
+    const newSource = Array.from(schedule[source.droppableId]);
+    newSource.splice(source.index, 1);
 
     // Add item to destination
-    const newDest = Array.from(schedule[result.destination.droppableId]);
-    if (result.destination.droppableId === result.source.droppableId) {
-      newDest.splice(result.source.index, 1);
+    const newDest = Array.from(schedule[destination.droppableId]);
+    if (destination.droppableId === source.droppableId) {
+      newDest.splice(source.index, 1);
     }
-    newDest.splice(result.destination.index, 0, result.draggableId);
+    newDest.splice(destination.index, 0, draggableId);
 
     dispatch({
       type: "UPDATE_SCHEDULE",
       payload: {
         updatedSchedule: Object.assign({}, schedule, {
-          [result.source.droppableId]: newSource,
-          [result.destination.droppableId]: newDest
+          [source.droppableId]: newSource,
+          [destination.droppableId]: newDest
         })
       }
     });
