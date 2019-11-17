@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 
-import Store from "../lib/store";
 import difficultyToColor from "../lib/difficultyToColor";
 
 const ClassCard = ({
