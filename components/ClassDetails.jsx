@@ -13,7 +13,7 @@ const ClassDetails = () => {
 
   return (
     editClass.length > 0 && (
-      <div className="relative">
+      <div className="relative z-20">
         <div className="class-more-details ml-8">
           <ClassCard
             {...currentClass}
