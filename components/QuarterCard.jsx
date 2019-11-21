@@ -7,12 +7,9 @@ import QuarterOverview from "./QuarterOverview";
 const QuarterCard = ({ classes, year, quarter }) => (
   <div className="w-1/3 px-2 mb-4 flex">
     <div className="w-full rounded p-2 bg-white">
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-12">
         <div>
-          <h1 className="text-sm uppercase font-bold tracking-widest">
-            {year}
-          </h1>
-          <h1 className="text-3xl leading-none mb-4 capitalize">
+          <h1 className="text-4xl leading-none capitalize">
             {quarter.toLowerCase()}
           </h1>
         </div>
