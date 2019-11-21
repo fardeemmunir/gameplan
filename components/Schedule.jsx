@@ -3,7 +3,7 @@ import QuarterCard from "./QuarterCard";
 import Store from "../lib/store";
 import { DragDropContext } from "react-beautiful-dnd";
 
-const years = ["FRESHMAN" /* , "Sophmore", "Junior", "Senior" */];
+const years = [0];
 const quarters = ["FALL", "WINTER", "SPRING"];
 const yearsAndQuarters = [];
 
@@ -49,9 +49,9 @@ const Schedule = () => {
       type: "UPDATE_SCHEDULE",
       payload: {
         updatedSchedule: {
-          FRESHMAN_FALL: ["ES_APPM 252-1"],
-          FRESHMAN_WINTER: ["ES_APPM 252-2"],
-          FRESHMAN_SPRING: ["COMP_SCI 111"]
+          FALL_0: ["ES_APPM 252-1"],
+          WINTER_0: ["ES_APPM 252-2"],
+          SPRING_0: ["COMP_SCI 111"]
         }
       }
     });
@@ -86,7 +86,7 @@ const Schedule = () => {
                     key={i}
                     year={year}
                     quarter={quarter}
-                    classes={schedule[year + "_" + quarter].map(code =>
+                    classes={schedule[quarter + "_" + year].map(code =>
                       classList.find(info => info.code === code)
                     )}
                   />

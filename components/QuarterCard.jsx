@@ -19,7 +19,7 @@ const QuarterCard = ({ classes, year, quarter }) => (
           interest={classes.reduce((a, b) => a + b.interest, 0)}
         />
       </div>
-      <Droppable droppableId={year + "_" + quarter}>
+      <Droppable droppableId={quarter + "_" + year}>
         {provided => (
           <div
             ref={provided.innerRef}
