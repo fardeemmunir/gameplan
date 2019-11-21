@@ -6,12 +6,18 @@ import Store from "../lib/store";
 const multiSelectStyles = {
   control: provided => ({
     ...provided,
-    backgroundColor: colors.gray[200],
-    border: 0
+    borderRadius: "0.25rem",
+    borderColor: colors.gray[300],
+    backgroundColor: "transparent"
   }),
   multiValue: provided => ({
     ...provided,
-    backgroundColor: colors.gray[300]
+    backgroundColor: colors.gray[200]
+  }),
+  valueContainer: provided => ({
+    ...provided,
+    padding: 2,
+    borderRadius: "0.25em"
   })
 };
 
