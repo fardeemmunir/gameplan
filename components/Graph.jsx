@@ -20,7 +20,7 @@ const Graph = () => {
    */
   function mapNodesToSearchTerm(nodes) {
     return nodes.map(node => {
-      if (searchTerm === "") return node;
+      if (searchTerm.trim() === "") return node;
       const searchExp = new RegExp(searchTerm, "gi");
 
       if (
@@ -41,7 +41,7 @@ const Graph = () => {
             type="search"
             placeholder="Search Classes"
             value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value.trim())}
+            onChange={e => setSearchTerm(e.target.value)}
           />
           <div className="text-left mr-4">
             <h1 className="text-sm">Link Distance</h1>
@@ -69,6 +69,17 @@ const Graph = () => {
 
         <div className="flex items-center">
           <p className="opacity-75 mr-4">Total Classes: {nodes.length}</p>
+          {searchTerm.length > 0 && (
+            <p className="opacity-75 mr-4">
+              Search Results:{" "}
+              {
+                mapNodesToSearchTerm(nodes).filter(
+                  // @ts-ignore
+                  ({ isSearched }) => isSearched
+                ).length
+              }
+            </p>
+          )}
           <Share />
         </div>
       </div>
