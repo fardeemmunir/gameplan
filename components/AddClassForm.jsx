@@ -4,11 +4,12 @@ import { colors } from "tailwindcss/defaultTheme";
 import Store from "../lib/store";
 
 const multiSelectStyles = {
-  control: provided => ({
+  control: (provided, { isFocused }) => ({
     ...provided,
     borderRadius: "0.25rem",
-    borderColor: colors.gray[300],
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
+    borderColor: isFocused ? colors.gray[500] : colors.gray[300],
+    boxShadow: "none"
   }),
   multiValue: provided => ({
     ...provided,
