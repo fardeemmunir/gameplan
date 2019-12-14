@@ -34,6 +34,34 @@ const Graph = () => {
     });
   }
 
+  const GraphView = () => (
+    <NetworkGraph
+      nodes={mapNodesToSearchTerm(nodes)}
+      links={links}
+      linkDistance={linkDistance}
+      nodeDistance={nodeDistance}
+      isSearching={!!searchTerm}
+    />
+  );
+
+  const ListViewWithOptions = () => (
+    <ListView
+      classList={mapNodesToSearchTerm(nodes)
+        .filter(
+          // @ts-ignore
+          ({ isSearched }) => {
+            if (searchTerm.length > 0) return isSearched;
+            return true;
+          }
+        )
+        .map(info => ({
+          ...info,
+          prereqs: info.prereqs.join(", "),
+          quarterPref: info.prereqs.join(", ")
+        }))}
+    />
+  );
+
   return (
     <>
       <div className="w-full text-center mt-8 mb-4 flex justify-between items-center container">
@@ -98,31 +126,7 @@ const Graph = () => {
         </div>
       </div>
 
-      {showGraph ? (
-        <NetworkGraph
-          nodes={mapNodesToSearchTerm(nodes)}
-          links={links}
-          linkDistance={linkDistance}
-          nodeDistance={nodeDistance}
-          isSearching={!!searchTerm}
-        />
-      ) : (
-        <ListView
-          classList={mapNodesToSearchTerm(nodes)
-            .filter(
-              // @ts-ignore
-              ({ isSearched }) => {
-                if (searchTerm.length > 0) return isSearched;
-                return true;
-              }
-            )
-            .map(info => ({
-              ...info,
-              prereqs: info.prereqs.join(", "),
-              quarterPref: info.prereqs.join(", ")
-            }))}
-        />
-      )}
+      {showGraph ? <GraphView /> : <ListViewWithOptions />}
     </>
   );
 };
