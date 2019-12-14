@@ -12,10 +12,16 @@ const Share = () => {
         Share
       </button>
 
+      <style jsx>{`
+        .modal--closed {
+          z-index: -2;
+        }
+      `}</style>
+
       <div
         className={
           "absolute bg-white p-2 share-modal rounded w-64 text-black text-left " +
-          (openModal ? "opacity-100" : "opacity-0")
+          (openModal ? "opacity-100 z-10" : "opacity-0 modal--closed")
         }
       >
         <div className="flex">

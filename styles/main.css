@@ -147,8 +147,7 @@ text {
 .share-modal {
   top: 150%;
   right: 0;
-  z-index: 2;
-  transition: opacity 0.2s;
+  transition: all 0.2s;
 }
 
 /* Schedule */
