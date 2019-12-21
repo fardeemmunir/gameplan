@@ -8,15 +8,15 @@ const ScheduleList = ({ classes }) => {
   const { dispatch } = useContext(Store);
 
   return (
-    <ul>
+    <ul className="list-none">
       {classes.map((classInfo, i) => (
         <Draggable key={classInfo.name} draggableId={classInfo.code} index={i}>
           {provided => (
-            <div
+            <li
               {...provided.draggableProps}
               {...provided.dragHandleProps}
               ref={provided.innerRef}
-              className="text-white p-2 rounded mt-2"
+              className="text-white p-2 rounded mt-2 block"
               style={{
                 backgroundColor: difficultyToColor(classInfo.difficulty),
                 ...provided.draggableProps.style
@@ -33,7 +33,7 @@ const ScheduleList = ({ classes }) => {
               <h2 className="text-xs tracking-widest font-mono">
                 {classInfo.code}
               </h2>
-            </div>
+            </li>
           )}
         </Draggable>
       ))}
