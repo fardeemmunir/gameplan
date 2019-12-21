@@ -72,7 +72,7 @@ const Schedule = () => {
 
       <div className="p-4 w-full max-w-3xl mx-auto -mt-16 rounded text-black relative z-10 schedule-chart mb-12">
         {Object.keys(schedule).length === 0 ? (
-          <div className="w-full flex justify-center">
+          <div className="w-full flex flex-wrap justify-center">
             <button className="form__submit" onClick={generateSchedule}>
               Generate
             </button>
