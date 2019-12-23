@@ -1,15 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import QuarterCard from "./QuarterCard";
 import Store from "../lib/store";
+import sortSchedule from "../lib/utils/sortSchedule";
+
 import { DragDropContext } from "react-beautiful-dnd";
-
-const years = [0];
-const quarters = ["FALL", "WINTER", "SPRING"];
-const yearsAndQuarters = [];
-
-years.forEach(year => {
-  return quarters.forEach(quarter => yearsAndQuarters.push({ year, quarter }));
-});
 
 const Schedule = () => {
   const { classList, schedule, dispatch } = useContext(Store);
@@ -26,11 +20,11 @@ const Schedule = () => {
       return;
 
     // Remove item from source
-    const newSource = Array.from(schedule[source.droppableId]);
+    const newSource = Array.from(schedule[source.droppableId] || []);
     newSource.splice(source.index, 1);
 
     // Add item to destination
-    const newDest = Array.from(schedule[destination.droppableId]);
+    const newDest = Array.from(schedule[destination.droppableId] || []);
     newDest.splice(destination.index, 0, draggableId);
 
     dispatch({
@@ -51,7 +45,8 @@ const Schedule = () => {
         updatedSchedule: {
           FALL_0: ["ES_APPM 252-1"],
           WINTER_0: ["ES_APPM 252-2"],
-          SPRING_0: ["COMP_SCI 111"]
+          SPRING_0: ["COMP_SCI 111", "COMP_SCI 211", "COMP_SCI 214"],
+          FALL_1: ["COMP_SCI 213"]
         }
       }
     });
@@ -81,12 +76,12 @@ const Schedule = () => {
           <>
             <DragDropContext onDragEnd={updateSchedule}>
               <div className="flex flex-wrap -mx-2">
-                {yearsAndQuarters.map(({ year, quarter }, i) => (
+                {sortSchedule(schedule).map(({ quarter, classes, id }, i) => (
                   <QuarterCard
                     key={i}
-                    year={year}
+                    id={id}
                     quarter={quarter}
-                    classes={schedule[quarter + "_" + year].map(code =>
+                    classes={classes.map(code =>
                       classList.find(info => info.code === code)
                     )}
                   />
