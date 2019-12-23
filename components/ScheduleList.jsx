@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 import Store from "../lib/store";
-import difficultyToColor from "../lib/difficultyToColor";
+import difficultyToColor from "../lib/utils/difficultyToColor";
 
 const ScheduleList = ({ classes }) => {
   const { dispatch } = useContext(Store);
