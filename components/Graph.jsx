@@ -57,7 +57,7 @@ const Graph = () => {
         .map(info => ({
           ...info,
           prereqs: info.prereqs.join(", "),
-          quarterPref: info.prereqs.join(", ")
+          quarterPref: info.quarterPref.join(", ").toLowerCase()
         }))}
     />
   );

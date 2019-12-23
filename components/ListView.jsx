@@ -43,8 +43,7 @@ const ListView = ({ classList }) => {
             <tr>
               {propNames.map(prop => (
                 <td className="border-t border-gray-600 px-4 py-2">
-                  {" "}
-                  {classInfo[prop]}{" "}
+                  {classInfo[prop]}
                 </td>
               ))}
               <td className="border-t border-gray-600 pl-4 py-2">
