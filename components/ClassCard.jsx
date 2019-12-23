@@ -1,6 +1,6 @@
 import React from "react";
 
-import difficultyToColor from "../lib/difficultyToColor";
+import difficultyToColor from "../lib/utils/difficultyToColor";
 
 const ClassCard = ({
   code,

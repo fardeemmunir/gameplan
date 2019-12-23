@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 
 import Store, { ClassInfoInterface } from "../lib/store";
-import makeLinks from "../lib/makeLinks";
+import makeLinks from "../lib/utils/makeLinks";
 import NetworkGraph from "./NetworkGraph";
 import Share from "./Share";
 import ListView from "./Listview";

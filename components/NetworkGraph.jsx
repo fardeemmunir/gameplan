@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import * as d3 from "d3";
 
-import color from "../lib/difficultyToColor";
+import color from "../lib/utils/difficultyToColor";
 import Store from "../lib/store";
 
 const NetworkGraph = ({
