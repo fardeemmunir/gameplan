@@ -6,8 +6,8 @@ import QuarterOverview from "./QuarterOverview";
 
 const QuarterCard = ({ classes, id, quarter }) => (
   <div className="w-1/3 px-2 mb-4 flex">
-    <div className="w-full rounded p-2 bg-white">
-      <div className="flex justify-between items-end mb-8">
+    <div className="w-full rounded bg-white">
+      <div className="flex px-2 pt-2 justify-between items-end mb-8">
         <div>
           <h1 className="text-3xl leading-none capitalize">
             {quarter.toLowerCase()}
@@ -20,11 +20,14 @@ const QuarterCard = ({ classes, id, quarter }) => (
         />
       </div>
       <Droppable droppableId={id}>
-        {provided => (
+        {(provided, snapshot) => (
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className="min-h-24"
+            className={
+              "min-h-24 p-2 rounded-b " +
+              (snapshot.isDraggingOver ? "bg-gray-300" : "bg-white")
+            }
           >
             <ScheduleList classes={classes} />
             {provided.placeholder}
