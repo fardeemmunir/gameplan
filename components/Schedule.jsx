@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
+
 import QuarterCard from "./QuarterCard";
 import Store from "../lib/store";
+import scheduleBuilder from "../lib/utils/scheduler";
 import sortSchedule from "../lib/utils/sortSchedule";
-
-import { DragDropContext } from "react-beautiful-dnd";
 
 const Schedule = () => {
   const { classList, schedule, dispatch } = useContext(Store);
@@ -42,12 +43,7 @@ const Schedule = () => {
     dispatch({
       type: "UPDATE_SCHEDULE",
       payload: {
-        updatedSchedule: {
-          FALL_0: ["ES_APPM 252-1"],
-          WINTER_0: ["ES_APPM 252-2"],
-          SPRING_0: ["COMP_SCI 111", "COMP_SCI 211", "COMP_SCI 214"],
-          FALL_1: ["COMP_SCI 213"]
-        }
+        updatedSchedule: scheduleBuilder(classList)
       }
     });
   }

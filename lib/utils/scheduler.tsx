@@ -1,6 +1,6 @@
 import { ScheduleInterface, ClassInfoInterface } from "../store";
 
-const enum QuarterOptions {
+enum QuarterOptions {
   Fall = "FALL",
   Winter = "WINTER",
   Spring = "SPRING"
