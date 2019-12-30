@@ -207,7 +207,7 @@ const AddClassForm = () => {
                     checked={quarterPref.includes(quarter)}
                   />
                   <label
-                    className="block p-2 rounded border-2 border-gray-200 leading-tight cursor-pointer capitalize select-none"
+                    className="block p-2 rounded border border-gray-200 leading-tight cursor-pointer capitalize select-none"
                     htmlFor={"QUARTER-" + quarter}
                   >
                     {quarter.toLowerCase()}

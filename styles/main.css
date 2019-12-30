@@ -82,7 +82,7 @@ a {
 }
 
 .form__input {
-  @apply appearance-none block mr-4 w-full bg-gray-200 text-gray-700 border border-gray-200 rounded p-2 mb-3 leading-tight;
+  @apply appearance-none block mr-4 w-full bg-white text-gray-700 border border-gray-300 rounded p-2 mb-3 leading-tight;
 }
 
 .form__input:focus {
