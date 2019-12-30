@@ -31,6 +31,11 @@ const QuarterCard = ({ classes, id, quarter, isDropDisabled }) => (
           >
             <ScheduleList classes={classes} />
             {provided.placeholder}
+            {classes.length > 5 && (
+              <p className="text-red-500 text-sm tracking-wide font-bold mt-4">
+                Overload
+              </p>
+            )}
           </div>
         )}
       </Droppable>
