@@ -1,21 +1,27 @@
 import React from "react";
 
-const QuarterOverview = ({ difficulty, interest }) => (
-  <div className="flex flex-col mb-8">
-    <div className="text-right mb-2">
-      <div className="p-2 font-mono text-sm font-bold text-white rounded bg-indigo-700 inline-block leading-none">
-        {interest}
-      </div>
-      <p className="text-xs">Total Interest</p>
-    </div>
+const QuarterOverview = ({ difficulty, interest }) => {
+  const score = interest - difficulty;
 
-    <div className="text-right mb-4">
-      <div className="p-2 font-mono text-sm font-bold text-white rounded bg-red-700 inline-block leading-none">
-        {difficulty}
+  function scoreToColor(score) {
+    if (score === 0) return "text-green-500";
+    else if (score > 0) return "text-blue-500";
+    else return "text-red-700";
+  }
+
+  return (
+    <div className="flex flex-col justify-center">
+      <div
+        className={
+          "py-1 font-mono text-xs text-right font-bold rounded inline-block leading-none " +
+          scoreToColor(score)
+        }
+      >
+        {score}
       </div>
-      <p className="text-xs">Total Difficulty</p>
+      <p className="text-xs">Total Score</p>
     </div>
-  </div>
-);
+  );
+};
 
 export default QuarterOverview;

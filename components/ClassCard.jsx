@@ -1,12 +1,13 @@
 import React from "react";
 
-import difficultyToColor from "../lib/difficultyToColor";
+import difficultyToColor from "../lib/utils/difficultyToColor";
 
 const ClassCard = ({
   code,
   name,
   difficulty,
   quarterPref,
+  prereqs,
   interest,
   closeCard
 }) => (
@@ -37,9 +38,16 @@ const ClassCard = ({
         {difficulty} / 5
       </p>
       <p>
-        <span className="opacity-75">Quarter:</span>{" "}
+        <span className="opacity-75">Quarter: </span>
         <span className="capitalize">
           {quarterPref.join("/").toLowerCase()}
+        </span>{" "}
+      </p>
+
+      <p>
+        <span className="opacity-75">Prerequisites: </span>
+        <span className="capitalize">
+          {prereqs.length > 0 ? prereqs.join(", ") : "None"}
         </span>{" "}
       </p>
     </footer>

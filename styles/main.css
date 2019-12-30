@@ -22,15 +22,18 @@ a {
 }
 
 /* range */
+:root {
+  --range-border-width: 0.08em;
+}
 
 .range {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   outline: none;
-  width: 12em;
-  height: 0.3em;
-  border-radius: 0.3em;
+  width: 10em;
+  height: 0.2em;
+  border-radius: 0.1em;
   background: rgba(255, 255, 255, 0.2);
 }
 
@@ -40,7 +43,7 @@ a {
   width: 1em;
   height: 1em;
   background: #2c3e50;
-  border: 0.1em solid #ffffff;
+  border: var(--range-border-width) solid #ffffff;
   border-radius: 1.2em;
   cursor: pointer;
 }
@@ -51,7 +54,7 @@ a {
   width: 1em;
   height: 1em;
   background: #2c3e50;
-  border: 0.1em solid #ffffff;
+  border: var(--range-border-width) solid #ffffff;
   border-radius: 1.2em;
   cursor: pointer;
 }
@@ -61,7 +64,7 @@ a {
   width: 1em;
   height: 1em;
   background: #2c3e50;
-  border: 0.1em solid #ffffff;
+  border: var(--range-border-width) solid #ffffff;
   border-radius: 1.2em;
   cursor: pointer;
 }
@@ -79,7 +82,7 @@ a {
 }
 
 .form__input {
-  @apply appearance-none block mr-4 w-full bg-gray-200 text-gray-700 border border-gray-200 rounded p-2 mb-3 leading-tight;
+  @apply appearance-none block mr-4 w-full bg-white text-gray-700 border border-gray-300 rounded p-2 mb-3 leading-tight;
 }
 
 .form__input:focus {
@@ -144,8 +147,7 @@ text {
 .share-modal {
   top: 150%;
   right: 0;
-  z-index: 2;
-  transition: opacity 0.2s;
+  transition: all 0.2s;
 }
 
 /* Schedule */
@@ -158,5 +160,5 @@ text {
 }
 
 .min-h-24 {
-  min-height: 6rem;
+  min-height: 9rem;
 }

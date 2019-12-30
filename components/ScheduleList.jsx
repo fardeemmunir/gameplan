@@ -2,21 +2,26 @@ import React, { useContext } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 import Store from "../lib/store";
-import difficultyToColor from "../lib/difficultyToColor";
+import difficultyToColor from "../lib/utils/difficultyToColor";
 
 const ScheduleList = ({ classes }) => {
   const { dispatch } = useContext(Store);
 
   return (
-    <ul>
+    <ul className="list-none">
+      <style jsx>{`
+        .schedule-item:last-of-type {
+          margin-bottom: 0;
+        }
+      `}</style>
       {classes.map((classInfo, i) => (
-        <Draggable key={classInfo.name} draggableId={classInfo.code} index={i}>
+        <Draggable key={classInfo.code} draggableId={classInfo.code} index={i}>
           {provided => (
-            <div
+            <li
               {...provided.draggableProps}
               {...provided.dragHandleProps}
               ref={provided.innerRef}
-              className="text-white p-2 rounded mt-2"
+              className="schedule-item text-white p-2 rounded mb-2 block"
               style={{
                 backgroundColor: difficultyToColor(classInfo.difficulty),
                 ...provided.draggableProps.style
@@ -33,7 +38,7 @@ const ScheduleList = ({ classes }) => {
               <h2 className="text-xs tracking-widest font-mono">
                 {classInfo.code}
               </h2>
-            </div>
+            </li>
           )}
         </Draggable>
       ))}

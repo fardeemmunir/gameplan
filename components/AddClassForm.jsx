@@ -4,14 +4,21 @@ import { colors } from "tailwindcss/defaultTheme";
 import Store from "../lib/store";
 
 const multiSelectStyles = {
-  control: provided => ({
+  control: (provided, { isFocused }) => ({
     ...provided,
-    backgroundColor: colors.gray[200],
-    border: 0
+    borderRadius: "0.25rem",
+    backgroundColor: "transparent",
+    borderColor: isFocused ? colors.gray[500] : colors.gray[300],
+    boxShadow: "none"
   }),
   multiValue: provided => ({
     ...provided,
-    backgroundColor: colors.gray[300]
+    backgroundColor: colors.gray[200]
+  }),
+  valueContainer: provided => ({
+    ...provided,
+    padding: 2,
+    borderRadius: "0.25em"
   })
 };
 
@@ -200,7 +207,7 @@ const AddClassForm = () => {
                     checked={quarterPref.includes(quarter)}
                   />
                   <label
-                    className="block p-2 rounded border-2 border-gray-200 leading-tight cursor-pointer capitalize select-none"
+                    className="block p-2 rounded border border-gray-200 leading-tight cursor-pointer capitalize select-none"
                     htmlFor={"QUARTER-" + quarter}
                   >
                     {quarter.toLowerCase()}
