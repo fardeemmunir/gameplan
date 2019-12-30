@@ -11,6 +11,7 @@ const Schedule = () => {
 
   function updateSchedule(result) {
     const { destination, source, draggableId } = result;
+    const updatedSchedule = Object.assign({}, schedule);
 
     if (!destination) return;
 
@@ -26,15 +27,23 @@ const Schedule = () => {
 
     // Add item to destination
     const newDest = Array.from(schedule[destination.droppableId] || []);
-    newDest.splice(destination.index, 0, draggableId);
 
+    // If user is reordering items in the same column
+    if (destination.droppableId === source.droppableId) {
+      newSource.splice(destination.index, 0, draggableId);
+      updatedSchedule[source.droppableId] = newSource;
+    } else {
+      console.log("hocche");
+      newDest.splice(destination.index, 0, draggableId);
+      updatedSchedule[source.droppableId] = newSource;
+      updatedSchedule[destination.droppableId] = newDest;
+    }
+
+    // console.log(updatedSchedule);
     dispatch({
       type: "UPDATE_SCHEDULE",
       payload: {
-        updatedSchedule: Object.assign({}, schedule, {
-          [source.droppableId]: newSource,
-          [destination.droppableId]: newDest
-        })
+        updatedSchedule
       }
     });
   }
