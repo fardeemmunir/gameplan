@@ -4,7 +4,7 @@ import { Droppable } from "react-beautiful-dnd";
 import ScheduleList from "./ScheduleList";
 import QuarterOverview from "./QuarterOverview";
 
-const QuarterCard = ({ classes, id, quarter }) => (
+const QuarterCard = ({ classes, id, quarter, isDropDisabled }) => (
   <div className="w-1/3 px-2 mb-4 flex">
     <div className="w-full rounded bg-white">
       <div className="flex px-2 pt-2 justify-between items-end mb-4">
@@ -19,7 +19,7 @@ const QuarterCard = ({ classes, id, quarter }) => (
           interest={classes.reduce((a, b) => a + b.interest, 0)}
         />
       </div>
-      <Droppable droppableId={id}>
+      <Droppable droppableId={id} isDropDisabled={isDropDisabled}>
         {(provided, snapshot) => (
           <div
             ref={provided.innerRef}

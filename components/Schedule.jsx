@@ -5,11 +5,15 @@ import QuarterCard from "./QuarterCard";
 import Store from "../lib/store";
 import scheduleBuilder from "../lib/utils/scheduler";
 import sortSchedule from "../lib/utils/sortSchedule";
+import { useState } from "react";
 
 const Schedule = () => {
+  const [classBeingDragged, setClassBeingDragged] = useState(null);
   const { classList, schedule, dispatch } = useContext(Store);
+  const sortedSchedule = sortSchedule(schedule);
 
   function updateSchedule(result) {
+    setClassBeingDragged(null);
     const { destination, source, draggableId } = result;
     const updatedSchedule = Object.assign({}, schedule);
 
@@ -65,6 +69,31 @@ const Schedule = () => {
     });
   }
 
+  function saveDraggedClass(payload) {
+    setClassBeingDragged(payload.draggableId);
+  }
+
+  function isDropDisabled(quarter, currentQuarterIndex) {
+    if (!classBeingDragged) return false;
+
+    const classInfo = classList.find(({ code }) => code === classBeingDragged);
+
+    const classesCompletedTillNow = sortedSchedule
+      .slice(0, currentQuarterIndex)
+      .map(({ classes }) => classes)
+      // Another way to flatten the array to make
+      // string[][] -> string[]
+      .reduce((a, b) => {
+        return a.concat(b);
+      }, []);
+
+    // Flip the boolean since the function is asking if the drop is disabled or not
+    return !(
+      classInfo.quarterPref.includes(quarter) &&
+      classInfo.prereqs.every(code => classesCompletedTillNow.includes(code))
+    );
+  }
+
   return (
     <div className="w-full mb-10">
       <p className="text-center text-gigantic opacity-25 font-bold">Schedule</p>
@@ -78,13 +107,17 @@ const Schedule = () => {
           </div>
         ) : (
           <>
-            <DragDropContext onDragEnd={updateSchedule}>
+            <DragDropContext
+              onDragStart={saveDraggedClass}
+              onDragEnd={updateSchedule}
+            >
               <div className="flex flex-wrap -mx-2">
-                {sortSchedule(schedule).map(({ quarter, classes, id }, i) => (
+                {sortedSchedule.map(({ quarter, classes, id }, i) => (
                   <QuarterCard
                     key={i}
                     id={id}
                     quarter={quarter}
+                    isDropDisabled={isDropDisabled(quarter, i)}
                     classes={classes.map(code =>
                       classList.find(info => info.code === code)
                     )}
