@@ -33,7 +33,6 @@ const Schedule = () => {
       newSource.splice(destination.index, 0, draggableId);
       updatedSchedule[source.droppableId] = newSource;
     } else {
-      console.log("hocche");
       newDest.splice(destination.index, 0, draggableId);
       updatedSchedule[source.droppableId] = newSource;
       updatedSchedule[destination.droppableId] = newDest;
