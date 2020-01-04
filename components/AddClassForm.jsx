@@ -91,10 +91,10 @@ const AddClassForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex mb-4 bg-white text-black rounded"
+      className="flex mb-4 mt-8 bg-white text-black rounded"
     >
-      <div className="w-1/5 pl-4 py-4 bg-right-bottom bg-no-repeat add-class-form__title">
-        <h1 className="text-4xl mt-6">
+      <div className="w-1/5 pl-4 py-4 flex flex-col justify-center bg-right-bottom bg-no-repeat add-class-form__title">
+        <h1 className="text-4xl">
           {isEditingClass ? "Edit" : "Add"} <br /> Class
         </h1>
       </div>
