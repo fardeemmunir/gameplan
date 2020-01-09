@@ -22,9 +22,7 @@ export interface ScheduleInterface {
   [key: string]: string[];
 }
 
-const Store = createContext<Partial<StoreInterface>>({
-  classList: []
-});
+const Store = createContext<Partial<StoreInterface>>({});
 
 export const initialState = {
   editClass: "",
@@ -59,8 +57,10 @@ export const initialState = {
 
 const localStorageKey = "GAMEPLAN.NU";
 
-export const StoreProvider = ({ children }) => {
+export const StoreProvider = ({ children, stateFromServer }) => {
   const [state, dispatch] = useReducer(reducer, initialState, () => {
+    if (stateFromServer) return stateFromServer;
+
     if (typeof localStorage !== "undefined") {
       const classList =
         JSON.parse(localStorage.getItem(`${localStorageKey}_CLASSLIST`)) ||
@@ -80,6 +80,10 @@ export const StoreProvider = ({ children }) => {
   });
 
   useEffect(() => {
+    if (stateFromServer !== null) {
+      return;
+    }
+
     localStorage.setItem(
       `${localStorageKey}_CLASSLIST`,
       JSON.stringify(state.classList)
