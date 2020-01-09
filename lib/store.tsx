@@ -59,7 +59,8 @@ const localStorageKey = "GAMEPLAN.NU";
 
 export const StoreProvider = ({ children, stateFromServer }) => {
   const [state, dispatch] = useReducer(reducer, initialState, () => {
-    if (stateFromServer) return stateFromServer;
+    if (stateFromServer)
+      return Object.assign({}, initialState, stateFromServer);
 
     if (typeof localStorage !== "undefined") {
       const classList =
