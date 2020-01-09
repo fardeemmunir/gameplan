@@ -9,22 +9,23 @@
     "test": "jest"
   },
   "dependencies": {
-    "@types/jest": "^24.0.23",
+    "@types/jest": "^24.0.25",
     "@zeit/next-css": "^1.0.1",
-    "d3": "^5.12.0",
+    "d3": "^5.15.0",
+    "isomorphic-unfetch": "^3.0.0",
     "jest": "^24.9.0",
     "next": "9.1.1",
     "react": "16.10.2",
-    "react-beautiful-dnd": "^12.0.0",
+    "react-beautiful-dnd": "^12.2.0",
     "react-dom": "16.10.2",
     "react-select": "^3.0.8",
-    "ts-jest": "^24.1.0"
+    "ts-jest": "^24.3.0"
   },
   "devDependencies": {
-    "@types/node": "^12.11.6",
-    "@types/react": "^16.9.9",
+    "@types/node": "^12.12.24",
+    "@types/react": "^16.9.17",
     "postcss-preset-env": "^6.7.0",
-    "tailwindcss": "^1.1.2",
-    "typescript": "^3.6.4"
+    "tailwindcss": "^1.1.4",
+    "typescript": "^3.7.4"
   }
 }
