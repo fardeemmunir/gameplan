@@ -4,20 +4,24 @@ const Share = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    function bubbled() {
+    function closeModal() {
       if (isModalOpen) setIsModalOpen(false);
     }
 
-    function stop(e) {
+    function stopPropagation(e) {
       e.stopPropagation();
     }
 
-    document.addEventListener("click", bubbled);
-    document.querySelector("#share-modal").addEventListener("click", stop);
+    document.addEventListener("click", closeModal);
+    document
+      .querySelector("#share-modal")
+      .addEventListener("click", stopPropagation);
 
     return () => {
-      document.removeEventListener("click", bubbled);
-      document.querySelector("#share-modal").removeEventListener("click", stop);
+      document.removeEventListener("click", closeModal);
+      document
+        .querySelector("#share-modal")
+        .removeEventListener("click", stopPropagation);
     };
   }, [isModalOpen]);
 
