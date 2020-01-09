@@ -1,43 +1,20 @@
-const db = {
-  1234: {
-    editClass: "",
-    classList: [
-      {
-        code: "ES_APPM 252-1",
-        name: "Multivariable Differential Calculus",
-        quarterPref: ["FALL"],
-        interest: 1,
-        difficulty: 3,
-        prereqs: []
-      },
-      {
-        code: "ES_APPM 252-2",
-        name: "Multivariable Integral Calculus",
-        quarterPref: ["WINTER"],
-        difficulty: 4,
-        interest: 1,
-        prereqs: ["ES_APPM 252-1"]
-      },
-      {
-        code: "COMP_SCI 111",
-        name: "Intro to Programming",
-        quarterPref: ["FALL"],
-        difficulty: 1,
-        interest: 1,
-        prereqs: ["ES_APPM 252-1"]
-      }
-    ],
-    schedule: {}
-  }
-};
+import faunadb from "faunadb";
+import config from "../../config";
 
-export default (req, res) => {
-  const queryResult = db[req.query.id];
+const secret = config.fauna_key;
+const q = faunadb.query;
+const client = new faunadb.Client({ secret });
 
-  res.setHeader("Content-Type", "application/json");
-  if (queryResult !== undefined) {
-    res.status(200).json(queryResult);
-  } else {
-    res.status(500).json({ error: "Error!" });
+module.exports = async (req, res) => {
+  try {
+    const query = await client.query(
+      q.Get(q.Ref(q.Collection("plans"), req.query.id))
+    );
+    // ok
+    // @ts-ignore
+    res.status(200).json(query.data);
+  } catch (e) {
+    // something went wrong
+    res.status(500).json({ error: e.message });
   }
 };
