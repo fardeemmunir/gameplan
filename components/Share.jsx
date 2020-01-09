@@ -1,13 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Share = () => {
-  const [openModal, setOpenModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    function bubbled() {
+      if (isModalOpen) setIsModalOpen(false);
+    }
+
+    function stop(e) {
+      e.stopPropagation();
+    }
+
+    document.addEventListener("click", bubbled);
+    document.querySelector("#share-modal").addEventListener("click", stop);
+
+    return () => {
+      document.removeEventListener("click", bubbled);
+      document.querySelector("#share-modal").removeEventListener("click", stop);
+    };
+  }, [isModalOpen]);
 
   return (
     <div className="relative">
       <button
         className="block p-2 bg-blue-600 rounded form__submit mb-0"
-        onClick={() => setOpenModal(!openModal)}
+        onClick={() => setIsModalOpen(!isModalOpen)}
       >
         Share
       </button>
@@ -19,9 +37,10 @@ const Share = () => {
       `}</style>
 
       <div
+        id="share-modal"
         className={
           "absolute bg-white p-2 share-modal rounded w-64 text-black text-left " +
-          (openModal ? "opacity-100 z-10" : "opacity-0 modal--closed")
+          (isModalOpen ? "opacity-100 z-10" : "opacity-0 modal--closed")
         }
       >
         <div className="flex">
