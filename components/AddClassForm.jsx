@@ -44,6 +44,7 @@ const AddClassForm = () => {
     setName(selectedClass.name);
     setPrereqs(selectedClass.prereqs);
     setDifficulty(selectedClass.difficulty);
+    setInterest(selectedClass.interest);
     setQuarterPref(selectedClass.quarterPref);
     setIsEditingClass(true);
   }, [editClass]);
