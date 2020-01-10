@@ -8,8 +8,9 @@ const client = new faunadb.Client({ secret });
 module.exports = async (req, res) => {
   try {
     const query = await client.query(
-      q.Get(q.Ref(q.Collection("plans"), req.query.id))
+      q.Get(q.Match(q.Index("plans_by_id"), req.query.id))
     );
+
     // ok
     // @ts-ignore
     res.status(200).json(query.data);
