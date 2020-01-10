@@ -55,7 +55,7 @@ Page.getInitialProps = async ({ query, req }) => {
       ? "http://" + req.headers.host
       : window.location.origin;
 
-  const res = await fetch(`${url}/api/classList?id=${query.id}`);
+  const res = await fetch(`${url}/api/getClassList?id=${query.id}`);
   const info = await res.json();
 
   return {
