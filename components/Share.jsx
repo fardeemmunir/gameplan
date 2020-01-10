@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from "react";
 
+import Loader from "../components/Loader";
+
 const ShareModal = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => {
+      // setIsLoading(true);
+      clearTimeout(timer);
+    };
+  }, []);
 
   useEffect(() => {
     function closeModal() {
@@ -47,6 +61,7 @@ const ShareModal = () => {
           (isModalOpen ? "opacity-100 z-10" : "opacity-0 modal--closed")
         }
       >
+        {isLoading ? <Loader /> : <ShareInfo />}
       </div>
     </div>
   );
