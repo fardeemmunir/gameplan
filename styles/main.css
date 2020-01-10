@@ -161,4 +161,5 @@ text {
 
 .min-h-24 {
   min-height: 9rem;
+  transition: background-color 0.1s;
 }
