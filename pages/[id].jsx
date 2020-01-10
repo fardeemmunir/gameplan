@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import fetch from "isomorphic-unfetch";
+import { resetServerContext } from "react-beautiful-dnd";
 
 import Header from "../components/Header";
 
@@ -50,6 +51,8 @@ const Page = ({ stateFromServer, isError }) => {
 };
 
 Page.getInitialProps = async ({ query, req }) => {
+  resetServerContext();
+
   const url =
     req && req.headers && req.headers.host
       ? "http://" + req.headers.host
