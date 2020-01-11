@@ -7,6 +7,12 @@ import QuarterOverview from "./QuarterOverview";
 const QuarterCard = ({ classes, id, quarter, isDropDisabled }) => (
   <div className="w-1/3 px-2 mb-4 flex">
     <div className="w-full rounded bg-white flex flex-col">
+      <style jsx>{`
+        .drop-zone {
+          min-height: 9rem;
+          transition: background-color 0.2s;
+        }
+      `}</style>
       <header className="flex px-2 pt-2 justify-between items-end mb-4">
         <div>
           <h1 className="text-3xl leading-none capitalize">
@@ -25,7 +31,7 @@ const QuarterCard = ({ classes, id, quarter, isDropDisabled }) => (
             ref={provided.innerRef}
             {...provided.droppableProps}
             className={
-              "min-h-24 flex-1 p-2 rounded-b " +
+              "drop-zone flex-1 p-2 rounded-b " +
               (snapshot.isDraggingOver ? "bg-gray-300" : "bg-white")
             }
           >
