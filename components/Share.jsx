@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 
 import Loader from "../components/Loader";
 
 const ShareModal = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const router = useRouter();
-
-  console.log(router);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -53,10 +49,6 @@ const ShareModal = () => {
       </button>
 
       <style jsx>{`
-        .modal {
-          width: 20rem;
-        }
-
         .modal--closed {
           z-index: -2;
         }
@@ -65,22 +57,22 @@ const ShareModal = () => {
       <div
         id="share-modal"
         className={
-          "absolute bg-white p-2 share-modal modal rounded text-black text-left " +
+          "absolute bg-white p-2 share-modal rounded w-64 text-black text-left " +
           (isModalOpen ? "opacity-100 z-10" : "opacity-0 modal--closed")
         }
       >
-        {isLoading ? <Loader /> : <ShareInfo shareId="COYtOqeTyljk" />}
+        {isLoading ? <Loader /> : <ShareInfo />}
       </div>
     </div>
   );
 };
 
-const ShareInfo = ({ shareId }) => (
+const ShareInfo = () => (
   <div>
     <div className="flex">
       <input
         type="text"
-        value={window.location.origin + "/" + shareId}
+        value="localhost:3000/sHjwKlQ"
         disabled
         className="w-full bg-gray-200 px-2 py-1 rounded-tl rounded-bl mb-2"
       />

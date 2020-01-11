@@ -158,3 +158,8 @@ text {
 .schedule-chart {
   min-height: 18rem;
 }
+
+.min-h-24 {
+  min-height: 9rem;
+  transition: background-color 0.1s;
+}
