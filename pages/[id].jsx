@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import Link from "next/link";
 import fetch from "isomorphic-unfetch";
 import { resetServerContext } from "react-beautiful-dnd";
 
