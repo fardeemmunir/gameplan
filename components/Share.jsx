@@ -1,21 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
 
+import Store from "../lib/store";
 import Loader from "../components/Loader";
 
 const ShareModal = () => {
+  const { query } = useRouter();
+  const { classList, schedule } = useContext(Store);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sharingId, setSharingId] = useState();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
+  function getId() {
+    setIsLoading(true);
+
+    if (query.id) {
+      setSharingId(query.id);
       setIsLoading(false);
-    }, 2000);
+      return;
+    }
 
-    return () => {
-      // setIsLoading(true);
-      clearTimeout(timer);
-    };
-  }, []);
+    fetch("/api/createClassList", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ classList, schedule })
+    })
+      .then(res => res.json())
+      .then(content => {
+        setSharingId(content.id);
+        setIsLoading(false);
+      });
+  }
+
 
   useEffect(() => {
     function closeModal() {
@@ -43,7 +62,10 @@ const ShareModal = () => {
     <div className="relative">
       <button
         className="block p-2 bg-blue-600 rounded form__submit mb-0"
-        onClick={() => setIsModalOpen(!isModalOpen)}
+        onClick={() => {
+          getId();
+          setIsModalOpen(!isModalOpen);
+        }}
       >
         Share
       </button>
@@ -61,13 +83,13 @@ const ShareModal = () => {
           (isModalOpen ? "opacity-100 z-10" : "opacity-0 modal--closed")
         }
       >
-        {isLoading ? <Loader /> : <ShareInfo />}
+        {isLoading ? <Loader /> : <ShareInfo id={sharingId} />}
       </div>
     </div>
   );
 };
 
-const ShareInfo = () => (
+const ShareInfo = ({ id }) => (
   <div>
     <div className="flex">
       <input
@@ -75,6 +97,7 @@ const ShareInfo = () => (
         value="localhost:3000/sHjwKlQ"
         disabled
         className="w-full bg-gray-200 px-2 py-1 rounded-tl rounded-bl mb-2"
+        value={window.location.origin + "/" + id}
       />
 
       <svg
