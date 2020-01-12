@@ -26,32 +26,7 @@ const Store = createContext<Partial<StoreInterface>>({});
 
 export const initialState = {
   editClass: "",
-  classList: [
-    {
-      code: "ES_APPM 252-1",
-      name: "Multivariable Differential Calculus",
-      quarterPref: ["FALL"],
-      interest: 1,
-      difficulty: 3,
-      prereqs: []
-    },
-    {
-      code: "ES_APPM 252-2",
-      name: "Multivariable Integral Calculus",
-      quarterPref: ["WINTER"],
-      difficulty: 4,
-      interest: 1,
-      prereqs: ["ES_APPM 252-1"]
-    },
-    {
-      code: "COMP_SCI 111",
-      name: "Intro to Programming",
-      quarterPref: ["FALL"],
-      difficulty: 1,
-      interest: 1,
-      prereqs: ["ES_APPM 252-1"]
-    }
-  ],
+  classList: [],
   schedule: {}
 };
 
