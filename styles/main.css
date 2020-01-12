@@ -74,7 +74,7 @@ a {
 /* AddClassForm */
 .add-class-form__title {
   background-image: url("/books.png");
-  background-size: 70%;
+  background-size: 80%;
 }
 
 .form__label {
@@ -157,8 +157,4 @@ text {
 
 .schedule-chart {
   min-height: 18rem;
-}
-
-.min-h-24 {
-  min-height: 9rem;
 }

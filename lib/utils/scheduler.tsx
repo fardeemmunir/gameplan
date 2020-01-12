@@ -23,6 +23,12 @@ function scheduler(classList: Partial<ClassInfoInterface>[]) {
           classInfo.prereqs.every(code => allocatedClasses.includes(code))
         );
       })
+      .sort((a, b) => {
+        const aScore = a.interest - a.difficulty;
+        const bscore = b.interest - b.difficulty;
+
+        return aScore <= bscore ? 1 : -1;
+      })
       .map(({ code }) => code);
 
     if (selectedClasses.length > 4) {
