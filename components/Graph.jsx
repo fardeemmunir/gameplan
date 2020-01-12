@@ -4,7 +4,7 @@ import Store, { ClassInfoInterface } from "../lib/store";
 import makeLinks from "../lib/utils/makeLinks";
 import NetworkGraph from "./NetworkGraph";
 import Share from "./Share";
-import ListView from "./Listview";
+import ListView from "./ListView";
 
 const Graph = () => {
   const { classList: nodes } = useContext(Store);
