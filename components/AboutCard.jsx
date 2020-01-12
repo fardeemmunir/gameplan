@@ -18,10 +18,6 @@ const AboutCard = () => (
         <Link href="/">
           <a className="form__submit inline-block mt-4 mr-4">Build Your Own</a>
         </Link>
-
-        <Link href="/">
-          <a className="form__submit inline-block mt-4">Use This Template</a>
-        </Link>
       </div>
       <img className="img" src="plan.png" />
     </div>
