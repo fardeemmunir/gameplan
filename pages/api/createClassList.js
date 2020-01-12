@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
     );
     // ok
     // @ts-ignore
-    res.status(200).send(id);
+    res.status(200).json({ id });
   } catch (e) {
     // something went wrong
     res.status(500).json({ error: e.message });
