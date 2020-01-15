@@ -6,8 +6,8 @@ const ClassCard = ({
   code,
   name,
   difficulty,
-  quarterPref,
-  prereqs,
+  quarterPref = [],
+  prereqs = [],
   interest,
   closeCard
 }) => (
