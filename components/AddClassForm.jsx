@@ -31,7 +31,7 @@ const AddClassForm = () => {
   const [quarterPref, setQuarterPref] = useState([]);
   const [isEditingClass, setIsEditingClass] = useState(false);
 
-  const { classList, editClass, dispatch } = useContext(Store);
+  const { classList, schedule, editClass, dispatch } = useContext(Store);
 
   useEffect(() => {
     if (editClass.trim() === "") {
@@ -82,6 +82,18 @@ const AddClassForm = () => {
     } else {
       return setQuarterPref(quarterPref.concat(selection));
     }
+  }
+
+  function isClassSaveToRemove(code) {
+    return (
+      // Class isn't a prereq of any other class
+      classList.filter(({ prereqs }) => prereqs.includes(code)).length === 0 &&
+      // Class doesn't exist in the schedule
+      !Object.values(schedule)
+        // @ts-ignore
+        .flat()
+        .includes(code)
+    );
   }
 
   const prereqOptions = classList.map(({ code }) => ({
@@ -230,26 +242,24 @@ const AddClassForm = () => {
               value={isEditingClass ? "Update Class" : "Add Class"}
             />
           </div>
-          {isEditingClass &&
-            classList.filter(({ prereqs }) => prereqs.includes(code)).length ===
-              0 && (
-              <div className="w-1/2 pl-3 mt-5">
-                <label className="form__label">&nbsp;</label>
-                <input
-                  className="w-full form__submit--danger"
-                  type="button"
-                  value="Remove Class"
-                  onClick={() => {
-                    dispatch({
-                      type: "REMOVE_CLASS",
-                      payload: {
-                        classCode: code
-                      }
-                    });
-                  }}
-                />
-              </div>
-            )}
+          {isEditingClass && isClassSaveToRemove(code) && (
+            <div className="w-1/2 pl-3 mt-5">
+              <label className="form__label">&nbsp;</label>
+              <input
+                className="w-full form__submit--danger"
+                type="button"
+                value="Remove Class"
+                onClick={() => {
+                  dispatch({
+                    type: "REMOVE_CLASS",
+                    payload: {
+                      classCode: code
+                    }
+                  });
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </form>
