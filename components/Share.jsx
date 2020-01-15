@@ -20,6 +20,12 @@ const ShareModal = () => {
       return;
     }
 
+    if (classList.length === 0) {
+      setSharingId("error");
+      setIsLoading(false);
+      return;
+    }
+
     fetch("/api/createClassList", {
       method: "POST",
       headers: {
@@ -33,14 +39,21 @@ const ShareModal = () => {
         setSharingId(content.id);
         setIsLoading(false);
       });
+
+    return;
   }
 
   useEffect(() => {
     if (!isModalOpen) return;
 
     // @ts-ignore
-    document.querySelector("#sharing-id").select();
-    document.execCommand("copy");
+    const sharingModal = document.querySelector("#sharing-id");
+
+    if (sharingModal) {
+      // @ts-ignore
+      sharingModal.select();
+      document.execCommand("copy");
+    }
   }, [isModalOpen]);
 
   useEffect(() => {
@@ -98,16 +111,24 @@ const ShareModal = () => {
 
 const ShareInfo = ({ id }) => (
   <div>
-    <div className="flex">
-      <input
-        id="sharing-id"
-        type="text"
-        readOnly
-        value={window.location.origin + "/" + id}
-        className="w-full bg-gray-200 px-2 py-1 rounded mb-2"
-      />
-    </div>
-    <p className="italic text-gray-800 text-sm">Link copied!</p>
+    {id === "error" ? (
+      <p className="p-2 text-sm font-italic text-gray-700">
+        Add some classes before you share!
+      </p>
+    ) : (
+      <>
+        <div className="flex">
+          <input
+            id="sharing-id"
+            type="text"
+            readOnly
+            value={window.location.origin + "/" + id}
+            className="w-full bg-gray-200 px-2 py-1 rounded mb-2"
+          />
+        </div>
+        <p className="italic text-gray-800 text-sm">Link copied!</p>
+      </>
+    )}
   </div>
 );
 
