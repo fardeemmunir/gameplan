@@ -126,7 +126,18 @@ const Graph = () => {
         </div>
       </div>
 
-      {showGraph ? <GraphView /> : <ListViewWithOptions />}
+      {nodes.length === 0 ? (
+        <div className=" my-48">
+          <img className="w-1/4 mx-auto" src="/plan.png" alt="" />
+          <p className="text-xl tracking-wider text-center opacity-50">
+            Add some classes
+          </p>
+        </div>
+      ) : showGraph ? (
+        <GraphView />
+      ) : (
+        <ListViewWithOptions />
+      )}
     </>
   );
 };
