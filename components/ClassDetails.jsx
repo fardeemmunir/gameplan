@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
+import { CSSTransition } from "react-transition-group";
+
 import ClassCard from "./ClassCard";
 import Store, { initialState } from "../lib/store";
 
@@ -12,8 +14,13 @@ const ClassDetails = () => {
   }, [editClass, classList]);
 
   return (
-    editClass.length > 0 && (
-      <div className="relative z-20">
+    <div className="relative z-20">
+      <CSSTransition
+        in={editClass.length > 0}
+        timeout={200}
+        unmountOnExit
+        classNames="fade-in-card"
+      >
         <div className="class-more-details ml-8">
           <ClassCard
             {...currentClass}
@@ -24,8 +31,8 @@ const ClassDetails = () => {
             }}
           />
         </div>
-      </div>
-    )
+      </CSSTransition>
+    </div>
   );
 };
 

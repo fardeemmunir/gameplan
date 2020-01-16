@@ -161,3 +161,20 @@ text {
 .schedule-chart {
   min-height: 18rem;
 }
+
+/* purgecss start ignore */
+.fade-in-card-enter {
+  opacity: 0;
+}
+.fade-in-card-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.fade-in-card-exit {
+  opacity: 1;
+}
+.fade-in-card-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+/* purgecss end ignore */
