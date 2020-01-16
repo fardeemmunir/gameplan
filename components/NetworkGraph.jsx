@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import * as d3 from "d3";
 
-import color from "../lib/utils/difficultyToColor";
+import color from "../lib/utils/scoreToColor";
 import Store from "../lib/store";
 
 const NetworkGraph = ({
@@ -77,7 +77,7 @@ const NetworkGraph = ({
       .append("circle")
       .attr("class", "cursor-pointer network__node")
       .attr("r", 10)
-      .attr("fill", d => color(d.difficulty))
+      .attr("fill", d => color(d.interest - d.difficulty))
       .attr("x", -8)
       .attr("y", -8)
       .on("click", d => {
