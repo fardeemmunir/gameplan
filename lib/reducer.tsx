@@ -36,7 +36,7 @@ function reducer(state = initialState, action: ActionInterface) {
           classList.push({
             code,
             name: "",
-            interest: 1,
+            interest: 0,
             quarterPref: [],
             difficulty: 0,
             prereqs: []
