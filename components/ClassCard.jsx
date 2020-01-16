@@ -1,6 +1,6 @@
 import React from "react";
 
-import difficultyToColor from "../lib/utils/difficultyToColor";
+import color from "../lib/utils/scoreToColor";
 
 const ClassCard = ({
   code,
@@ -14,7 +14,7 @@ const ClassCard = ({
   <div
     className=" w-64 rounded p-2 bg-purple-500 shadow flex flex-col justify-between"
     style={{
-      backgroundColor: difficultyToColor(difficulty)
+      backgroundColor: color(interest - difficulty)
     }}
   >
     <p

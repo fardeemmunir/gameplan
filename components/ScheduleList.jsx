@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 import Store from "../lib/store";
-import difficultyToColor from "../lib/utils/difficultyToColor";
+import color from "../lib/utils/scoreToColor";
 
 const ScheduleList = ({ classes }) => {
   const { dispatch } = useContext(Store);
@@ -23,7 +23,9 @@ const ScheduleList = ({ classes }) => {
               ref={provided.innerRef}
               className="schedule-item text-white p-2 rounded mb-2 block"
               style={{
-                backgroundColor: difficultyToColor(classInfo.difficulty),
+                backgroundColor: color(
+                  classInfo.interest - classInfo.difficulty
+                ),
                 ...provided.draggableProps.style
               }}
               onClick={() => {
