@@ -1,6 +1,6 @@
 {
   "name": "gameplan",
   "env": {
-    "VARIABLE_NAME": "@fauna_api_key"
+    "FAUNA_API_KEY": "@fauna_api_key"
   }
 }
