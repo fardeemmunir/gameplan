@@ -25,8 +25,11 @@ const ListView = ({ classList }) => {
       <table className="table-auto w-full">
         <thead className="text-left font-bold">
           <tr>
-            {propNames.map(mapPropNameToLabel).map(prop => (
-              <th className="px-4 py-2 uppercase text-xs tracking-widest">
+            {propNames.map(mapPropNameToLabel).map((prop, i) => (
+              <th
+                key={i}
+                className="px-4 py-2 uppercase text-xs tracking-widest"
+              >
                 {prop}
               </th>
             ))}
