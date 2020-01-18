@@ -19,15 +19,6 @@ const Page = ({ stateFromServer, isError }) => {
   return (
     <StoreProvider stateFromServer={stateFromServer}>
       <main>
-        <Head>
-          <title>Gameplan – Design Wonderful Semesters</title>
-          <link rel="shortcut icon" href="/favicon.png" />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Quicksand:400,700&display=swap"
-          />
-        </Head>
-
         <div className="container">
           <Header />
           {!isError && <AboutCard />}

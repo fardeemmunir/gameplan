@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 
 import Header from "../components/Header";
 
@@ -16,15 +15,6 @@ const Home = () => {
   return (
     <StoreProvider stateFromServer={null}>
       <main>
-        <Head>
-          <title>Gameplan – Design Wonderful Semesters</title>
-          <link rel="shortcut icon" href="/favicon.png" />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Quicksand:400,700&display=swap"
-          />
-        </Head>
-
         <div className="container">
           <Header />
           <AddClassForm />
