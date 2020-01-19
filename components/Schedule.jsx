@@ -81,11 +81,7 @@ const Schedule = () => {
     const classesCompletedTillNow = sortedSchedule
       .slice(0, currentQuarterIndex)
       .map(({ classes }) => classes)
-      // Another way to flatten the array to make
-      // string[][] -> string[]
-      .reduce((a, b) => {
-        return a.concat(b);
-      }, []);
+      .flat();
 
     // Flip the boolean since the function is asking if the drop is disabled or not
     return !(
