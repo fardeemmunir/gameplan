@@ -84,9 +84,18 @@ const Schedule = () => {
       .flat();
 
     // Flip the boolean since the function is asking if the drop is disabled or not
+    // Condtitions for being enabled
+    // 1. Quarter in quarter pref
+    // 2. classCompletedTillNow includes all prereqs
+    // 3. All classes in ClassCompletedTillNow doesnt have a prereq that includes the classBeing dragged
     return !(
       classInfo.quarterPref.includes(quarter) &&
-      classInfo.prereqs.every(code => classesCompletedTillNow.includes(code))
+      classInfo.prereqs.every(code => classesCompletedTillNow.includes(code)) &&
+      classesCompletedTillNow.every(code => {
+        const classInfo = classList.find(info => info.code === code);
+
+        return !classInfo.prereqs.includes(classBeingDragged);
+      })
     );
   }
 
