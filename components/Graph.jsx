@@ -63,7 +63,7 @@ const Graph = () => {
   );
 
   return (
-    <>
+    <article>
       <div className="w-full text-center mt-8 mb-4 flex justify-between items-center container">
         <div className="flex items-center">
           <style jsx>{`
@@ -144,7 +144,7 @@ const Graph = () => {
           }
         }
       })()}
-    </>
+    </article>
   );
 };
 
