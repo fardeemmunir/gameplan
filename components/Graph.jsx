@@ -126,18 +126,24 @@ const Graph = () => {
         </div>
       </div>
 
-      {nodes.length === 0 ? (
-        <div className=" my-48">
-          <img className="w-1/4 mx-auto" src="/plan.png" alt="" />
-          <p className="text-xl tracking-wider text-center opacity-50">
-            Add some classes
-          </p>
-        </div>
-      ) : showGraph ? (
-        <GraphView />
-      ) : (
-        <ListViewWithOptions />
-      )}
+      {(() => {
+        if (nodes.length === 0) {
+          return (
+            <div className="my-48">
+              <img className="w-1/4 mx-auto" src="/plan.png" alt="" />
+              <p className="text-xl tracking-wider text-center opacity-50">
+                Add some classes
+              </p>
+            </div>
+          );
+        } else {
+          if (showGraph) {
+            return <GraphView />;
+          } else {
+            return <ListViewWithOptions />;
+          }
+        }
+      })()}
     </>
   );
 };
