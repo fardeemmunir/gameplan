@@ -162,6 +162,10 @@ text {
   min-height: 18rem;
 }
 
+.transition-bg {
+  transition: background-color 0.2s;
+}
+
 /* purgecss start ignore */
 .fade-in-card-enter {
   opacity: 0;

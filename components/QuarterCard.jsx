@@ -6,11 +6,15 @@ import QuarterOverview from "./QuarterOverview";
 
 const QuarterCard = ({ classes, id, quarter, isDropDisabled }) => (
   <div className="w-1/3 px-2 mb-4 flex">
-    <div className="w-full rounded bg-white flex flex-col">
+    <div
+      className={
+        "w-full rounded bg-white relative flex flex-col transition-bg " +
+        (isDropDisabled ? "bg-gray-200" : "bg-white")
+      }
+    >
       <style jsx>{`
         .drop-zone {
           min-height: 9rem;
-          transition: background-color 0.2s;
         }
       `}</style>
       <header className="flex px-2 pt-2 justify-between items-end mb-4">
@@ -31,8 +35,8 @@ const QuarterCard = ({ classes, id, quarter, isDropDisabled }) => (
             ref={provided.innerRef}
             {...provided.droppableProps}
             className={
-              "drop-zone flex-1 p-2 rounded-b " +
-              (snapshot.isDraggingOver ? "bg-gray-300" : "bg-white")
+              "drop-zone transition-bg flex-1 p-2 rounded-b " +
+              (snapshot.isDraggingOver ? "bg-gray-300" : "transparent")
             }
           >
             <ScheduleList classes={classes} />
@@ -45,6 +49,10 @@ const QuarterCard = ({ classes, id, quarter, isDropDisabled }) => (
           </article>
         )}
       </Droppable>
+
+      <div className="w-full px-2 pb-1 tracking-widest bottom-0 text-red-500 text-sm uppercase font-bold">
+        {isDropDisabled && "conflict"}
+      </div>
     </div>
   </div>
 );
