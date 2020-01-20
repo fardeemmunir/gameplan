@@ -163,7 +163,7 @@ text {
 }
 
 .transition-bg {
-  transition: background-color 0.2s;
+  transition: all 0.2s;
 }
 
 /* purgecss start ignore */

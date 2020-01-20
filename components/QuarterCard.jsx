@@ -9,10 +9,13 @@ const QuarterCard = ({ classes, id, quarter, isDropDisabled }) => (
     <div
       className={
         "w-full rounded bg-white relative flex flex-col transition-bg " +
-        (isDropDisabled ? "bg-gray-200" : "bg-white")
+        (isDropDisabled ? "shrink bg-gray-200" : "bg-white")
       }
     >
       <style jsx>{`
+        .shrink {
+          transform: scale(0.9);
+        }
         .drop-zone {
           min-height: 9rem;
         }
@@ -49,10 +52,6 @@ const QuarterCard = ({ classes, id, quarter, isDropDisabled }) => (
           </article>
         )}
       </Droppable>
-
-      <div className="w-full px-2 pb-1 tracking-widest bottom-0 text-red-500 text-sm uppercase font-bold">
-        {isDropDisabled && "conflict"}
-      </div>
     </div>
   </div>
 );
