@@ -213,7 +213,7 @@ const AddClassForm = () => {
                 <div key={quarter}>
                   <input
                     type="checkbox"
-                    className="hidden"
+                    className="absolute opacity-0 z--1"
                     id={"QUARTER-" + quarter}
                     name={quarter}
                     onChange={handleQuarterPrefChange}
