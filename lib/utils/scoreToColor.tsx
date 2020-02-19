@@ -12,7 +12,6 @@ const colors = [
 ];
 
 function difficultyToColor(difficulty: number) {
-  if (difficulty === 0) return "#4e4e4e";
   return colors[difficulty + 4];
 }
 
