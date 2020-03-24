@@ -106,16 +106,13 @@ a {
   @apply border-red-600;
 }
 
-.quarter-selector label {
+.quarter-selector button {
+  @apply rounded border border-gray-300 py-2 px-3 leading-tight capitalize;
   transition: all 0.2s;
 }
 
-.quarter-selector input:checked + label {
-  @apply bg-gray-200;
-}
-
-.quarter-selector input:focus + label {
-  @apply border-gray-400;
+.quarter-selector button:focus {
+  @apply outline-none;
 }
 
 .z--1 {

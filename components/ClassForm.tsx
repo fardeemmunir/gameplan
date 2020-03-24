@@ -119,7 +119,7 @@ const ClassForm = () => {
               <FieldArray
                 name="quarterPref"
                 render={arrayHelpers => (
-                  <div className="flex justify-between quarter-selector">
+                  <div className="flex justify-between mb-3 quarter-selector">
                     {["FALL", "WINTER", "SPRING"].map(quarter => (
                       <button
                         type="button"
