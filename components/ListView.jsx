@@ -43,9 +43,9 @@ const ListView = ({ classList }) => {
             }
           `}</style>
           {classList.map(classInfo => (
-            <tr>
+            <tr key={classInfo.id}>
               {propNames.map(prop => (
-                <td className="border-t border-gray-600 px-4 py-2">
+                <td key={prop} className="border-t border-gray-600 px-4 py-2">
                   {classInfo[prop]}
                 </td>
               ))}
