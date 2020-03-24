@@ -1,6 +1,11 @@
 import React from "react";
 
+import { Class } from "../lib/reducer";
 import color from "../lib/utils/scoreToColor";
+
+interface Props extends Class {
+  closeCard: () => void;
+}
 
 const ClassCard = ({
   code,
@@ -10,7 +15,7 @@ const ClassCard = ({
   prereqs = [],
   interest,
   closeCard
-}) => (
+}: Props) => (
   <div
     className=" w-64 rounded p-2 bg-purple-500 shadow flex flex-col justify-between"
     style={{
