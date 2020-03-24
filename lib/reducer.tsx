@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from "uuid";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 //
 // Types
@@ -41,12 +40,27 @@ export const initialState: Store = {
   editClass: ""
 };
 
-const store = createSlice({
-  name: "store",
-  initialState,
-  reducers: {
-    addOrUpdateClass(state, action: PayloadAction<Class>) {
-      const { classList } = state;
+type AddOrUpdateClass = {
+  type: "ADD_OR_UPDATE_CLASS";
+  payload: Class;
+};
+
+type RemoveClass = {
+  type: "REMOVE_CLASS";
+  payload: string;
+};
+
+type SetClassToEdit = {
+  type: "SET_CLASS_TO_EDIT";
+  payload: string;
+};
+
+type StoreActions = AddOrUpdateClass | RemoveClass | SetClassToEdit;
+
+const storeReducer = function(state: Store, action: StoreActions): Store {
+  switch (action.type) {
+    case "ADD_OR_UPDATE_CLASS": {
+      const classList = Array.from(state.classList);
       const classToBeAdded = action.payload;
       const classIndexIfExists = classList.findIndex(
         ({ id }) => id === classToBeAdded.id
@@ -75,11 +89,16 @@ const store = createSlice({
           quarterPref: []
         });
       }
-    },
 
-    removeClass(state, action: PayloadAction<string>) {
+      return {
+        ...state,
+        classList
+      };
+    }
+
+    case "REMOVE_CLASS": {
       const classId = action.payload;
-      const { classList, schedule } = state;
+      const { classList, schedule } = Object.assign({}, state);
       const classIndex = classList.findIndex(({ id }) => id === classId);
 
       classList.splice(classIndex, 1);
@@ -97,15 +116,48 @@ const store = createSlice({
         }
       }
 
-      state.editClass = "";
-    },
-
-    setClassToEdit(state, action: PayloadAction<string>) {
-      state.editClass = action.payload;
+      return {
+        ...state,
+        classList,
+        schedule
+      };
     }
+
+    case "SET_CLASS_TO_EDIT": {
+      return {
+        ...state,
+        editClass: action.payload
+      };
+    }
+
+    default:
+      return state;
   }
-});
+};
 
-export default store.reducer;
+const actions = {
+  addOrUpdateClass(classInfo: Class): AddOrUpdateClass {
+    return {
+      type: "ADD_OR_UPDATE_CLASS",
+      payload: classInfo
+    };
+  },
 
-export const { addOrUpdateClass, removeClass, setClassToEdit } = store.actions;
+  removeClass(id: string): RemoveClass {
+    return {
+      type: "REMOVE_CLASS",
+      payload: id
+    };
+  },
+
+  setClassToEdit(id: string): SetClassToEdit {
+    return {
+      type: "SET_CLASS_TO_EDIT",
+      payload: id
+    };
+  }
+};
+
+export default storeReducer;
+
+export const { addOrUpdateClass, removeClass, setClassToEdit } = actions;
