@@ -1,8 +1,22 @@
-import React, { useRef, useEffect, useState, useContext } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import * as d3 from "d3";
 
 import color from "../lib/utils/scoreToColor";
 import Store from "../lib/store";
+import { Class } from "../lib/reducer";
+import { setClassToEdit } from "../lib/reducer";
+
+type Node = Class & {
+  x: number;
+  y: number;
+  isSearched: boolean;
+};
+
+type Link = {
+  source: Node;
+  target: Node;
+  index: number;
+};
 
 const NetworkGraph = ({
   nodes,
@@ -13,7 +27,7 @@ const NetworkGraph = ({
 }) => {
   const { dispatch } = useContext(Store);
   const svgContainer = useRef(null);
-  const height = nodes.length > 15 ? 1100 : 900;
+  const height = 900;
 
   useEffect(() => {
     const width = window.innerWidth - 100;
@@ -24,8 +38,7 @@ const NetworkGraph = ({
         "link",
         d3
           .forceLink(links)
-          // @ts-ignore
-          .id(d => d.code)
+          .id((d: Node) => d.id)
           .distance(linkDistance)
       )
       .force("charge", d3.forceManyBody().strength(nodeDistance * -1))
@@ -35,8 +48,7 @@ const NetworkGraph = ({
     const svg = d3
       .select(svgContainer.current)
       .append("svg")
-      // @ts-ignore
-      .attr("viewBox", [-width / 2, -height / 2, width, height]);
+      .attr("viewBox", `${-width / 2} ${-height / 2} ${width} ${height}`);
 
     d3.select(svgContainer.current)
       .select("svg")
@@ -77,41 +89,36 @@ const NetworkGraph = ({
       .append("circle")
       .attr("class", "cursor-pointer network__node")
       .attr("r", 10)
-      .attr("fill", d => color(d.interest - d.difficulty))
+      .attr("fill", (d: Node) => color(d.interest - d.difficulty))
       .attr("x", -8)
       .attr("y", -8)
-      .on("click", d => {
-        dispatch({
-          type: "EDIT_CLASS",
-          payload: {
-            classCode: d.code
-          }
-        });
+      .on("click", (d: Node) => {
+        dispatch(setClassToEdit(d.id));
       });
 
     node
       .append("text")
-      .attr("class", d => {
-        return (
-          "text-green text-xs " +
-          (d.isSearched ? "font-bold searched-item" : "")
-        );
-      })
+      .attr(
+        "class",
+        (d: Node) =>
+          `text-green text-xs  ${d.isSearched && "font-bold searched-item"}`
+      )
       .attr("dx", 20)
       .attr("dy", ".45em")
-      .text(d => d.code);
+      .text((d: Node) => d.code);
 
     simulation.on("tick", () => {
       link
-        .attr("x2", d => d.source.x)
-        .attr("y2", d => d.source.y)
-        .attr("x1", d => d.target.x)
-        .attr("y1", d => d.target.y);
+        .attr("x2", (d: Link) => d.source.x)
+        .attr("y2", (d: Link) => d.source.y)
+        .attr("x1", (d: Link) => d.target.x)
+        .attr("y1", (d: Link) => d.target.y);
 
-      node.attr("transform", d => `translate(${d.x},${d.y})`);
+      node.attr("transform", (d: Node) => `translate(${d.x},${d.y})`);
     });
 
     return () => {
+      simulation.stop();
       svgContainer.current.innerHTML = "";
     };
   }, [nodes, links, linkDistance, nodeDistance]);

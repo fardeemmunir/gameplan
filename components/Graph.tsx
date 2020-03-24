@@ -1,76 +1,46 @@
 import React, { useContext, useState } from "react";
 
-import Store, { ClassInfoInterface } from "../lib/store";
+import Store from "../lib/store";
 import makeLinks from "../lib/utils/makeLinks";
 import NetworkGraph from "./NetworkGraph";
 import Share from "./Share";
 import ListView from "./ListView";
+import { Class } from "../lib/reducer";
 
 const Graph = () => {
-  const { classList: nodes } = useContext(Store);
-  const links = makeLinks(
-    nodes.map(({ code, prereqs }) => ({ node: code, pointsTo: prereqs }))
-  );
-
+  const { classList } = useContext(Store);
   const [searchTerm, setSearchTerm] = useState("");
   const [linkDistance, setLinkDistance] = useState(150);
   const [nodeDistance, setNodeDistance] = useState(900);
   const [showGraph, setShowGraph] = useState(true);
 
-  /**
-   * @param {ClassInfoInterface[]} nodes
-   */
-  function mapNodesToSearchTerm(nodes) {
-    return nodes.map(node => {
-      if (searchTerm.trim() === "") return node;
-      const searchExp = new RegExp(searchTerm, "gi");
+  function mapClassToSearch(classInfo: Class): Class & { isSearched: boolean } {
+    const searchExp = new RegExp(searchTerm, "gi");
 
-      if (
-        node.code.search(searchExp) > -1 ||
-        node.name.search(searchExp) > -1
-      ) {
-        return { ...node, isSearched: true };
-      } else return { ...node, isSearched: false };
-    });
+    if (
+      searchTerm.trim() !== "" &&
+      (classInfo.code.search(searchExp) > -1 ||
+        classInfo.name.search(searchExp) > -1)
+    ) {
+      return { ...classInfo, isSearched: true };
+    } else return { ...classInfo, isSearched: false };
   }
 
-  const GraphView = () => (
-    <NetworkGraph
-      nodes={mapNodesToSearchTerm(nodes)}
-      links={links}
-      linkDistance={linkDistance}
-      nodeDistance={nodeDistance}
-      isSearching={!!searchTerm}
-    />
-  );
-
-  const ListViewWithOptions = () => (
-    <ListView
-      classList={mapNodesToSearchTerm(nodes)
-        .filter(
-          // @ts-ignore
-          ({ isSearched }) => {
-            if (searchTerm.length > 0) return isSearched;
-            return true;
-          }
-        )
-        .map(info => ({
-          ...info,
-          prereqs: info.prereqs.join(", "),
-          quarterPref: info.quarterPref.join(", ").toLowerCase()
-        }))}
-    />
-  );
+  if (classList.length === 0) {
+    return (
+      <div className="my-48">
+        <img className="w-1/4 mx-auto" src="/plan.png" alt="" />
+        <p className="text-xl tracking-wider text-center opacity-50">
+          Add some classes
+        </p>
+      </div>
+    );
+  }
 
   return (
     <article>
       <div className="w-full text-center mt-8 mb-4 flex justify-between items-center container">
         <div className="flex items-center">
-          <style jsx>{`
-            .toggle-btn {
-              min-width: 8rem;
-            }
-          `}</style>
           <button
             onClick={() => setShowGraph(!showGraph)}
             className="block toggle-btn p-2 mr-4 bg-blue-600 rounded form__submit mb-0 whitespace-no-wrap"
@@ -110,15 +80,14 @@ const Graph = () => {
         </div>
 
         <div className="flex items-center">
-          <p className="opacity-75 mr-4">Total Classes: {nodes.length}</p>
+          <p className="opacity-75 mr-4">Total Classes: {classList.length}</p>
           {searchTerm.length > 0 && (
             <p className="opacity-75 mr-4">
               Search Results:{" "}
               {
-                mapNodesToSearchTerm(nodes).filter(
-                  // @ts-ignore
-                  ({ isSearched }) => isSearched
-                ).length
+                classList
+                  .map(mapClassToSearch)
+                  .filter(({ isSearched }) => isSearched).length
               }
             </p>
           )}
@@ -126,24 +95,29 @@ const Graph = () => {
         </div>
       </div>
 
-      {(() => {
-        if (nodes.length === 0) {
-          return (
-            <div className="my-48">
-              <img className="w-1/4 mx-auto" src="/plan.png" alt="" />
-              <p className="text-xl tracking-wider text-center opacity-50">
-                Add some classes
-              </p>
-            </div>
-          );
-        } else {
-          if (showGraph) {
-            return <GraphView />;
-          } else {
-            return <ListViewWithOptions />;
-          }
-        }
-      })()}
+      {showGraph ? (
+        <NetworkGraph
+          nodes={classList.map(mapClassToSearch)}
+          links={makeLinks(classList)}
+          linkDistance={linkDistance}
+          nodeDistance={nodeDistance}
+          isSearching={!!searchTerm}
+        />
+      ) : (
+        <ListView
+          classList={classList
+            .map(mapClassToSearch)
+            .filter(({ isSearched }) => {
+              if (searchTerm.length > 0) return isSearched;
+              return true;
+            })
+            .map(info => ({
+              ...info,
+              prereqs: info.prereqs.join(", "),
+              quarterPref: info.quarterPref.join(", ").toLowerCase()
+            }))}
+        />
+      )}
     </article>
   );
 };
