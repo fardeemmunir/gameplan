@@ -19,7 +19,6 @@ module.exports = async (req, res) => {
       })
     );
     // ok
-    // @ts-ignore
     res.status(200).json({ id });
   } catch (e) {
     // something went wrong

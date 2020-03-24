@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 
 import Store from "../lib/store";
-import Loader from "../components/Loader";
+import Loader from "./Loader";
 
 const ShareModal = () => {
   const { query } = useRouter();
