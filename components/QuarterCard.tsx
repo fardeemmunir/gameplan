@@ -3,8 +3,16 @@ import { Droppable } from "react-beautiful-dnd";
 
 import ScheduleList from "./ScheduleList";
 import QuarterOverview from "./QuarterOverview";
+import { Class } from "../lib/reducer";
 
-const QuarterCard = ({ classes, id, quarter, isDropDisabled }) => (
+interface Props {
+  classes: Class[];
+  id: string;
+  isDropDisabled: boolean;
+  quarter: string;
+}
+
+const QuarterCard = ({ classes, id, quarter, isDropDisabled }: Props) => (
   <div className="w-1/3 px-2 mb-4 flex">
     <div
       className={
@@ -14,7 +22,7 @@ const QuarterCard = ({ classes, id, quarter, isDropDisabled }) => (
     >
       <style jsx>{`
         .shrink {
-          transform: scale(0.9);
+          transform: scale(0.95);
         }
         .drop-zone {
           min-height: 9rem;
@@ -38,11 +46,12 @@ const QuarterCard = ({ classes, id, quarter, isDropDisabled }) => (
             ref={provided.innerRef}
             {...provided.droppableProps}
             className={
-              "drop-zone transition-bg flex-1 p-2 rounded-b " +
+              "drop-zone transition-bg flex-1 pt-2 px-2 rounded-b " +
               (snapshot.isDraggingOver ? "bg-gray-300" : "transparent")
             }
           >
             <ScheduleList classes={classes} />
+
             {provided.placeholder}
             {classes.length > 5 && (
               <p className="text-red-500 text-sm tracking-wide font-bold mt-4">

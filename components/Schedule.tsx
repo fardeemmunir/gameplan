@@ -1,161 +1,153 @@
-export default () => <h1>Helo</h1>;
+import React, { useContext, useState } from "react";
+import { DragDropContext, DragStart, DropResult } from "react-beautiful-dnd";
+import { produce } from "immer";
 
-// import React, { useContext } from "react";
-// import { DragDropContext } from "react-beautiful-dnd";
+import QuarterCard from "./QuarterCard";
+import Store, { useStore } from "../lib/store";
+import { updateSchedule } from "../lib/reducer";
+import scheduleBuilder from "../lib/utils/scheduler";
+import sortSchedule from "../lib/utils/sortSchedule";
 
-// import QuarterCard from "./QuarterCard";
-// import Store from "../lib/store";
-// import scheduleBuilder from "../lib/utils/scheduler";
-// import sortSchedule from "../lib/utils/sortSchedule";
-// import { useState } from "react";
-// import { CSSTransition } from "react-transition-group";
+const useScheduling = () => {
+  const [classBeingDragged, setClassBeingDragged] = useState(null);
+  const { classList, schedule, dispatch } = useContext(Store);
+  const sortedSchedule = sortSchedule(schedule.data);
 
-// const Schedule = () => {
-//   const [classBeingDragged, setClassBeingDragged] = useState(null);
-//   const { classList, schedule, dispatch } = useContext(Store);
-//   const sortedSchedule = sortSchedule(schedule.data);
+  function updateScheduleAfterDrop(result: DropResult) {
+    setClassBeingDragged(null);
+    const { destination, source, draggableId } = result;
 
-//   function updateSchedule(result) {
-//     setClassBeingDragged(null);
-//     const { destination, source, draggableId } = result;
-//     const updatedSchedule = Object.assign({}, schedule);
+    if (!destination) return;
 
-//     if (!destination) return;
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    )
+      return;
 
-//     if (
-//       destination.droppableId === source.droppableId &&
-//       destination.index === source.index
-//     )
-//       return;
+    const update = produce(schedule.data, draft => {
+      draft[source.droppableId].splice(source.index, 1);
+      draft[destination.droppableId].splice(destination.index, 0, draggableId);
+    });
 
-//     // Remove item from source
-//     const newSource = Array.from(schedule[source.droppableId] || []);
-//     newSource.splice(source.index, 1);
+    dispatch(updateSchedule(update));
+  }
 
-//     // Add item to destination
-//     const newDest = Array.from(schedule[destination.droppableId] || []);
+  function isDropDisabled(quarter: string, currentQuarterIndex: number) {
+    if (!classBeingDragged) return false;
 
-//     // If user is reordering items in the same column
-//     if (destination.droppableId === source.droppableId) {
-//       newSource.splice(destination.index, 0, draggableId);
-//       updatedSchedule[source.droppableId] = newSource;
-//     } else {
-//       newDest.splice(destination.index, 0, draggableId);
-//       updatedSchedule[source.droppableId] = newSource;
-//       updatedSchedule[destination.droppableId] = newDest;
-//     }
+    const classInfo = classList.find(({ id }) => id === classBeingDragged);
 
-//     // console.log(updatedSchedule);
-//     dispatch({
-//       type: "UPDATE_SCHEDULE",
-//       payload: {
-//         updatedSchedule
-//       }
-//     });
-//   }
+    const classesCompletedTillNow = sortedSchedule
+      .slice(0, currentQuarterIndex)
+      .map(({ classes }) => classes)
+      .flat();
 
-//   function generateSchedule() {
-//     dispatch({
-//       type: "UPDATE_SCHEDULE",
-//       payload: {
-//         updatedSchedule: scheduleBuilder(classList)
-//       }
-//     });
-//   }
+    // Flip the boolean since the function is asking if the drop is disabled or not
+    // Condtitions for being enabled
+    // 1. Quarter in quarter pref
+    // 2. All the prereqs of the class being dragged has been fulfilled and is contained in classesCompletedTillNow
+    // 3. All classes in ClassCompletedTillNow doesnt have a prereq that includes the classBeing dragged. Makes
+    //    sure that you can't place a class behind a class that has a dependency on it
+    return !(
+      classInfo.quarterPref.includes(quarter) && // [1]
+      classInfo.prereqs.every(id => classesCompletedTillNow.includes(id)) && // [2]
+      classesCompletedTillNow.every(id => {
+        // [3]
+        const classInfo = classList.find(info => info.id === id);
+        return !classInfo.prereqs.includes(classBeingDragged);
+      })
+    );
+  }
 
-//   function clearSchedule() {
-//     dispatch({
-//       type: "UPDATE_SCHEDULE",
-//       payload: {
-//         updatedSchedule: {}
-//       }
-//     });
-//   }
+  return {
+    schedule,
+    sortedSchedule,
+    isDropDisabled,
+    updateScheduleAfterDrop,
 
-//   function saveDraggedClass(payload) {
-//     setClassBeingDragged(payload.draggableId);
-//   }
+    generateSchedule() {
+      dispatch(updateSchedule(scheduleBuilder(classList)));
+    },
 
-//   function isDropDisabled(quarter, currentQuarterIndex) {
-//     if (!classBeingDragged) return false;
+    clearSchedule() {
+      dispatch(updateSchedule({}));
+    },
 
-//     const classInfo = classList.find(({ code }) => code === classBeingDragged);
+    saveDraggedClass(payload: DragStart) {
+      setClassBeingDragged(payload.draggableId);
+    }
+  };
+};
 
-//     const classesCompletedTillNow = sortedSchedule
-//       .slice(0, currentQuarterIndex)
-//       .map(({ classes }) => classes)
-//       .flat();
+const Schedule = () => {
+  const { classList } = useStore();
+  const {
+    schedule,
+    sortedSchedule,
+    generateSchedule,
+    isDropDisabled,
+    clearSchedule,
+    saveDraggedClass,
+    updateScheduleAfterDrop
+  } = useScheduling();
 
-//     // Flip the boolean since the function is asking if the drop is disabled or not
-//     // Condtitions for being enabled
-//     // 1. Quarter in quarter pref
-//     // 2. classCompletedTillNow includes all prereqs
-//     // 3. All classes in ClassCompletedTillNow doesnt have a prereq that includes the classBeing dragged
-//     return !(
-//       classInfo.quarterPref.includes(quarter) &&
-//       classInfo.prereqs.every(code => classesCompletedTillNow.includes(code)) &&
-//       classesCompletedTillNow.every(code => {
-//         const classInfo = classList.find(info => info.code === code);
+  if (Object.keys(schedule.data).length === 0) {
+    return (
+      <div className="w-full flex flex-wrap justify-center">
+        <button className="form__submit" onClick={generateSchedule}>
+          Generate
+        </button>
+      </div>
+    );
+  }
 
-//         return !classInfo.prereqs.includes(classBeingDragged);
-//       })
-//     );
-//   }
+  return (
+    <div>
+      <DragDropContext
+        onDragStart={saveDraggedClass}
+        onDragEnd={updateScheduleAfterDrop}
+      >
+        <div className="flex flex-wrap -mx-2">
+          {sortedSchedule.map(({ quarter, classes, id }, i) => (
+            <QuarterCard
+              key={i}
+              id={id}
+              quarter={quarter}
+              isDropDisabled={isDropDisabled(quarter, i)}
+              classes={classes.map(id =>
+                classList.find(info => info.id === id)
+              )}
+            />
+          ))}
+        </div>
+      </DragDropContext>
 
-//   return (
-//     <div className="w-full mb-10">
-//       <p className="text-center text-gigantic opacity-25 font-bold">Schedule</p>
+      <div className="w-full flex justify-center">
+        <button className="form__submit mr-4" onClick={generateSchedule}>
+          Reset Schedule
+        </button>
+        <button className="form__submit" onClick={clearSchedule}>
+          Clear Schedule
+        </button>
+      </div>
+    </div>
+  );
+};
 
-//       <div className="p-4 w-full max-w-3xl mx-auto -mt-16 rounded text-black relative z-10 schedule-chart mb-12">
-//         {Object.keys(schedule).length === 0 ? (
-//           <div className="w-full flex flex-wrap justify-center">
-//             <button className="form__submit" onClick={generateSchedule}>
-//               Generate
-//             </button>
-//           </div>
-//         ) : (
-//           <CSSTransition
-//             in={Object.keys(schedule).length !== 0}
-//             timeout={1000}
-//             unmountOnExit
-//             classNames="fade-in-card"
-//           >
-//             <div>
-//               <DragDropContext
-//                 onDragStart={saveDraggedClass}
-//                 onDragEnd={updateSchedule}
-//               >
-//                 <div className="flex flex-wrap -mx-2">
-//                   {sortedSchedule.map(({ quarter, classes, id }, i) => (
-//                     <QuarterCard
-//                       key={i}
-//                       id={id}
-//                       quarter={quarter}
-//                       isDropDisabled={isDropDisabled(quarter, i)}
-//                       classes={classes.map(code =>
-//                         classList.find(info => info.code === code)
-//                       )}
-//                     />
-//                   ))}
-//                 </div>
-//               </DragDropContext>
-//               <div className="w-full flex justify-center">
-//                 <button
-//                   className="form__submit mr-4"
-//                   onClick={generateSchedule}
-//                 >
-//                   Reset Schedule
-//                 </button>
-//                 <button className="form__submit" onClick={clearSchedule}>
-//                   Clear Schedule
-//                 </button>
-//               </div>
-//             </div>
-//           </CSSTransition>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
+export default () => (
+  <div className="w-full mb-10">
+    <style jsx>{`
+      .text-gigantic {
+        font-size: 7rem;
+      }
+    `}</style>
+    <h1 className="text-center text-5xl text-gigantic opacity-25 font-bold">
+      Schedule
+    </h1>
 
-// export default Schedule;
+    <div className="p-4 w-full max-w-3xl mx-auto -mt-16 rounded text-black relative z-10 schedule-chart mb-12">
+      <Schedule />
+    </div>
+  </div>
+);

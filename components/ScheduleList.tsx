@@ -3,19 +3,24 @@ import { Draggable } from "react-beautiful-dnd";
 
 import Store from "../lib/store";
 import color from "../lib/utils/scoreToColor";
+import { Class, setClassToEdit } from "../lib/reducer";
 
-const ScheduleList = ({ classes }) => {
+interface Props {
+  classes: Class[];
+}
+
+const ScheduleList = ({ classes }: Props) => {
   const { dispatch } = useContext(Store);
 
   return (
     <ul className="list-none">
       <style jsx>{`
         .schedule-item:last-of-type {
-          margin-bottom: 0;
+          // margin-bottom: 0;
         }
       `}</style>
       {classes.map((classInfo, i) => (
-        <Draggable key={classInfo.code} draggableId={classInfo.code} index={i}>
+        <Draggable key={classInfo.id} draggableId={classInfo.id} index={i}>
           {provided => (
             <li
               {...provided.draggableProps}
@@ -29,12 +34,7 @@ const ScheduleList = ({ classes }) => {
                 ...provided.draggableProps.style
               }}
               onClick={() => {
-                dispatch({
-                  type: "EDIT_CLASS",
-                  payload: {
-                    classCode: classInfo.code
-                  }
-                });
+                dispatch(setClassToEdit(classInfo.id));
               }}
             >
               <h2 className="text-xs tracking-widest font-mono">
