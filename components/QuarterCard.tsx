@@ -16,8 +16,8 @@ const QuarterCard = ({ classes, id, quarter, isDropDisabled }: Props) => (
   <div className="w-1/3 px-2 mb-4 flex">
     <div
       className={
-        "w-full rounded bg-white relative flex flex-col transition-bg " +
-        (isDropDisabled ? "shrink bg-gray-200" : "bg-white")
+        "w-full rounded bg-white relative flex flex-col transition-all duration-150 " +
+        (isDropDisabled ? "bg-gray-300" : "bg-white")
       }
     >
       <style jsx>{`
@@ -28,11 +28,19 @@ const QuarterCard = ({ classes, id, quarter, isDropDisabled }: Props) => (
           min-height: 9rem;
         }
       `}</style>
-      <header className="flex px-2 pt-2 justify-between items-end mb-4">
+      <header className="flex px-2 pt-2 justify-between items-end mb-4 relative">
         <div>
           <h1 className="text-3xl leading-none capitalize">
             {quarter.toLowerCase()}
           </h1>
+          <div
+            className={
+              "absolute top-0 left-0 mt-4 text-sm p-2 inline-block rounded-r bg-red-600 text-white font-bold opacity-0 transition-opacity duration-200 " +
+              (isDropDisabled ? "opacity-100" : "opacity-0")
+            }
+          >
+            Disabled
+          </div>
         </div>
 
         <QuarterOverview
