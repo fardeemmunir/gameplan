@@ -141,6 +141,10 @@ export default () => (
       .text-gigantic {
         font-size: 7rem;
       }
+
+      .schedule-chart {
+        min-height: 18rem;
+      }
     `}</style>
     <h1 className="text-center text-5xl text-gigantic opacity-25 font-bold">
       Schedule

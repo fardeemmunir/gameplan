@@ -16,6 +16,14 @@ const ClassDetails = () => {
 
   return (
     <div className="relative z-20">
+      <style jsx>{`
+        .class-more-details {
+          position: fixed;
+          bottom: 2rem;
+          z-index: 2;
+        }
+      `}</style>
+
       <CSSTransition
         in={editClass.length > 0}
         timeout={200}

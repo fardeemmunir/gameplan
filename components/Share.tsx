@@ -113,7 +113,11 @@ export default () => {
             position: "relative",
             backgroundColor: "transparent"
           },
-          content: {}
+          content: {
+            top: "1rem",
+            right: 0,
+            transition: "all 0.2s"
+          }
         }}
       >
         {loading ? (

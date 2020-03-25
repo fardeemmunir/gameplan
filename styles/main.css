@@ -75,10 +75,6 @@ a {
 /* Component Styles */
 
 /* AddClassForm */
-.add-class-form__title {
-  background-image: url("/books.png");
-  background-size: 80%;
-}
 
 .form__label {
   @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
@@ -115,10 +111,6 @@ a {
   @apply outline-none;
 }
 
-.z--1 {
-  z-index: -1;
-}
-
 /* NetworkGraph */
 
 .network__node {
@@ -142,22 +134,7 @@ text {
   opacity: 1;
 }
 
-.class-more-details {
-  position: fixed;
-  bottom: 2rem;
-  z-index: 2;
-}
-
-.leading-zero {
-  line-height: 0;
-}
-
-.share-modal {
-  top: 1rem;
-  right: 0;
-  transition: all 0.2s;
-}
-
+/* purgecss start ignore */
 .ReactModal__Overlay {
   opacity: 0;
   transition: opacity 200ms;
@@ -171,20 +148,6 @@ text {
   opacity: 0;
 }
 
-/* Schedule */
-.text-gigantic {
-  font-size: 7rem;
-}
-
-.schedule-chart {
-  min-height: 18rem;
-}
-
-.transition-bg {
-  transition: all 0.2s;
-}
-
-/* purgecss start ignore */
 .fade-in-card-enter {
   opacity: 0;
 }
