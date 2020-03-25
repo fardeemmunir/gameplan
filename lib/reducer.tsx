@@ -55,7 +55,16 @@ type SetClassToEdit = {
   payload: string;
 };
 
-type StoreActions = AddOrUpdateClass | RemoveClass | SetClassToEdit;
+type UpdateSchedule = {
+  type: "UPDATE_SCHEDULE";
+  payload: Schedule;
+};
+
+type StoreActions =
+  | AddOrUpdateClass
+  | RemoveClass
+  | SetClassToEdit
+  | UpdateSchedule;
 
 const storeReducer = function(state: Store, action: StoreActions): Store {
   switch (action.type) {
@@ -132,6 +141,16 @@ const storeReducer = function(state: Store, action: StoreActions): Store {
       };
     }
 
+    case "UPDATE_SCHEDULE": {
+      return {
+        ...state,
+        schedule: {
+          locks: state.schedule.locks,
+          data: action.payload
+        }
+      };
+    }
+
     default:
       return state;
   }
@@ -157,9 +176,21 @@ const actions = {
       type: "SET_CLASS_TO_EDIT",
       payload: id
     };
+  },
+
+  updateSchedule(schedule: Schedule): UpdateSchedule {
+    return {
+      type: "UPDATE_SCHEDULE",
+      payload: schedule
+    };
   }
 };
 
 export default storeReducer;
 
-export const { addOrUpdateClass, removeClass, setClassToEdit } = actions;
+export const {
+  addOrUpdateClass,
+  removeClass,
+  setClassToEdit,
+  updateSchedule
+} = actions;
