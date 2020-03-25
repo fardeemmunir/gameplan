@@ -25,11 +25,11 @@ const useGraphData = () => {
       x: 0,
       y: 0
     }));
-  }, [classList]);
+  }, [classList, classList.length]);
 
   const links = useMemo(() => {
     return makeLinksFromClassList(classList);
-  }, [classList]);
+  }, [classList, classList.length]);
 
   return {
     nodes,
