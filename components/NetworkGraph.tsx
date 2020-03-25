@@ -113,6 +113,8 @@ const NetworkGraph = ({ linkDistance, nodeDistance, searchTerm }: Props) => {
         return `text-green text-xs  ${isBolded && "font-bold searched-item"}`;
       });
 
+    let animationId = 0;
+
     simulation.on("tick", () => {
       let max = 0;
       let min = 0;
@@ -121,7 +123,7 @@ const NetworkGraph = ({ linkDistance, nodeDistance, searchTerm }: Props) => {
         min = Math.min(min, node.y);
       }
 
-      requestAnimationFrame(() => {
+      animationId = requestAnimationFrame(() => {
         setHeight(max + Math.abs(min) + 150);
       });
 
@@ -135,6 +137,7 @@ const NetworkGraph = ({ linkDistance, nodeDistance, searchTerm }: Props) => {
     });
 
     return () => {
+      cancelAnimationFrame(animationId);
       simulation.stop();
       svgContainer.current.innerHTML = "";
     };
