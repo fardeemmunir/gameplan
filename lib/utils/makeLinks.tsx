@@ -1,10 +1,5 @@
 import { Class } from "../reducer";
 
-interface Node {
-  node: string;
-  pointsTo: string[];
-}
-
 function makeLinksFromClassList(classList: Class[]) {
   let links = [];
 

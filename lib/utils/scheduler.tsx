@@ -1,4 +1,4 @@
-import { ScheduleInterface, ClassInfoInterface } from "../store";
+import { Schedule, Class } from "../reducer";
 
 enum QuarterOptions {
   Fall = "FALL",
@@ -6,10 +6,10 @@ enum QuarterOptions {
   Spring = "SPRING"
 }
 
-function scheduler(classList: Partial<ClassInfoInterface>[]) {
+function scheduler(classList: Partial<Class>[]) {
   let currentQuarter: QuarterOptions = QuarterOptions.Fall;
 
-  const schedule: ScheduleInterface = {};
+  const schedule: Schedule = {};
   let allocatedClasses: string[] = [];
   let year: number = 0;
   let selectedClasses: string[] = [];
