@@ -17,14 +17,16 @@ export type Schedule = {
   [key: string]: string[];
 };
 
+export type ScheduleWithLocks = {
+  locks: string[];
+  data: Schedule;
+};
+
 export type EditClass = string;
 
 export type Store = {
   classList: Class[];
-  schedule: {
-    data: Schedule;
-    locks: string[];
-  };
+  schedule: ScheduleWithLocks;
   editClass: EditClass;
 };
 

@@ -1,126 +1,96 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Modal from "react-modal";
+import isEqual from "lodash/isEqual";
+import { useRouter } from "next/router";
 
 import CloseIcon from "./CloseIcon";
+import { useStore } from "../lib/store";
+import Loader from "./Loader";
 
-// const ShareModal = () => {
-//   const { query } = useRouter();
-//   const { classList, schedule } = useContext(Store);
-//   const [isLoading, setIsLoading] = useState(true);
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [sharingId, setSharingId] = useState("");
+const useSharingId = (isOpen: boolean) => {
+  const { classList, schedule } = useStore();
+  const { query } = useRouter();
+  const [id, setId] = useState("");
+  const [loading, setLoading] = useState(true);
+  const prevData = useRef({});
 
-//   async function getId() {
-//     setIsLoading(true);
+  useEffect(() => {
+    if (!isOpen) return;
 
-//     setSharingId("123");
-//     setIsLoading(false);
-//     // if (query.id && typeof query.id === "string") {
-//     //   setSharingId(query.id);
-//     //   setIsLoading(false);
-//     //   return;
-//     // }
+    if (query.id && typeof query.id === "string") {
+      setId(query.id);
+      setLoading(false);
+      return;
+    }
 
-//     // if (classList.length === 0) {
-//     //   setSharingId(null);
-//     //   setIsLoading(false);
-//     //   return;
-//     // }
+    const dataToSave = { classList, schedule };
 
-//     // fetch("/api/createClassList", {
-//     //   method: "POST",
-//     //   headers: {
-//     //     Accept: "application/json",
-//     //     "Content-Type": "application/json"
-//     //   },
-//     //   body: JSON.stringify({ classList, schedule })
-//     // })
-//     //   .then(res => res.json())
-//     //   .then(content => {
-//     //     setSharingId(content.id);
-//     //     setIsLoading(false);
-//     //   });
+    if (isEqual(dataToSave, prevData.current)) return;
 
-//     // return;
-//   }
+    async function saveDataUpdatId() {
+      setLoading(true);
 
-//   useEffect(() => {
-//     function closeModal() {
-//       if (isModalOpen) setIsModalOpen(false);
-//     }
+      const data = await fetch("/api/share", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ classList, schedule })
+      }).then(res => res.json());
 
-//     function stopPropagation(e) {
-//       e.stopPropagation();
-//     }
+      setId(data.id);
+      setLoading(false);
+      prevData.current = dataToSave;
+    }
 
-//     document.addEventListener("click", closeModal);
-//     document
-//       .querySelector("#share-modal")
-//       .addEventListener("click", stopPropagation);
+    saveDataUpdatId();
+  }, [classList, schedule, isOpen]);
 
-//     return () => {
-//       document.removeEventListener("click", closeModal);
-//       document
-//         .querySelector("#share-modal")
-//         .removeEventListener("click", stopPropagation);
-//     };
-//   }, [isModalOpen]);
+  return { id, loading };
+};
 
-//   return (
-//     <div className="relative">
-//       <button
-//         className="block p-2 bg-blue-600 rounded form__submit mb-0"
-//         onClick={() => {
-//           getId();
-//           setIsModalOpen(!isModalOpen);
-//         }}
-//       >
-//         Share
-//       </button>
+const SharingInfo = ({ id, close }) => {
+  useEffect(() => {
+    const sharingModal: HTMLInputElement = document.querySelector(
+      "#sharing-id-input"
+    );
 
-//       <style jsx>{`
-//         .modal--closed {
-//           z-index: -2;
-//         }
-//       `}</style>
+    if (sharingModal) {
+      sharingModal.select();
+      document.execCommand("copy");
+    }
+  }, []);
 
-//       <div
-//         id="share-modal"
-//         className={
-//           "absolute bg-white p-2 share-modal rounded w-64 text-black text-left " +
-//           (isModalOpen ? "opacity-100 z-10" : "opacity-0 modal--closed")
-//         }
-//       >
-//         {classList.length === 0 ? (
-//           <p className="p-2 text-sm font-italic text-gray-700">
-//             Add some classes before you share!
-//           </p>
-//         ) : isLoading ? (
-//           <Loader />
-//         ) : (
-//           <ShareInfo id={sharingId} />
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
+  return (
+    <div>
+      <div className="flex">
+        <input
+          id="sharing-id-input"
+          type="text"
+          readOnly
+          value={window.location.origin + "/" + id}
+          className="w-full bg-gray-200 px-2 py-1 rounded mb-2 focus:outline-none focus:shadow-outline"
+        />
+      </div>
 
-const ShareInfo = ({ id }) => (
-  <div>
-    <div className="flex">
-      <input
-        id="sharing-id"
-        type="text"
-        readOnly
-        value={window.location.origin + "/" + id}
-        className="w-full bg-gray-200 px-2 py-1 rounded mb-2"
-      />
+      <div className="w-full flex justify-between">
+        <p className="italic text-gray-800 text-sm">Link copied!</p>
+
+        <button
+          className="focus:outline-none text-sm text-gray-800 flex"
+          onClick={close}
+        >
+          <span className="mr-1">Close</span> <CloseIcon color="#283748" />
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default () => {
   const [open, setOpen] = useState(false);
+  const { id, loading } = useSharingId(open);
 
   return (
     <div id="sharing-modal">
@@ -146,17 +116,11 @@ export default () => {
           content: {}
         }}
       >
-        <ShareInfo id="111" />
-        <div className="w-full flex justify-between">
-          <p className="italic text-gray-800 text-sm">Link copied!</p>
-
-          <button
-            className="focus:outline-none text-sm text-gray-800 flex"
-            onClick={() => setOpen(false)}
-          >
-            <span className="mr-1">Close</span> <CloseIcon color="#283748" />
-          </button>
-        </div>
+        {loading ? (
+          <Loader />
+        ) : (
+          <SharingInfo id={id} close={() => setOpen(false)} />
+        )}
       </Modal>
     </div>
   );
