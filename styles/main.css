@@ -153,9 +153,22 @@ text {
 }
 
 .share-modal {
-  top: 150%;
+  top: 1rem;
   right: 0;
   transition: all 0.2s;
+}
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
 }
 
 /* Schedule */
