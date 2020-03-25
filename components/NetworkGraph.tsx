@@ -1,36 +1,59 @@
-import React, { useRef, useEffect, useContext } from "react";
+import React, { useRef, useEffect, useState, useMemo } from "react";
 import * as d3 from "d3";
 
 import color from "../lib/utils/scoreToColor";
-import Store from "../lib/store";
-import { Class } from "../lib/reducer";
+import { useStore } from "../lib/store";
 import { setClassToEdit } from "../lib/reducer";
+import makeLinksFromClassList from "../lib/utils/makeLinks";
 
-type Node = Class & {
+type Node = {
+  id: string;
+  label: string;
+  color: string;
   x: number;
   y: number;
-  isSearched: boolean;
 };
 
-type Link = {
-  source: Node;
-  target: Node;
-  index: number;
+const useGraphData = () => {
+  const { classList } = useStore();
+
+  const nodes: Node[] = useMemo(() => {
+    return classList.map(info => ({
+      id: info.id,
+      color: color(info.interest - info.difficulty),
+      label: info.code,
+      x: 0,
+      y: 0
+    }));
+  }, [classList]);
+
+  const links = useMemo(() => {
+    return makeLinksFromClassList(classList);
+  }, [classList]);
+
+  return {
+    nodes,
+    links
+  };
 };
 
-const NetworkGraph = ({
-  nodes,
-  links,
-  isSearching,
-  linkDistance,
-  nodeDistance
-}) => {
-  const { dispatch } = useContext(Store);
+interface Props {
+  linkDistance: number;
+  nodeDistance: number;
+  searchTerm: string;
+}
+
+const NetworkGraph = ({ linkDistance, nodeDistance, searchTerm }: Props) => {
+  const { dispatch } = useStore();
+  const { nodes, links } = useGraphData();
+
   const svgContainer = useRef(null);
-  const height = 900;
+
+  const [width, setWidth] = useState(1180);
+  const [height, setHeight] = useState(1000);
 
   useEffect(() => {
-    const width = window.innerWidth - 100;
+    setWidth(window.innerWidth - 100);
 
     const simulation = d3
       .forceSimulation(nodes)
@@ -45,28 +68,7 @@ const NetworkGraph = ({
       .force("x", d3.forceX())
       .force("y", d3.forceY());
 
-    const svg = d3
-      .select(svgContainer.current)
-      .append("svg")
-      .attr("viewBox", `${-width / 2} ${-height / 2} ${width} ${height}`);
-
-    d3.select(svgContainer.current)
-      .select("svg")
-      .append("defs")
-      .append("marker")
-      .attr("id", "arrowhead")
-      .attr("id", "arrowhead")
-      .attr("viewBox", "-0 -5 10 10")
-      .attr("refX", 13)
-      .attr("refY", 0)
-      .attr("orient", "auto")
-      .attr("markerWidth", 13)
-      .attr("markerHeight", 13)
-      .attr("xoverflow", "visible")
-      .append("svg:path")
-      .attr("d", "M 0,-3 L 5 ,0 L 0,3")
-      .attr("fill", "#999")
-      .style("stroke", "none");
+    const svg = d3.select(svgContainer.current);
 
     const link = svg
       .append("g")
@@ -83,53 +85,87 @@ const NetworkGraph = ({
       .data(nodes)
       .join("g")
       .attr("class", "node")
+      // @ts-ignore
       .call(drag(simulation));
 
     node
       .append("circle")
       .attr("class", "cursor-pointer network__node")
       .attr("r", 10)
-      .attr("fill", (d: Node) => color(d.interest - d.difficulty))
+      .attr("fill", d => d.color)
       .attr("x", -8)
       .attr("y", -8)
-      .on("click", (d: Node) => {
+      .on("click", d => {
         dispatch(setClassToEdit(d.id));
       });
 
     node
       .append("text")
-      .attr(
-        "class",
-        (d: Node) =>
-          `text-green text-xs  ${d.isSearched && "font-bold searched-item"}`
-      )
       .attr("dx", 20)
       .attr("dy", ".45em")
-      .text((d: Node) => d.code);
+      .text(d => d.label)
+      .attr("class", d => {
+        const searchExp = new RegExp(searchTerm, "gi");
+
+        const isBolded =
+          searchTerm.trim() !== "" && d.label.search(searchExp) > -1;
+
+        return `text-green text-xs  ${isBolded && "font-bold searched-item"}`;
+      });
 
     simulation.on("tick", () => {
-      link
-        .attr("x2", (d: Link) => d.source.x)
-        .attr("y2", (d: Link) => d.source.y)
-        .attr("x1", (d: Link) => d.target.x)
-        .attr("y1", (d: Link) => d.target.y);
+      let max = 0;
+      let min = 0;
+      for (const node of nodes) {
+        max = Math.max(max, node.y);
+        min = Math.min(min, node.y);
+      }
 
-      node.attr("transform", (d: Node) => `translate(${d.x},${d.y})`);
+      requestAnimationFrame(() => {
+        setHeight(max + Math.abs(min) + 150);
+      });
+
+      link
+        .attr("x2", d => d.source.x)
+        .attr("y2", d => d.source.y)
+        .attr("x1", d => d.target.x)
+        .attr("y1", d => d.target.y);
+
+      node.attr("transform", d => `translate(${d.x},${d.y})`);
     });
 
     return () => {
       simulation.stop();
       svgContainer.current.innerHTML = "";
     };
-  }, [nodes, links, linkDistance, nodeDistance]);
+  }, [nodes, links, linkDistance, nodeDistance, searchTerm]);
 
   return (
     <section className="relative w-full px-8">
       <div
-        className={"w-full " + (isSearching && "network--is-searched")}
-        ref={svgContainer}
-        style={{ minHeight: height }}
-      ></div>
+        className={`w-full ${searchTerm.trim() !== "" &&
+          "network--is-searched"}`}
+      >
+        <svg
+          ref={svgContainer}
+          viewBox={`${-width / 2} ${-height / 2} ${width} ${height}`}
+        >
+          <defs>
+            <marker
+              id="arrowhead"
+              viewBox="-0 -5 10 10"
+              refX="13"
+              refY="0"
+              orient="auto"
+              markerWidth="13"
+              markerHeight="13"
+              overflow="visible"
+            >
+              <path d="M 0,-3 L 5 ,0 L 0,3" fill="#999" stroke="none"></path>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
   );
 };

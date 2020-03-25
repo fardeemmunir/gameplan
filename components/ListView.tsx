@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import Store from "../lib/store";
+import { setClassToEdit } from "../lib/reducer";
 
 const ListView = ({ classList }) => {
   const { dispatch } = useContext(Store);
@@ -15,7 +16,7 @@ const ListView = ({ classList }) => {
 
   function mapPropNameToLabel(prop) {
     if (prop === "prereqs") return "prerequisites";
-    if (prop === "quarterPref") return "quarter preference";
+    if (prop === "quarterPref") return "quarter pref.";
 
     return prop;
   }
@@ -45,7 +46,10 @@ const ListView = ({ classList }) => {
           {classList.map(classInfo => (
             <tr key={classInfo.id}>
               {propNames.map(prop => (
-                <td key={prop} className="border-t border-gray-600 px-4 py-2">
+                <td
+                  key={prop}
+                  className="border-t border-gray-600 capitalize px-4 py-2"
+                >
                   {classInfo[prop]}
                 </td>
               ))}
@@ -53,12 +57,7 @@ const ListView = ({ classList }) => {
                 <button
                   className="form__submit"
                   onClick={() => {
-                    dispatch({
-                      type: "EDIT_CLASS",
-                      payload: {
-                        classCode: classInfo.code
-                      }
-                    });
+                    dispatch(setClassToEdit(classInfo.id));
                   }}
                 >
                   Edit

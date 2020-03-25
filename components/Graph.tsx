@@ -1,14 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 
-import Store from "../lib/store";
-import makeLinks from "../lib/utils/makeLinks";
+import { useStore } from "../lib/store";
 import NetworkGraph from "./NetworkGraph";
 import Share from "./Share";
 import ListView from "./ListView";
 import { Class } from "../lib/reducer";
 
 const Graph = () => {
-  const { classList } = useContext(Store);
+  const { classList } = useStore();
   const [searchTerm, setSearchTerm] = useState("");
   const [linkDistance, setLinkDistance] = useState(150);
   const [nodeDistance, setNodeDistance] = useState(900);
@@ -97,11 +96,9 @@ const Graph = () => {
 
       {showGraph ? (
         <NetworkGraph
-          nodes={classList.map(mapClassToSearch)}
-          links={makeLinks(classList)}
           linkDistance={linkDistance}
           nodeDistance={nodeDistance}
-          isSearching={!!searchTerm}
+          searchTerm={searchTerm}
         />
       ) : (
         <ListView
@@ -113,8 +110,10 @@ const Graph = () => {
             })
             .map(info => ({
               ...info,
-              prereqs: info.prereqs.join(", "),
-              quarterPref: info.quarterPref.join(", ").toLowerCase()
+              quarterPref: info.quarterPref.join(", ").toLowerCase(),
+              prereqs: info.prereqs
+                .map(classId => classList.find(({ id }) => id === classId).name)
+                .join(", ")
             }))}
         />
       )}
