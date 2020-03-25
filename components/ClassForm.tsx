@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Formik, Form, Field, FieldArray } from "formik";
 import CreatableSelect from "react-select/creatable";
@@ -6,7 +6,7 @@ import { Styles } from "react-select";
 import { colors } from "tailwindcss/defaultTheme";
 
 import { useStore } from "../lib/store";
-import { addOrUpdateClass } from "../lib/reducer";
+import { addOrUpdateClass, removeClass } from "../lib/reducer";
 
 const multiSelectStyles: Styles = {
   control: (provided, { isFocused }) => ({
@@ -29,19 +29,31 @@ const multiSelectStyles: Styles = {
   })
 };
 
+const emptyClass = {
+  code: "",
+  name: "",
+  prereqs: [],
+  difficulty: 1,
+  interest: 1,
+  quarterPref: []
+};
+
 const ClassForm = () => {
-  const { classList, dispatch } = useStore();
+  const { classList, editClass, dispatch } = useStore();
+  const [initialValue, setInitialValue] = useState(emptyClass);
+
+  useEffect(() => {
+    if (editClass === "") {
+      setInitialValue(emptyClass);
+    } else {
+      setInitialValue(classList.find(({ id }) => id === editClass));
+    }
+  }, [editClass]);
 
   return (
     <Formik
-      initialValues={{
-        code: "",
-        name: "",
-        prereqs: [],
-        difficulty: 1,
-        interest: 1,
-        quarterPref: []
-      }}
+      enableReinitialize={true}
+      initialValues={initialValue}
       onSubmit={(values, { resetForm }) => {
         dispatch(addOrUpdateClass({ id: uuidv4(), ...values }));
         resetForm();
@@ -150,19 +162,38 @@ const ClassForm = () => {
               </p>
             </section>
 
-            <section className="flex-1">
-              <style jsx>{`
-                .align {
-                  margin-top: 3px;
-                }
-              `}</style>
+            <style jsx>{`
+              .form-btn {
+                padding-right: 1rem;
+                margin-top: 3px;
+                transition: all 0.1s;
+              }
+
+              .form-btn:last-of-type {
+                padding-right: 0;
+              }
+            `}</style>
+
+            <section className="flex-1 pr-4 form-btn">
               <label className="form__label">&nbsp;</label>
               <input
-                className="form__submit w-full align"
+                className="form__submit w-full align mr-4"
                 type="submit"
-                value="Add Class"
+                value={`${editClass ? "Update" : "Add"} Class`}
               />
             </section>
+
+            {editClass !== "" && (
+              <section className="w-1/2 form-btn">
+                <label className="form__label">&nbsp;</label>
+                <input
+                  className="form__submit--danger w-full align"
+                  type="button"
+                  value="Remove class"
+                  onClick={() => dispatch(removeClass(editClass))}
+                />
+              </section>
+            )}
           </div>
         </Form>
       )}
@@ -170,24 +201,28 @@ const ClassForm = () => {
   );
 };
 
-export default () => (
-  <div className="flex mb-4 bg-white text-black rounded">
-    <style jsx>{`
-      .bg {
-        background-image: url("/books.png");
-        background-size: 80%;
-        background-position: right bottom;
-        background-repeat: no-repeat;
-      }
-    `}</style>
-    <div className="w-1/5 pl-4 flex items-center bg">
-      <h1 className="text-4xl">
-        Add <br /> Class
-      </h1>
-    </div>
+export default () => {
+  const { editClass } = useStore();
 
-    <div className="w-4/5 p-4">
-      <ClassForm />
+  return (
+    <div className="flex mb-4 bg-white text-black rounded">
+      <style jsx>{`
+        .bg {
+          background-image: url("/books.png");
+          background-size: 80%;
+          background-position: right bottom;
+          background-repeat: no-repeat;
+        }
+      `}</style>
+      <div className="w-1/5 pl-4 flex items-center bg">
+        <h1 className="text-4xl">
+          {editClass ? "Edit" : "Add"} <br /> Class
+        </h1>
+      </div>
+
+      <div className="w-4/5 p-4">
+        <ClassForm />
+      </div>
     </div>
-  </div>
-);
+  );
+};
