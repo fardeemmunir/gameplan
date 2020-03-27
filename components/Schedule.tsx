@@ -135,29 +135,23 @@ const Schedule = () => {
   );
 };
 
-export default () => {
-  const { classList } = useStore();
+export default () => (
+  <div className="w-full mb-10">
+    <style jsx>{`
+      .text-gigantic {
+        font-size: 7rem;
+      }
 
-  if (classList.length === 0) return null;
+      .schedule-chart {
+        min-height: 18rem;
+      }
+    `}</style>
+    <h1 className="text-center text-5xl text-gigantic opacity-25 font-bold">
+      Schedule
+    </h1>
 
-  return (
-    <div className="w-full mb-10">
-      <style jsx>{`
-        .text-gigantic {
-          font-size: 7rem;
-        }
-
-        .schedule-chart {
-          min-height: 18rem;
-        }
-      `}</style>
-      <h1 className="text-center text-5xl text-gigantic opacity-25 font-bold">
-        Schedule
-      </h1>
-
-      <div className="p-4 w-full max-w-3xl mx-auto -mt-16 rounded text-black relative z-10 schedule-chart mb-12">
-        <Schedule />
-      </div>
+    <div className="p-4 w-full max-w-3xl mx-auto -mt-16 rounded text-black relative z-10 schedule-chart mb-12">
+      <Schedule />
     </div>
-  );
-};
+  </div>
+);

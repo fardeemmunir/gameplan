@@ -25,17 +25,6 @@ const Graph = () => {
     } else return { ...classInfo, isSearched: false };
   }
 
-  if (classList.length === 0) {
-    return (
-      <div className="my-48">
-        <img className="w-1/4 mx-auto" src="/plan.png" alt="" />
-        <p className="text-xl tracking-wider text-center opacity-50">
-          Add some classes
-        </p>
-      </div>
-    );
-  }
-
   return (
     <article>
       <div className="w-full text-center mt-8 mb-4 flex justify-between items-center container">
