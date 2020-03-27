@@ -28,14 +28,19 @@ const QuarterCard = ({ classes, id, quarter, isDropDisabled }: Props) => (
           min-height: 9rem;
         }
       `}</style>
-      <header className="flex px-2 pt-2 justify-between items-center mb-4 relative">
-        <div>
-          <h1 className="text-3xl leading-none capitalize">
+      <header className="flex px-2 pt-2 justify-between items-center mb-4">
+        <div className="relative">
+          <h1
+            className={
+              "text-3xl leading-none capitalize transition-opacity duration-200 " +
+              (isDropDisabled && "opacity-0")
+            }
+          >
             {quarter.toLowerCase()}
           </h1>
           <div
             className={
-              "absolute top-0 left-0 mt-4 text-sm p-2 inline-block rounded-r bg-red-600 text-white font-bold opacity-0 transition-opacity duration-200 " +
+              "absolute select-none top-0 rounded text-sm p-2 inline-block bg-red-600 text-white font-bold opacity-0 transition-opacity duration-200 " +
               (isDropDisabled ? "opacity-100" : "opacity-0")
             }
           >
