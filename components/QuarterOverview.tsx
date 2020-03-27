@@ -30,7 +30,7 @@ const QuarterOverview = ({ quarterId, difficulty, interest }: Props) => {
       <Lock
         isLocked={schedule.locks.includes(quarterId)}
         onClick={() => {}}
-        className={`w-4 h-4 cursor-pointer transform transition-all duration-100 ${
+        className={`w-4 cursor-pointer transform transition-all duration-100 ${
           schedule.locks.includes(quarterId)
             ? "opacity-100 scale-125"
             : "opacity-50"
