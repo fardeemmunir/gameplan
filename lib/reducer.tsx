@@ -62,11 +62,17 @@ type UpdateSchedule = {
   payload: Schedule;
 };
 
+type ToggleLock = {
+  type: "TOGGLE_LOCK";
+  payload: string;
+};
+
 type StoreActions =
   | AddOrUpdateClass
   | RemoveClass
   | SetClassToEdit
-  | UpdateSchedule;
+  | UpdateSchedule
+  | ToggleLock;
 
 const storeReducer = function(state: Store, action: StoreActions): Store {
   switch (action.type) {
@@ -153,6 +159,26 @@ const storeReducer = function(state: Store, action: StoreActions): Store {
       };
     }
 
+    case "TOGGLE_LOCK": {
+      const quarterToggleLock = action.payload;
+
+      if (!Object.keys(state.schedule.data).includes(quarterToggleLock))
+        return { ...state };
+
+      const schedule = Object.assign({}, state.schedule);
+      const index = schedule.locks.findIndex(
+        currentLock => currentLock === quarterToggleLock
+      );
+
+      if (index !== -1) {
+        schedule.locks.splice(index, 1);
+      } else {
+        schedule.locks.push(quarterToggleLock);
+      }
+
+      return { ...state, schedule };
+    }
+
     default:
       return state;
   }
@@ -185,6 +211,13 @@ const actions = {
       type: "UPDATE_SCHEDULE",
       payload: schedule
     };
+  },
+
+  toggleLock(quarter: string): ToggleLock {
+    return {
+      type: "TOGGLE_LOCK",
+      payload: quarter
+    };
   }
 };
 
@@ -194,5 +227,6 @@ export const {
   addOrUpdateClass,
   removeClass,
   setClassToEdit,
-  updateSchedule
+  updateSchedule,
+  toggleLock
 } = actions;

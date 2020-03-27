@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Lock from "./utils/Lock";
 import { useStore } from "../lib/store";
+import { toggleLock } from "../lib/reducer";
 
 interface Props {
   quarterId: string;
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const QuarterOverview = ({ quarterId, difficulty, interest }: Props) => {
-  const { schedule } = useStore();
+  const { schedule, dispatch } = useStore();
   const [isLocked, setIsLocked] = useState(false);
 
   const score = interest - difficulty;
@@ -29,7 +30,7 @@ const QuarterOverview = ({ quarterId, difficulty, interest }: Props) => {
 
       <Lock
         isLocked={schedule.locks.includes(quarterId)}
-        onClick={() => {}}
+        onClick={() => dispatch(toggleLock(quarterId))}
         className={`w-4 cursor-pointer transform transition-all duration-100 ${
           schedule.locks.includes(quarterId)
             ? "opacity-100 scale-125"
