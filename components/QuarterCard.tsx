@@ -28,7 +28,7 @@ const QuarterCard = ({ classes, id, quarter, isDropDisabled }: Props) => (
           min-height: 9rem;
         }
       `}</style>
-      <header className="flex px-2 pt-2 justify-between items-end mb-4 relative">
+      <header className="flex px-2 pt-2 justify-between items-center mb-4 relative">
         <div>
           <h1 className="text-3xl leading-none capitalize">
             {quarter.toLowerCase()}
@@ -44,6 +44,7 @@ const QuarterCard = ({ classes, id, quarter, isDropDisabled }: Props) => (
         </div>
 
         <QuarterOverview
+          quarterId={id}
           difficulty={classes.reduce((a, b) => a + b.difficulty, 0)}
           interest={classes.reduce((a, b) => a + b.interest, 0)}
         />
