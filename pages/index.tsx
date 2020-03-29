@@ -1,11 +1,10 @@
 import React from "react";
 
-import Header from "../components/Header";
-
 import "../styles/main.css";
-import AddClassForm from "../components/AddClassForm";
 
 import { StoreProvider } from "../lib/store";
+import Header from "../components/Header";
+import ClassForm from "../components/ClassForm";
 import Graph from "../components/Graph";
 import Schedule from "../components/Schedule";
 import ClassDetails from "../components/ClassDetails";
@@ -17,10 +16,10 @@ const Home = () => {
       <main>
         <div className="container">
           <Header />
-          <AddClassForm />
+          <ClassForm />
         </div>
-
         <ClassDetails />
+
         <Graph />
         <Schedule />
 

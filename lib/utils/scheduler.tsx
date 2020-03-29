@@ -1,4 +1,4 @@
-import { ScheduleInterface, ClassInfoInterface } from "../store";
+import { Schedule, Class } from "../reducer";
 
 enum QuarterOptions {
   Fall = "FALL",
@@ -6,21 +6,21 @@ enum QuarterOptions {
   Spring = "SPRING"
 }
 
-function scheduler(classList: Partial<ClassInfoInterface>[]) {
+function scheduler(classList: Class[]) {
   let currentQuarter: QuarterOptions = QuarterOptions.Fall;
 
-  const schedule: ScheduleInterface = {};
+  const schedule: Schedule = {};
   let allocatedClasses: string[] = [];
   let year: number = 0;
   let selectedClasses: string[] = [];
 
   while (allocatedClasses.length !== classList.length) {
     selectedClasses = classList
-      .filter(classInfo => !allocatedClasses.includes(classInfo.code))
+      .filter(classInfo => !allocatedClasses.includes(classInfo.id))
       .filter(classInfo => {
         return (
           classInfo.quarterPref.includes(currentQuarter) &&
-          classInfo.prereqs.every(code => allocatedClasses.includes(code))
+          classInfo.prereqs.every(id => allocatedClasses.includes(id))
         );
       })
       .sort((a, b) => {
@@ -29,7 +29,7 @@ function scheduler(classList: Partial<ClassInfoInterface>[]) {
 
         return aScore <= bscore ? 1 : -1;
       })
-      .map(({ code }) => code);
+      .map(({ id }) => id);
 
     if (selectedClasses.length > 4) {
       selectedClasses = selectedClasses.slice(0, 4);

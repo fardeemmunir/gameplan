@@ -75,10 +75,6 @@ a {
 /* Component Styles */
 
 /* AddClassForm */
-.add-class-form__title {
-  background-image: url("/books.png");
-  background-size: 80%;
-}
 
 .form__label {
   @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
@@ -106,20 +102,13 @@ a {
   @apply border-red-600;
 }
 
-.quarter-selector label {
+.quarter-selector button {
+  @apply rounded border border-gray-300 py-2 px-3 leading-tight capitalize;
   transition: all 0.2s;
 }
 
-.quarter-selector input:checked + label {
-  @apply bg-gray-200;
-}
-
-.quarter-selector input:focus + label {
-  @apply border-gray-400;
-}
-
-.z--1 {
-  z-index: -1;
+.quarter-selector button:focus {
+  @apply outline-none;
 }
 
 /* NetworkGraph */
@@ -145,36 +134,20 @@ text {
   opacity: 1;
 }
 
-.class-more-details {
-  position: fixed;
-  bottom: 2rem;
-  z-index: 2;
-}
-
-.leading-zero {
-  line-height: 0;
-}
-
-.share-modal {
-  top: 150%;
-  right: 0;
-  transition: all 0.2s;
-}
-
-/* Schedule */
-.text-gigantic {
-  font-size: 7rem;
-}
-
-.schedule-chart {
-  min-height: 18rem;
-}
-
-.transition-bg {
-  transition: all 0.2s;
-}
-
 /* purgecss start ignore */
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
 .fade-in-card-enter {
   opacity: 0;
 }

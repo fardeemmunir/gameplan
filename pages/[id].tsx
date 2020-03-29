@@ -1,13 +1,11 @@
 import React from "react";
-import Head from "next/head";
 import fetch from "isomorphic-unfetch";
 import { resetServerContext } from "react-beautiful-dnd";
 
-import Header from "../components/Header";
-
 import "../styles/main.css";
-
 import { StoreProvider } from "../lib/store";
+
+import Header from "../components/Header";
 import AboutCard from "../components/AboutCard";
 import ErrorInfo from "../components/ErrorInfo";
 import Graph from "../components/Graph";
@@ -48,11 +46,11 @@ Page.getInitialProps = async ({ query, req }) => {
       ? "http://" + req.headers.host
       : window.location.origin;
 
-  const res = await fetch(`${url}/api/getClassList?id=${query.id}`);
-  const info = await res.json();
+  const res = await fetch(`${url}/api/share?id=${query.id}`);
+  const data = await res.json();
 
   return {
-    stateFromServer: info,
+    stateFromServer: data,
     isError: res.status === 500 ? true : false
   };
 };

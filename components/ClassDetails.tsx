@@ -1,20 +1,29 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 
 import ClassCard from "./ClassCard";
-import Store, { initialState } from "../lib/store";
+import { setClassToEdit } from "../lib/reducer";
+import { useStore } from "../lib/store";
 
 const ClassDetails = () => {
-  const [currentClass, setCurrentClass] = useState(initialState.classList[0]);
-  const { classList, editClass, dispatch } = useContext(Store);
+  const [currentClass, setCurrentClass] = useState(null);
+  const { classList, editClass, dispatch } = useStore();
 
   useEffect(() => {
     if (!editClass) return;
-    setCurrentClass(classList.find(({ code }) => code === editClass));
+    setCurrentClass(classList.find(({ id }) => id === editClass));
   }, [editClass, classList]);
 
   return (
     <div className="relative z-20">
+      <style jsx>{`
+        .class-more-details {
+          position: fixed;
+          bottom: 2rem;
+          z-index: 2;
+        }
+      `}</style>
+
       <CSSTransition
         in={editClass.length > 0}
         timeout={200}
@@ -24,11 +33,7 @@ const ClassDetails = () => {
         <div className="class-more-details ml-8">
           <ClassCard
             {...currentClass}
-            closeCard={() => {
-              dispatch({
-                type: "FINISH_EDITING_CLASS"
-              });
-            }}
+            closeCard={() => dispatch(setClassToEdit(""))}
           />
         </div>
       </CSSTransition>

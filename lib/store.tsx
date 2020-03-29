@@ -1,34 +1,15 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer, useEffect, useContext } from "react";
 
-import reducer from "./reducer";
+import reducer, { initialState, Store as StoreData } from "./reducer";
 
-export interface StoreInterface {
-  classList: ClassInfoInterface[];
-  editClass: string;
-  schedule: ScheduleInterface;
-  dispatch: Function;
+interface Store extends StoreData {
+  dispatch: (arg: any) => void;
 }
 
-export interface ClassInfoInterface {
-  code: string;
-  name: string;
-  prereqs: string[];
-  difficulty: number;
-  interest: number;
-  quarterPref: string[];
-}
-
-export interface ScheduleInterface {
-  [key: string]: string[];
-}
-
-const Store = createContext<Partial<StoreInterface>>({});
-
-export const initialState = {
-  editClass: "",
-  classList: [],
-  schedule: {}
-};
+const Store = createContext<Store>({
+  ...initialState,
+  dispatch: () => {}
+});
 
 const localStorageKey = "GAMEPLAN.NU";
 
@@ -73,6 +54,10 @@ export const StoreProvider = ({ children, stateFromServer }) => {
   return (
     <Store.Provider value={{ ...state, dispatch }}>{children}</Store.Provider>
   );
+};
+
+export const useStore = () => {
+  return useContext(Store);
 };
 
 export default Store;

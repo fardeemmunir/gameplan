@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 
 const Header = () => (
-  <header className="pt-8 text-white">
+  <header className="pt-8 mb-8 text-white">
     <Head>
       <title>Gameplan – Design Wonderful Semesters</title>
       <link rel="shortcut icon" href="/favicon.png" />

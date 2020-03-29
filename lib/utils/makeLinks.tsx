@@ -1,16 +1,15 @@
-interface Node {
-  node: string;
-  pointsTo: string[];
-}
+import { Class } from "../reducer";
 
-function makeLinks(nodeList: Node[]) {
+function makeLinksFromClassList(classList: Class[]) {
   let links = [];
 
-  nodeList.forEach(({ node, pointsTo }) => {
-    links = links.concat(pointsTo.map(target => ({ source: node, target })));
-  });
+  classList
+    .map(({ id, prereqs }) => ({ node: id, pointsTo: prereqs }))
+    .forEach(({ node, pointsTo }) => {
+      links = links.concat(pointsTo.map(target => ({ source: node, target })));
+    });
 
   return links;
 }
 
-export default makeLinks;
+export default makeLinksFromClassList;
