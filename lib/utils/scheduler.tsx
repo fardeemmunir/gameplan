@@ -6,7 +6,7 @@ enum QuarterOptions {
   Spring = "SPRING"
 }
 
-function scheduler(classList: Class[]) {
+function scheduler(classList: Class[], locks: Schedule = {}) {
   let currentQuarter: QuarterOptions = QuarterOptions.Fall;
 
   const schedule: Schedule = {};
@@ -15,28 +15,34 @@ function scheduler(classList: Class[]) {
   let selectedClasses: string[] = [];
 
   while (allocatedClasses.length !== classList.length) {
-    selectedClasses = classList
-      .filter(classInfo => !allocatedClasses.includes(classInfo.id))
-      .filter(classInfo => {
-        return (
-          classInfo.quarterPref.includes(currentQuarter) &&
-          classInfo.prereqs.every(id => allocatedClasses.includes(id))
-        );
-      })
-      .sort((a, b) => {
-        const aScore = a.interest - a.difficulty;
-        const bscore = b.interest - b.difficulty;
+    const quarterToAllocate = `${currentQuarter}_${year}`;
 
-        return aScore <= bscore ? 1 : -1;
-      })
-      .map(({ id }) => id);
+    if (locks[quarterToAllocate]) {
+      selectedClasses = locks[quarterToAllocate];
+    } else {
+      selectedClasses = classList
+        .filter(classInfo => !allocatedClasses.includes(classInfo.id))
+        .filter(classInfo => {
+          return (
+            classInfo.quarterPref.includes(currentQuarter) &&
+            classInfo.prereqs.every(id => allocatedClasses.includes(id))
+          );
+        })
+        .sort((a, b) => {
+          const aScore = a.interest - a.difficulty;
+          const bscore = b.interest - b.difficulty;
 
-    if (selectedClasses.length > 4) {
-      selectedClasses = selectedClasses.slice(0, 4);
+          return aScore <= bscore ? 1 : -1;
+        })
+        .map(({ id }) => id);
+
+      if (selectedClasses.length > 4) {
+        selectedClasses = selectedClasses.slice(0, 4);
+      }
     }
 
     if (selectedClasses.length > 0) {
-      schedule[currentQuarter + "_" + year] = selectedClasses;
+      schedule[quarterToAllocate] = selectedClasses;
     }
 
     allocatedClasses = allocatedClasses.concat(selectedClasses);

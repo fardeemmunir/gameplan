@@ -33,8 +33,13 @@ const useScheduling = () => {
     dispatch(updateSchedule(update));
   }
 
-  function isDropDisabled(quarter: string, currentQuarterIndex: number) {
+  function isDropDisabled(
+    quarter: string,
+    currentQuarterIndex: number,
+    quarterId: string
+  ) {
     if (!classBeingDragged) return false;
+    if (schedule.locks.includes(quarterId)) return true;
 
     const classInfo = classList.find(({ id }) => id === classBeingDragged);
 
@@ -43,6 +48,7 @@ const useScheduling = () => {
       .map(({ classes }) => classes)
       .flat();
 
+    console.log(quarter, classesCompletedTillNow);
     // Flip the boolean since the function is asking if the drop is disabled or not
     // Condtitions for being enabled
     // 1. Quarter in quarter pref
@@ -67,7 +73,14 @@ const useScheduling = () => {
     updateScheduleAfterDrop,
 
     generateSchedule() {
-      dispatch(updateSchedule(scheduleBuilder(classList)));
+      const lockedClasses = Object.fromEntries(
+        schedule.locks.map(lockedQuarter => [
+          lockedQuarter,
+          schedule.data[lockedQuarter] || []
+        ])
+      );
+
+      dispatch(updateSchedule(scheduleBuilder(classList, lockedClasses)));
     },
 
     clearSchedule() {
@@ -114,7 +127,7 @@ const Schedule = () => {
               key={i}
               id={id}
               quarter={quarter}
-              isDropDisabled={isDropDisabled(quarter, i)}
+              isDropDisabled={isDropDisabled(quarter, i, id)}
               classes={classes.map(id =>
                 classList.find(info => info.id === id)
               )}
@@ -135,29 +148,23 @@ const Schedule = () => {
   );
 };
 
-export default () => {
-  const { classList } = useStore();
+export default () => (
+  <div className="w-full mb-10">
+    <style jsx>{`
+      .text-gigantic {
+        font-size: 7rem;
+      }
 
-  if (classList.length === 0) return null;
+      .schedule-chart {
+        min-height: 18rem;
+      }
+    `}</style>
+    <h1 className="text-center text-5xl text-gigantic opacity-25 font-bold">
+      Schedule
+    </h1>
 
-  return (
-    <div className="w-full mb-10">
-      <style jsx>{`
-        .text-gigantic {
-          font-size: 7rem;
-        }
-
-        .schedule-chart {
-          min-height: 18rem;
-        }
-      `}</style>
-      <h1 className="text-center text-5xl text-gigantic opacity-25 font-bold">
-        Schedule
-      </h1>
-
-      <div className="p-4 w-full max-w-3xl mx-auto -mt-16 rounded text-black relative z-10 schedule-chart mb-12">
-        <Schedule />
-      </div>
+    <div className="p-4 w-full max-w-3xl mx-auto -mt-16 rounded text-black relative z-10 schedule-chart mb-12">
+      <Schedule />
     </div>
-  );
-};
+  </div>
+);
