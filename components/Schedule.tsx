@@ -94,7 +94,7 @@ const useScheduling = () => {
 };
 
 const Schedule = () => {
-  const { classList } = useStore();
+  const { classList, isDataFromServer } = useStore();
   const {
     schedule,
     sortedSchedule,
@@ -136,14 +136,16 @@ const Schedule = () => {
         </div>
       </DragDropContext>
 
-      <div className="w-full flex justify-center">
-        <button className="form__submit mr-4" onClick={generateSchedule}>
-          Reset Schedule
-        </button>
-        <button className="form__submit" onClick={clearSchedule}>
-          Clear Schedule
-        </button>
-      </div>
+      {!isDataFromServer && (
+        <div className="w-full flex justify-center">
+          <button className="form__submit mr-4" onClick={generateSchedule}>
+            Reset Schedule
+          </button>
+          <button className="form__submit" onClick={clearSchedule}>
+            Clear Schedule
+          </button>
+        </div>
+      )}
     </div>
   );
 };

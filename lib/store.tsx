@@ -3,11 +3,13 @@ import React, { createContext, useReducer, useEffect, useContext } from "react";
 import reducer, { initialState, Store as StoreData } from "./reducer";
 
 interface Store extends StoreData {
+  isDataFromServer: boolean;
   dispatch: (arg: any) => void;
 }
 
 const Store = createContext<Store>({
   ...initialState,
+  isDataFromServer: false,
   dispatch: () => {}
 });
 
@@ -52,7 +54,11 @@ export const StoreProvider = ({ children, stateFromServer }) => {
   }, [state]);
 
   return (
-    <Store.Provider value={{ ...state, dispatch }}>{children}</Store.Provider>
+    <Store.Provider
+      value={{ ...state, isDataFromServer: !!stateFromServer, dispatch }}
+    >
+      {children}
+    </Store.Provider>
   );
 };
 
