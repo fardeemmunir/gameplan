@@ -33,8 +33,13 @@ const useScheduling = () => {
     dispatch(updateSchedule(update));
   }
 
-  function isDropDisabled(quarter: string, currentQuarterIndex: number) {
+  function isDropDisabled(
+    quarter: string,
+    currentQuarterIndex: number,
+    quarterId: string
+  ) {
     if (!classBeingDragged) return false;
+    if (schedule.locks.includes(quarterId)) return true;
 
     const classInfo = classList.find(({ id }) => id === classBeingDragged);
 
@@ -43,6 +48,7 @@ const useScheduling = () => {
       .map(({ classes }) => classes)
       .flat();
 
+    console.log(quarter, classesCompletedTillNow);
     // Flip the boolean since the function is asking if the drop is disabled or not
     // Condtitions for being enabled
     // 1. Quarter in quarter pref
@@ -67,7 +73,14 @@ const useScheduling = () => {
     updateScheduleAfterDrop,
 
     generateSchedule() {
-      dispatch(updateSchedule(scheduleBuilder(classList)));
+      const lockedClasses = Object.fromEntries(
+        schedule.locks.map(lockedQuarter => [
+          lockedQuarter,
+          schedule.data[lockedQuarter] || []
+        ])
+      );
+
+      dispatch(updateSchedule(scheduleBuilder(classList, lockedClasses)));
     },
 
     clearSchedule() {
@@ -114,7 +127,7 @@ const Schedule = () => {
               key={i}
               id={id}
               quarter={quarter}
-              isDropDisabled={isDropDisabled(quarter, i)}
+              isDropDisabled={isDropDisabled(quarter, i, id)}
               classes={classes.map(id =>
                 classList.find(info => info.id === id)
               )}
