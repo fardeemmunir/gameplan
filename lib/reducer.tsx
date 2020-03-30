@@ -143,6 +143,12 @@ const storeReducer = function(state: Store, action: StoreActions): Store {
     }
 
     case "SET_CLASS_TO_EDIT": {
+      if (
+        action.payload !== "" &&
+        !state.classList.find(({ id }) => id === action.payload)
+      )
+        return state;
+
       return {
         ...state,
         editClass: action.payload
