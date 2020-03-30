@@ -2,7 +2,8 @@ import reducer, {
   initialState,
   addOrUpdateClass,
   removeClass,
-  setClassToEdit
+  setClassToEdit,
+  toggleLock
 } from "./reducer";
 
 const classToAdd = {
@@ -117,5 +118,61 @@ test("Class editing can be empty", () => {
   expect(reducer(initialState, setClassToEdit(""))).toStrictEqual({
     ...initialState,
     editClass: ""
+  });
+});
+
+test("A quarter cannot be locked if it doesn't exist", () => {
+  const state = {
+    ...initialState,
+    schedule: {
+      data: {
+        FALL_0: []
+      },
+      locks: []
+    }
+  };
+
+  expect(reducer(state, toggleLock("QUARTER_DOESNT_EXIST"))).toStrictEqual(
+    state
+  );
+});
+
+test("A quarter can be locked if it does exist", () => {
+  const state = {
+    ...initialState,
+    schedule: {
+      data: {
+        FALL_0: []
+      },
+      locks: []
+    }
+  };
+
+  expect(reducer(state, toggleLock("FALL_0"))).toStrictEqual({
+    ...state,
+    schedule: {
+      ...state.schedule,
+      locks: ["FALL_0"]
+    }
+  });
+});
+
+test("A quarter is unlocked if it is already locked", () => {
+  const state = {
+    ...initialState,
+    schedule: {
+      data: {
+        FALL_0: []
+      },
+      locks: ["FALL_0"]
+    }
+  };
+
+  expect(reducer(state, toggleLock("FALL_0"))).toStrictEqual({
+    ...state,
+    schedule: {
+      ...state.schedule,
+      locks: []
+    }
   });
 });
