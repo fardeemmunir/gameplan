@@ -113,7 +113,7 @@ test("The scheduler works without locks", () => {
   // @ts-ignore
   const result = scheduler(classList, {});
 
-  expect(result).toStrictEqual(output);
+  expect(result).toEqual(output);
 });
 
 test("The scheduler works with locks", () => {
@@ -130,5 +130,5 @@ test("The scheduler works with locks", () => {
     WINTER_1: ["CS 213"]
   };
 
-  expect(result).toStrictEqual(output);
+  expect(result).toEqual(output);
 });

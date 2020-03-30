@@ -22,28 +22,26 @@ test("Class is added if it already doesn't exist", () => {
     classList: [classToAdd]
   };
 
-  expect(reducer(initialState, addOrUpdateClass(classToAdd))).toStrictEqual(
-    output
-  );
+  expect(reducer(initialState, addOrUpdateClass(classToAdd))).toEqual(output);
 });
 
 test("Class is not added if it already exists", () => {
   const state = { ...initialState, classList: [classToAdd] };
 
-  expect(reducer(state, addOrUpdateClass(classToAdd))).toStrictEqual(state);
+  expect(reducer(state, addOrUpdateClass(classToAdd))).toEqual(state);
 });
 
 test("Class is updated appropriately", () => {
   const state = { ...initialState, classList: [classToAdd] };
 
   classToAdd.name = "My updated class";
-  expect(reducer(state, addOrUpdateClass(classToAdd))).toStrictEqual(state);
+  expect(reducer(state, addOrUpdateClass(classToAdd))).toEqual(state);
 });
 
 test("If class has a new prereq, it gets automatically added", () => {
   classToAdd.prereqs.push("some_class");
   const output = reducer(initialState, addOrUpdateClass(classToAdd));
-  expect(output).toStrictEqual({
+  expect(output).toEqual({
     ...initialState,
     classList: [
       classToAdd,
@@ -66,9 +64,7 @@ test("Class is removed from list", () => {
     classList: [classToAdd]
   };
 
-  expect(reducer(state, removeClass(classToAdd.id))).toStrictEqual(
-    initialState
-  );
+  expect(reducer(state, removeClass(classToAdd.id))).toEqual(initialState);
 });
 
 test("Class is removed from schedule if it exists", () => {
@@ -83,7 +79,7 @@ test("Class is removed from schedule if it exists", () => {
     }
   };
 
-  expect(reducer(state, removeClass(classToAdd.id))).toStrictEqual({
+  expect(reducer(state, removeClass(classToAdd.id))).toEqual({
     ...initialState,
     schedule: {
       locks: [],
@@ -99,7 +95,7 @@ test("If a class exists, it can be edited", () => {
     ...initialState,
     classList: [classToAdd]
   };
-  expect(reducer(state, setClassToEdit(classToAdd.id))).toStrictEqual({
+  expect(reducer(state, setClassToEdit(classToAdd.id))).toEqual({
     ...state,
     editClass: classToAdd.id
   });
@@ -109,13 +105,13 @@ test("If a class doesn't exist, then it cannot be edited", () => {
   const state = {
     ...initialState
   };
-  expect(reducer(state, setClassToEdit(classToAdd.id))).toStrictEqual({
+  expect(reducer(state, setClassToEdit(classToAdd.id))).toEqual({
     ...state
   });
 });
 
 test("Class editing can be empty", () => {
-  expect(reducer(initialState, setClassToEdit(""))).toStrictEqual({
+  expect(reducer(initialState, setClassToEdit(""))).toEqual({
     ...initialState,
     editClass: ""
   });
@@ -132,9 +128,7 @@ test("A quarter cannot be locked if it doesn't exist", () => {
     }
   };
 
-  expect(reducer(state, toggleLock("QUARTER_DOESNT_EXIST"))).toStrictEqual(
-    state
-  );
+  expect(reducer(state, toggleLock("QUARTER_DOESNT_EXIST"))).toEqual(state);
 });
 
 test("A quarter can be locked if it does exist", () => {
@@ -148,7 +142,7 @@ test("A quarter can be locked if it does exist", () => {
     }
   };
 
-  expect(reducer(state, toggleLock("FALL_0"))).toStrictEqual({
+  expect(reducer(state, toggleLock("FALL_0"))).toEqual({
     ...state,
     schedule: {
       ...state.schedule,
@@ -168,7 +162,7 @@ test("A quarter is unlocked if it is already locked", () => {
     }
   };
 
-  expect(reducer(state, toggleLock("FALL_0"))).toStrictEqual({
+  expect(reducer(state, toggleLock("FALL_0"))).toEqual({
     ...state,
     schedule: {
       ...state.schedule,
