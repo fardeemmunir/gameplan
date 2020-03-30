@@ -84,6 +84,7 @@ const storeReducer = function(state: Store, action: StoreActions): Store {
       );
 
       if (classIndexIfExists === -1) {
+        classToBeAdded.id = uuidv4();
         classList.push(classToBeAdded);
       } else {
         classList[classIndexIfExists] = classToBeAdded;

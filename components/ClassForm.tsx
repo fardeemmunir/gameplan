@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { Formik, Form, Field, FieldArray } from "formik";
 import CreatableSelect from "react-select/creatable";
 import { Styles } from "react-select";
@@ -62,7 +61,7 @@ const ClassForm = () => {
       enableReinitialize={true}
       initialValues={initialValue}
       onSubmit={(values, { resetForm }) => {
-        dispatch(addOrUpdateClass({ id: uuidv4(), ...values }));
+        dispatch(addOrUpdateClass(values));
         resetForm();
       }}
     >
@@ -193,10 +192,8 @@ const ClassForm = () => {
             {editClass !== "" && (
               <section className="w-1/2 form-btn">
                 <label className="form__label">&nbsp;</label>
-                <input
+                <button
                   className="form__submit--danger w-full align"
-                  type="button"
-                  value="Remove class"
                   onClick={() => dispatch(removeClass(editClass))}
                   {...(() => {
                     const dependedBy = classesDependedOn(values.id);
@@ -205,12 +202,14 @@ const ClassForm = () => {
 
                     return {
                       disabled: true,
-                      title: `Class cannot be removed because it is depended on by ${dependedBy.join(
+                      "data-tooltip": `Class cannot be removed because it is depended on by ${dependedBy.join(
                         ", "
                       )}.`
                     };
                   })()}
-                />
+                >
+                  Remove class
+                </button>
               </section>
             )}
           </div>
