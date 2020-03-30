@@ -9,7 +9,9 @@ const Footer = () => (
       <a href="https://reactjs.org/">React</a> &amp;{" "}
       <a href="https://nextjs.org/">Friends</a>
     </p>
-    <p className="text-right tracking-tight">Made by Fardeem Munir</p>
+    <p className="text-right tracking-tight">
+      Made by <a href="https://fardeem.com">Fardeem Munir</a>
+    </p>
   </footer>
 );
 
