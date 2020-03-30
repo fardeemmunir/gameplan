@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
-import Store from "../lib/store";
+import { useStore } from "../lib/store";
 import color from "../lib/utils/scoreToColor";
 import { Class, setClassToEdit } from "../lib/reducer";
 
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const ScheduleList = ({ classes }: Props) => {
-  const { dispatch } = useContext(Store);
+  const { isDataFromServer, dispatch } = useStore();
 
   return (
     <ul className="list-none">
@@ -20,7 +20,12 @@ const ScheduleList = ({ classes }: Props) => {
         }
       `}</style>
       {classes.map((classInfo, i) => (
-        <Draggable key={classInfo.id} draggableId={classInfo.id} index={i}>
+        <Draggable
+          key={classInfo.id}
+          isDragDisabled={isDataFromServer}
+          draggableId={classInfo.id}
+          index={i}
+        >
           {provided => (
             <li
               {...provided.draggableProps}

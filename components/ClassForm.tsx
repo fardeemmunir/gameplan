@@ -30,6 +30,7 @@ const multiSelectStyles: Styles = {
 };
 
 const emptyClass = {
+  id: "",
   code: "",
   name: "",
   prereqs: [],
@@ -49,6 +50,12 @@ const ClassForm = () => {
       setInitialValue(classList.find(({ id }) => id === editClass));
     }
   }, [editClass]);
+
+  function classesDependedOn(parentClassId: string) {
+    return classList
+      .filter(({ prereqs }) => prereqs.includes(parentClassId))
+      .map(({ code }) => code);
+  }
 
   return (
     <Formik
@@ -191,6 +198,18 @@ const ClassForm = () => {
                   type="button"
                   value="Remove class"
                   onClick={() => dispatch(removeClass(editClass))}
+                  {...(() => {
+                    const dependedBy = classesDependedOn(values.id);
+
+                    if (dependedBy.length === 0) return {};
+
+                    return {
+                      disabled: true,
+                      title: `Class cannot be removed because it is depended on by ${dependedBy.join(
+                        ", "
+                      )}.`
+                    };
+                  })()}
                 />
               </section>
             )}

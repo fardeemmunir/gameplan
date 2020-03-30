@@ -121,7 +121,7 @@ const storeReducer = function(state: Store, action: StoreActions): Store {
 
       classList.splice(classIndex, 1);
 
-      for (let quarter in schedule.data) {
+      for (const quarter in schedule.data) {
         const classIdsInQuarter = schedule.data[quarter];
         const classIndexIfExists = classIdsInQuarter.findIndex(
           id => id === classId
@@ -143,6 +143,12 @@ const storeReducer = function(state: Store, action: StoreActions): Store {
     }
 
     case "SET_CLASS_TO_EDIT": {
+      if (
+        action.payload !== "" &&
+        !state.classList.find(({ id }) => id === action.payload)
+      )
+        return state;
+
       return {
         ...state,
         editClass: action.payload

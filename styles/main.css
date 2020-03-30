@@ -102,6 +102,10 @@ a {
   @apply border-red-600;
 }
 
+.form__submit--danger:disabled {
+  @apply cursor-not-allowed bg-gray-500 border-gray-500;
+}
+
 .quarter-selector button {
   @apply rounded border border-gray-300 py-2 px-3 leading-tight capitalize;
   transition: all 0.2s;

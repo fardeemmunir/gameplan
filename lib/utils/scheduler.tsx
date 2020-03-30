@@ -29,6 +29,9 @@ function scheduler(classList: Class[], locks: Schedule = {}) {
           );
         })
         .sort((a, b) => {
+          return a.code < b.code ? 1 : -1;
+        })
+        .sort((a, b) => {
           const aScore = a.interest - a.difficulty;
           const bscore = b.interest - b.difficulty;
 
