@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { Formik, Form, Field, FieldArray } from "formik";
 import CreatableSelect from "react-select/creatable";
 import { Styles } from "react-select";
@@ -62,7 +61,7 @@ const ClassForm = () => {
       enableReinitialize={true}
       initialValues={initialValue}
       onSubmit={(values, { resetForm }) => {
-        dispatch(addOrUpdateClass({ id: uuidv4(), ...values }));
+        dispatch(addOrUpdateClass(values));
         resetForm();
       }}
     >
