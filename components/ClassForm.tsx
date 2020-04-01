@@ -130,32 +130,38 @@ const ClassForm = () => {
               </label>
               <FieldArray
                 name="quarterPref"
-                render={arrayHelpers => (
-                  <div className="flex justify-between mb-3 quarter-selector">
-                    {["FALL", "WINTER", "SPRING"].map(quarter => (
-                      <button
-                        type="button"
-                        key={quarter}
-                        className={
-                          values.quarterPref.includes(quarter)
-                            ? "bg-gray-200"
-                            : ""
-                        }
-                        onClick={() => {
-                          const index = values.quarterPref.findIndex(
-                            pref => pref === quarter
-                          );
+                render={arrayHelpers => {
+                  const quarters = ["FALL", "WINTER", "SPRING"];
 
-                          return index === -1
-                            ? arrayHelpers.push(quarter)
-                            : arrayHelpers.remove(index);
-                        }}
-                      >
-                        {quarter.toLowerCase()}
-                      </button>
-                    ))}
-                  </div>
-                )}
+                  function toggleQuarter(quarter: string) {
+                    const index = values.quarterPref.findIndex(
+                      pref => pref === quarter
+                    );
+
+                    return index === -1
+                      ? arrayHelpers.push(quarter)
+                      : arrayHelpers.remove(index);
+                  }
+
+                  return (
+                    <div className="flex justify-between mb-3 quarter-selector">
+                      {quarters.map(quarter => (
+                        <button
+                          type="button"
+                          key={quarter}
+                          className={
+                            values.quarterPref.includes(quarter)
+                              ? "bg-gray-200"
+                              : ""
+                          }
+                          onClick={() => toggleQuarter(quarter)}
+                        >
+                          {quarter.toLowerCase()}
+                        </button>
+                      ))}
+                    </div>
+                  );
+                }}
               />
               <p className="text-gray-600  text-xs italic">
                 For teacher preference{" "}
@@ -205,11 +211,11 @@ export default () => {
   const { editClass } = useStore();
 
   return (
-    <div className="flex flex-col md:flex-row mb-4 bg-white text-black rounded">
+    <div className="flex flex-col lg:flex-row mb-4 bg-white text-black rounded">
       <style jsx>{`
         .bg {
           background-image: url("/books.png");
-          background-size: 30%;
+          background-size: 12rem;
           background-position: right center;
           background-repeat: no-repeat;
           min-height: 8rem;
@@ -217,18 +223,18 @@ export default () => {
 
         @media (min-width: 768px) {
           .bg {
-            background-size: 80%;
+            background-size: 9rem;
             background-position: right bottom;
           }
         }
       `}</style>
-      <div className="w-full md:w-1/5 pl-4 flex items-center bg">
-        <h1 className="text-4xl">
-          {editClass ? "Edit" : "Add"} <br className="hidden md:block" /> Class
+      <div className="w-full lg:w-1/6 pl-4 flex items-center bg">
+        <h1 className="text-3xl md:text-4xl -mt-8 leading-tight">
+          {editClass ? "Edit" : "Add"} <br className="hidden lg:block" /> Class
         </h1>
       </div>
 
-      <div className="w-full md:w-4/5 p-4">
+      <div className="w-full md:flex-1 p-4">
         <ClassForm />
       </div>
     </div>

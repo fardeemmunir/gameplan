@@ -84,6 +84,11 @@ a {
   @apply appearance-none block mr-4 w-full bg-white text-gray-700 border border-gray-300 rounded p-2 mb-3 leading-tight;
 }
 
+.form__input--select {
+  padding-right: 2rem;
+  margin-right: 0;
+}
+
 .form__input:focus {
   @apply outline-none bg-white border-gray-500;
 }
@@ -102,9 +107,18 @@ a {
   @apply border-red-600;
 }
 
+.quarter-selector {
+  position: relative;
+  overflow-x: auto;
+}
+
 .quarter-selector button {
-  @apply rounded border border-gray-300 py-2 px-3 leading-tight capitalize;
+  @apply rounded border mr-2 flex-1 border-gray-300 py-2 px-3 leading-tight capitalize;
   transition: all 0.2s;
+}
+
+.quarter-selector button:last-of-type {
+  margin-right: 0;
 }
 
 .quarter-selector button:focus {
