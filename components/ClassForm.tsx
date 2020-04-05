@@ -13,19 +13,19 @@ const multiSelectStyles: Styles = {
     borderRadius: "0.25rem",
     backgroundColor: "transparent",
     borderColor: isFocused ? colors.gray[500] : colors.gray[300],
-    boxShadow: "none"
+    boxShadow: "none",
   }),
 
-  multiValue: provided => ({
+  multiValue: (provided) => ({
     ...provided,
-    backgroundColor: colors.gray[200]
+    backgroundColor: colors.gray[200],
   }),
 
-  valueContainer: provided => ({
+  valueContainer: (provided) => ({
     ...provided,
     paddingLeft: "8",
-    borderRadius: "0.25em"
-  })
+    borderRadius: "0.25em",
+  }),
 };
 
 const emptyClass = {
@@ -35,7 +35,7 @@ const emptyClass = {
   prereqs: [],
   difficulty: 1,
   interest: 1,
-  quarterPref: []
+  quarterPref: [],
 };
 
 const ClassForm = () => {
@@ -97,13 +97,14 @@ const ClassForm = () => {
                 isMulti
                 options={classList.map(({ id, code }) => ({
                   value: id,
-                  label: code
+                  label: code,
                 }))}
-                value={values.prereqs.map(id => ({
-                  label: classList.find(classInfo => classInfo.id === id).code,
-                  value: id
+                value={values.prereqs.map((id) => ({
+                  label: classList.find((classInfo) => classInfo.id === id)
+                    .code,
+                  value: id,
                 }))}
-                onChange={selectedItems =>
+                onChange={(selectedItems) =>
                   setFieldValue(
                     "prereqs",
                     // @ts-ignore
@@ -115,7 +116,7 @@ const ClassForm = () => {
           </div>
 
           <div className="w-1/2 flex flex-wrap">
-            {["difficulty", "interest"].map(section => (
+            {["difficulty", "interest"].map((section) => (
               <section key={section} className="w-1/4 pr-4">
                 <label className="form__label">{section}</label>
 
@@ -136,20 +137,20 @@ const ClassForm = () => {
               </label>
               <FieldArray
                 name="quarterPref"
-                render={arrayHelpers => (
+                render={(arrayHelpers) => (
                   <div className="flex justify-between mb-3 quarter-selector">
-                    {["FALL", "WINTER", "SPRING"].map(quarter => (
+                    {["FALL", "WINTER", "SPRING"].map((quarter) => (
                       <button
                         type="button"
                         key={quarter}
                         className={
-                          values.quarterPref.includes(quarter)
-                            ? "bg-gray-200"
-                            : ""
+                          "focus:bg-gray-200 " +
+                          (values.quarterPref.includes(quarter) &&
+                            "bg-gray-200")
                         }
                         onClick={() => {
                           const index = values.quarterPref.findIndex(
-                            pref => pref === quarter
+                            (pref) => pref === quarter
                           );
 
                           return index === -1
@@ -204,7 +205,7 @@ const ClassForm = () => {
                       disabled: true,
                       "data-tooltip": `Class cannot be removed because it is depended on by ${dependedBy.join(
                         ", "
-                      )}.`
+                      )}.`,
                     };
                   })()}
                 >
