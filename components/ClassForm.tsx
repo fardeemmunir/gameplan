@@ -144,9 +144,7 @@ const ClassForm = () => {
                         type="button"
                         key={quarter}
                         className={
-                          "focus:bg-gray-200 " +
-                          (values.quarterPref.includes(quarter) &&
-                            "bg-gray-200")
+                          values.quarterPref.includes(quarter) && "bg-gray-200"
                         }
                         onClick={() => {
                           const index = values.quarterPref.findIndex(
