@@ -25,7 +25,7 @@ const useScheduling = () => {
     )
       return;
 
-    const update = produce(schedule.data, draft => {
+    const update = produce(schedule.data, (draft) => {
       draft[source.droppableId].splice(source.index, 1);
       draft[destination.droppableId].splice(destination.index, 0, draggableId);
     });
@@ -57,10 +57,10 @@ const useScheduling = () => {
     //    sure that you can't place a class behind a class that has a dependency on it
     return !(
       classInfo.quarterPref.includes(quarter) && // [1]
-      classInfo.prereqs.every(id => classesCompletedTillNow.includes(id)) && // [2]
-      classesCompletedTillNow.every(id => {
+      classInfo.prereqs.every((id) => classesCompletedTillNow.includes(id)) && // [2]
+      classesCompletedTillNow.every((id) => {
         // [3]
-        const classInfo = classList.find(info => info.id === id);
+        const classInfo = classList.find((info) => info.id === id);
         return !classInfo.prereqs.includes(classBeingDragged);
       })
     );
@@ -74,9 +74,9 @@ const useScheduling = () => {
 
     generateSchedule() {
       const lockedClasses = Object.fromEntries(
-        schedule.locks.map(lockedQuarter => [
+        schedule.locks.map((lockedQuarter) => [
           lockedQuarter,
-          schedule.data[lockedQuarter] || []
+          schedule.data[lockedQuarter] || [],
         ])
       );
 
@@ -89,7 +89,7 @@ const useScheduling = () => {
 
     saveDraggedClass(payload: DragStart) {
       setClassBeingDragged(payload.draggableId);
-    }
+    },
   };
 };
 
@@ -102,7 +102,7 @@ const Schedule = () => {
     isDropDisabled,
     clearSchedule,
     saveDraggedClass,
-    updateScheduleAfterDrop
+    updateScheduleAfterDrop,
   } = useScheduling();
 
   if (Object.keys(schedule.data).length === 0) {
@@ -121,15 +121,15 @@ const Schedule = () => {
         onDragStart={saveDraggedClass}
         onDragEnd={updateScheduleAfterDrop}
       >
-        <div className="flex flex-wrap -mx-2">
+        <div className="flex flex-wrap justify-center -mx-2">
           {sortedSchedule.map(({ quarter, classes, id }, i) => (
             <QuarterCard
               key={i}
               id={id}
               quarter={quarter}
               isDropDisabled={isDropDisabled(quarter, i, id)}
-              classes={classes.map(id =>
-                classList.find(info => info.id === id)
+              classes={classes.map((id) =>
+                classList.find((info) => info.id === id)
               )}
             />
           ))}
@@ -154,18 +154,22 @@ export default () => (
   <div className="w-full mb-10">
     <style jsx>{`
       .text-gigantic {
-        font-size: 7rem;
+        font-size: 5rem;
+      }
+
+      @media (min-width: 800px) {
+        .text-gigantic {
+          font-size: 7rem;
+        }
       }
 
       .schedule-chart {
         min-height: 18rem;
       }
     `}</style>
-    <h1 className="text-center text-5xl text-gigantic opacity-25 font-bold">
-      Schedule
-    </h1>
+    <h1 className="text-center text-gigantic opacity-25 font-bold">Schedule</h1>
 
-    <div className="p-4 w-full max-w-3xl mx-auto -mt-16 rounded text-black relative z-10 schedule-chart mb-12">
+    <div className="p-4 w-full max-w-3xl mx-auto -mt-12 md:-mt-16 rounded text-black relative z-10 schedule-chart mb-12">
       <Schedule />
     </div>
   </div>
