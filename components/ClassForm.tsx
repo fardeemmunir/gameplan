@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { Formik, Form, Field, FieldArray } from "formik";
 import CreatableSelect from "react-select/creatable";
 import { Styles } from "react-select";
@@ -14,28 +13,29 @@ const multiSelectStyles: Styles = {
     borderRadius: "0.25rem",
     backgroundColor: "transparent",
     borderColor: isFocused ? colors.gray[500] : colors.gray[300],
-    boxShadow: "none"
+    boxShadow: "none",
   }),
 
-  multiValue: provided => ({
+  multiValue: (provided) => ({
     ...provided,
-    backgroundColor: colors.gray[200]
+    backgroundColor: colors.gray[200],
   }),
 
-  valueContainer: provided => ({
+  valueContainer: (provided) => ({
     ...provided,
     paddingLeft: "8",
-    borderRadius: "0.25em"
-  })
+    borderRadius: "0.25em",
+  }),
 };
 
 const emptyClass = {
+  id: "",
   code: "",
   name: "",
   prereqs: [],
   difficulty: 1,
   interest: 1,
-  quarterPref: []
+  quarterPref: [],
 };
 
 const ClassForm = () => {
@@ -50,12 +50,18 @@ const ClassForm = () => {
     }
   }, [editClass]);
 
+  function classesDependedOn(parentClassId: string) {
+    return classList
+      .filter(({ prereqs }) => prereqs.includes(parentClassId))
+      .map(({ code }) => code);
+  }
+
   return (
     <Formik
       enableReinitialize={true}
       initialValues={initialValue}
       onSubmit={(values, { resetForm }) => {
-        dispatch(addOrUpdateClass({ id: uuidv4(), ...values }));
+        dispatch(addOrUpdateClass(values));
         resetForm();
       }}
     >
@@ -91,13 +97,14 @@ const ClassForm = () => {
                 isMulti
                 options={classList.map(({ id, code }) => ({
                   value: id,
-                  label: code
+                  label: code,
                 }))}
-                value={values.prereqs.map(id => ({
-                  label: classList.find(classInfo => classInfo.id === id).code,
-                  value: id
+                value={values.prereqs.map((id) => ({
+                  label: classList.find((classInfo) => classInfo.id === id)
+                    .code,
+                  value: id,
                 }))}
-                onChange={selectedItems =>
+                onChange={(selectedItems) =>
                   setFieldValue(
                     "prereqs",
                     // @ts-ignore
@@ -109,7 +116,7 @@ const ClassForm = () => {
           </div>
 
           <div className="w-full md:w-1/2 flex flex-wrap">
-            {["difficulty", "interest"].map(section => (
+            {["difficulty", "interest"].map((section) => (
               <section key={section} className="w-1/4 pr-4">
                 <label className="form__label">{section}</label>
 
@@ -130,38 +137,30 @@ const ClassForm = () => {
               </label>
               <FieldArray
                 name="quarterPref"
-                render={arrayHelpers => {
-                  const quarters = ["FALL", "WINTER", "SPRING"];
+                render={(arrayHelpers) => (
+                  <div className="flex justify-between mb-3 quarter-selector">
+                    {["FALL", "WINTER", "SPRING"].map((quarter) => (
+                      <button
+                        type="button"
+                        key={quarter}
+                        className={
+                          values.quarterPref.includes(quarter) && "bg-gray-200"
+                        }
+                        onClick={() => {
+                          const index = values.quarterPref.findIndex(
+                            (pref) => pref === quarter
+                          );
 
-                  function toggleQuarter(quarter: string) {
-                    const index = values.quarterPref.findIndex(
-                      pref => pref === quarter
-                    );
-
-                    return index === -1
-                      ? arrayHelpers.push(quarter)
-                      : arrayHelpers.remove(index);
-                  }
-
-                  return (
-                    <div className="flex justify-between mb-3 quarter-selector">
-                      {quarters.map(quarter => (
-                        <button
-                          type="button"
-                          key={quarter}
-                          className={
-                            values.quarterPref.includes(quarter)
-                              ? "bg-gray-200"
-                              : ""
-                          }
-                          onClick={() => toggleQuarter(quarter)}
-                        >
-                          {quarter.toLowerCase()}
-                        </button>
-                      ))}
-                    </div>
-                  );
-                }}
+                          return index === -1
+                            ? arrayHelpers.push(quarter)
+                            : arrayHelpers.remove(index);
+                        }}
+                      >
+                        {quarter.toLowerCase()}
+                      </button>
+                    ))}
+                  </div>
+                )}
               />
               <p className="text-gray-600  text-xs italic">
                 For teacher preference{" "}
@@ -192,12 +191,24 @@ const ClassForm = () => {
             {editClass !== "" && (
               <section className="w-1/2 form-btn">
                 <label className="form__label">&nbsp;</label>
-                <input
+                <button
                   className="form__submit--danger w-full align"
-                  type="button"
-                  value="Remove class"
                   onClick={() => dispatch(removeClass(editClass))}
-                />
+                  {...(() => {
+                    const dependedBy = classesDependedOn(values.id);
+
+                    if (dependedBy.length === 0) return {};
+
+                    return {
+                      disabled: true,
+                      "data-tooltip": `Class cannot be removed because it is depended on by ${dependedBy.join(
+                        ", "
+                      )}.`,
+                    };
+                  })()}
+                >
+                  Remove class
+                </button>
               </section>
             )}
           </div>

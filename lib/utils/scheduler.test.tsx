@@ -103,17 +103,17 @@ const classList = [
 
 test("The scheduler works without locks", () => {
   const output = {
-    FALL_0: ["EASY 1", "Calc 1", "DTC 1", "EA 1"],
-    WINTER_0: ["EASY 2", "Calc 2", "EA 2", "CS 111"],
-    SPRING_0: ["Calc 3", "DTC 2", "EA 3", "CS 211"],
-    WINTER_1: ["CS 213"],
-    SPRING_1: ["CS 214"]
+    FALL_0: ["EASY 1", "CS 111", "EA 1", "DTC 1"],
+    WINTER_0: ["EASY 2", "CS 211", "EA 2", "Calc 1"],
+    SPRING_0: ["CS 214", "EA 3", "DTC 2", "Calc 2"],
+    FALL_1: ["Calc 3"],
+    WINTER_1: ["CS 213"]
   };
 
   // @ts-ignore
   const result = scheduler(classList, {});
 
-  expect(result).toStrictEqual(output);
+  expect(result).toEqual(output);
 });
 
 test("The scheduler works with locks", () => {
@@ -123,12 +123,12 @@ test("The scheduler works with locks", () => {
   });
 
   const output = {
-    FALL_0: ["EASY 1", "Calc 1", "DTC 1", "EA 1"],
+    FALL_0: ["EASY 1", "CS 111", "EA 1", "DTC 1"],
     WINTER_0: ["DTC 1", "EASY 2", "Calc 2", "EA 2"],
-    SPRING_0: ["Calc 3", "DTC 2", "EA 3", "CS 111"],
-    FALL_1: ["CS 211"],
+    SPRING_0: ["CS 211", "EA 3", "DTC 2", "Calc 3"],
+    FALL_1: ["Calc 1"],
     WINTER_1: ["CS 213"]
   };
 
-  expect(result).toStrictEqual(output);
+  expect(result).toEqual(output);
 });

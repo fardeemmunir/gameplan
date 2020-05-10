@@ -18,12 +18,12 @@ const useGraphData = () => {
   const { classList } = useStore();
 
   const nodes: Node[] = useMemo(() => {
-    return classList.map(info => ({
+    return classList.map((info) => ({
       id: info.id,
       color: color(info.interest - info.difficulty),
       label: info.code,
       x: 0,
-      y: 0
+      y: 0,
     }));
   }, [classList, classList.length]);
 
@@ -33,7 +33,7 @@ const useGraphData = () => {
 
   return {
     nodes,
-    links
+    links,
   };
 };
 
@@ -70,6 +70,23 @@ const NetworkGraph = ({ linkDistance, nodeDistance, searchTerm }: Props) => {
 
     const svg = d3.select(svgContainer.current);
 
+    svg
+      .append("defs")
+      .append("marker")
+      .attr("id", "arrowhead")
+      .attr("id", "arrowhead")
+      .attr("viewBox", "-0 -5 10 10")
+      .attr("refX", 13)
+      .attr("refY", 0)
+      .attr("orient", "auto")
+      .attr("markerWidth", 13)
+      .attr("markerHeight", 13)
+      .attr("xoverflow", "visible")
+      .append("svg:path")
+      .attr("d", "M 0,-3 L 5 ,0 L 0,3")
+      .attr("fill", "#999")
+      .style("stroke", "none");
+
     const link = svg
       .append("g")
       .attr("stroke", "#999")
@@ -92,10 +109,10 @@ const NetworkGraph = ({ linkDistance, nodeDistance, searchTerm }: Props) => {
       .append("circle")
       .attr("class", "cursor-pointer network__node")
       .attr("r", 10)
-      .attr("fill", d => d.color)
+      .attr("fill", (d) => d.color)
       .attr("x", -8)
       .attr("y", -8)
-      .on("click", d => {
+      .on("click", (d) => {
         dispatch(setClassToEdit(d.id));
       });
 
@@ -103,8 +120,8 @@ const NetworkGraph = ({ linkDistance, nodeDistance, searchTerm }: Props) => {
       .append("text")
       .attr("dx", 20)
       .attr("dy", ".45em")
-      .text(d => d.label)
-      .attr("class", d => {
+      .text((d) => d.label)
+      .attr("class", (d) => {
         const searchExp = new RegExp(searchTerm, "gi");
 
         const isBolded =
@@ -128,12 +145,12 @@ const NetworkGraph = ({ linkDistance, nodeDistance, searchTerm }: Props) => {
       });
 
       link
-        .attr("x2", d => d.source.x)
-        .attr("y2", d => d.source.y)
-        .attr("x1", d => d.target.x)
-        .attr("y1", d => d.target.y);
+        .attr("x2", (d) => d.source.x)
+        .attr("y2", (d) => d.source.y)
+        .attr("x1", (d) => d.target.x)
+        .attr("y1", (d) => d.target.y);
 
-      node.attr("transform", d => `translate(${d.x},${d.y})`);
+      node.attr("transform", (d) => `translate(${d.x},${d.y})`);
     });
 
     return () => {
@@ -146,28 +163,14 @@ const NetworkGraph = ({ linkDistance, nodeDistance, searchTerm }: Props) => {
   return (
     <section className="relative w-full px-8">
       <div
-        className={`w-full ${searchTerm.trim() !== "" &&
-          "network--is-searched"}`}
+        className={`w-full ${
+          searchTerm.trim() !== "" && "network--is-searched"
+        }`}
       >
         <svg
           ref={svgContainer}
           viewBox={`${-width / 2} ${-height / 2} ${width} ${height}`}
-        >
-          <defs>
-            <marker
-              id="arrowhead"
-              viewBox="-0 -5 10 10"
-              refX="13"
-              refY="0"
-              orient="auto"
-              markerWidth="13"
-              markerHeight="13"
-              overflow="visible"
-            >
-              <path d="M 0,-3 L 5 ,0 L 0,3" fill="#999" stroke="none"></path>
-            </marker>
-          </defs>
-        </svg>
+        ></svg>
       </div>
     </section>
   );

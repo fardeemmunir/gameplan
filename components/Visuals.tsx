@@ -15,14 +15,14 @@ const Visuals = () => {
         </p>
       </div>
     );
-  } else {
-    return (
-      <>
-        <Graph />
-        <Schedule />
-      </>
-    );
   }
+
+  return (
+    <section>
+      <Graph />
+      <Schedule />
+    </section>
+  );
 };
 
 export default Visuals;

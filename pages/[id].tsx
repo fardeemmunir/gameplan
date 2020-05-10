@@ -1,4 +1,5 @@
 import React from "react";
+import { GetServerSideProps } from "next";
 import fetch from "isomorphic-unfetch";
 import { resetServerContext } from "react-beautiful-dnd";
 
@@ -38,7 +39,10 @@ const Page = ({ stateFromServer, isError }) => {
   );
 };
 
-Page.getInitialProps = async ({ query, req }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  query,
+}) => {
   resetServerContext();
 
   const url =
@@ -50,8 +54,10 @@ Page.getInitialProps = async ({ query, req }) => {
   const data = await res.json();
 
   return {
-    stateFromServer: data,
-    isError: res.status === 500 ? true : false
+    props: {
+      stateFromServer: data,
+      isError: res.status === 500 ? true : false,
+    },
   };
 };
 
