@@ -13,7 +13,7 @@ interface Props {
 }
 
 const QuarterCard = ({ classes, id, quarter, isDropDisabled }: Props) => (
-  <div className="w-1/3 px-2 mb-4 flex">
+  <div className="w-full md:w-1/3 max-w-xs px-2 mb-4 flex">
     <div
       className={
         "w-full rounded bg-white relative flex flex-col transition-all duration-150 " +

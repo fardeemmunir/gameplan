@@ -66,8 +66,8 @@ const ClassForm = () => {
       }}
     >
       {({ values, setFieldValue }) => (
-        <Form className="w-full flex">
-          <div className="w-1/2 mr-4">
+        <Form className="w-full flex flex-col md:flex-row">
+          <div className="w-full md:w-1/2 mr-4">
             <section className="flex mb-4">
               <div className="w-1/3 mr-2">
                 <label className="form__label" htmlFor="code">
@@ -115,7 +115,7 @@ const ClassForm = () => {
             </section>
           </div>
 
-          <div className="w-1/2 flex flex-wrap">
+          <div className="w-full md:w-1/2 flex flex-wrap">
             {["difficulty", "interest"].map((section) => (
               <section key={section} className="w-1/4 pr-4">
                 <label className="form__label">{section}</label>
@@ -222,22 +222,30 @@ export default () => {
   const { editClass } = useStore();
 
   return (
-    <div className="flex mb-4 bg-white text-black rounded">
+    <div className="flex flex-col lg:flex-row mb-4 bg-white text-black rounded">
       <style jsx>{`
         .bg {
           background-image: url("/books.png");
-          background-size: 80%;
-          background-position: right bottom;
+          background-size: 12rem;
+          background-position: right center;
           background-repeat: no-repeat;
+          min-height: 8rem;
+        }
+
+        @media (min-width: 768px) {
+          .bg {
+            background-size: 9rem;
+            background-position: right bottom;
+          }
         }
       `}</style>
-      <div className="w-1/5 pl-4 flex items-center bg">
-        <h1 className="text-4xl">
-          {editClass ? "Edit" : "Add"} <br /> Class
+      <div className="w-full lg:w-1/6 pl-4 flex items-center bg">
+        <h1 className="text-3xl md:text-4xl -mt-8 leading-tight">
+          {editClass ? "Edit" : "Add"} <br className="hidden lg:block" /> Class
         </h1>
       </div>
 
-      <div className="w-4/5 p-4">
+      <div className="w-full md:flex-1 p-4">
         <ClassForm />
       </div>
     </div>
