@@ -1,7 +1,7 @@
 import React from "react";
 
 const Footer = () => (
-  <footer className="text-gray-500 pb-8 pt-4 text-sm container flex justify-between">
+  <footer className="text-gray-500 pb-8 pt-4 text-sm container flex flex-col justify-between">
     <p className="text-right tracking-tight">
       Build using <a href="https://d3js.org/">D3</a>,{" "}
       <a href="https://fauna.com/">Fauna DB</a>,{" "}

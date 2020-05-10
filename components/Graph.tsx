@@ -27,8 +27,8 @@ const Graph = () => {
 
   return (
     <article>
-      <div className="w-full text-center mt-8 mb-4 flex justify-between items-center container">
-        <div className="flex items-center">
+      <div className="w-full text-center mt-8 mb-4 flex flex-col md:flex-row justify-between items-center container">
+        <div className="flex w-full md:w-auto items-center mb-4 md:mb-0">
           <button
             onClick={() => setShowGraph(!showGraph)}
             className="block toggle-btn p-2 mr-4 bg-blue-600 rounded form__submit mb-0 whitespace-no-wrap"
@@ -36,14 +36,18 @@ const Graph = () => {
             {!showGraph ? "Graph View" : "List View"}
           </button>
           <input
-            className="bg-transparent focus:outline-none border border-gray-300 rounded py-2 px-4 mr-4 block w-full appearance-none leading-normal"
+            className="bg-transparent focus:outline-none border border-gray-300 rounded py-2 px-4 block w-full appearance-none leading-normal"
             type="search"
             placeholder="Search Classes"
             value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
 
-          <div className={"text-left mr-4 " + (!showGraph && "invisible")}>
+          <div
+            className={
+              "hidden lg:block text-left mx-4 " + (!showGraph && "invisible")
+            }
+          >
             <h1 className="text-sm">Link Distance</h1>
             <input
               type="range"
@@ -51,10 +55,14 @@ const Graph = () => {
               min="100"
               max="300"
               defaultValue={linkDistance}
-              onChange={e => setLinkDistance(Number(e.target.value))}
+              onChange={(e) => setLinkDistance(Number(e.target.value))}
             />
           </div>
-          <div className={"text-left " + (!showGraph && "invisible")}>
+          <div
+            className={
+              "hidden lg:block text-left " + (!showGraph && "invisible")
+            }
+          >
             <h1 className="text-sm">Node Distance</h1>
             <input
               type="range"
@@ -62,12 +70,12 @@ const Graph = () => {
               min="500"
               max="1500"
               defaultValue={nodeDistance}
-              onChange={e => setNodeDistance(Number(e.target.value))}
+              onChange={(e) => setNodeDistance(Number(e.target.value))}
             />
           </div>
         </div>
 
-        <div className="flex items-center">
+        <div className="flex justify-between w-full md:w-auto items-center">
           <p className="opacity-75 mr-4">Total Classes: {classList.length}</p>
           {searchTerm.length > 0 && (
             <p className="opacity-75 mr-4">
@@ -97,12 +105,14 @@ const Graph = () => {
               if (searchTerm.length > 0) return isSearched;
               return true;
             })
-            .map(info => ({
+            .map((info) => ({
               ...info,
               quarterPref: info.quarterPref.join(", ").toLowerCase(),
               prereqs: info.prereqs
-                .map(classId => classList.find(({ id }) => id === classId).name)
-                .join(", ")
+                .map(
+                  (classId) => classList.find(({ id }) => id === classId).name
+                )
+                .join(", "),
             }))}
         />
       )}
